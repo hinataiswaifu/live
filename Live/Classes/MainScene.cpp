@@ -39,6 +39,9 @@ bool MainScene::init()
         keys.erase(keyCode);
     };
 
+    TMXTiledMap* _tileMap = TMXTiledMap::create("map2.tmx");
+    this->addChild(_tileMap, -1);
+
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(kb_listener,this);
 
     // Let cocos know we have an update function to be called.
