@@ -11,6 +11,7 @@ public:
     virtual ~GameObject();
     virtual void setPosition(float x, float y);
     virtual cocos2d::Vec2 getPosition() const;
+    const float distance(const GameObject &other);
     virtual cocos2d::Sprite* getSprite();
 
 protected:

@@ -2,6 +2,10 @@
 
 #include "GameObject.h"
 #include "cocos2d.h"
+#include "Item.h"
+#include "Inventory.h"
+
+#define MAX_PICKUP_DISTANCE 40
 
 class Player : public GameObject {
 public:
@@ -13,8 +17,9 @@ public:
     void move(float x, float y);
     float getHunger() const;
     float getStamina() const;
-
+    bool pickup(Item *item);
 private:
     float m_hunger;
+    Inventory inventory;
     float m_stamina;
 };

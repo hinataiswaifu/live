@@ -1,5 +1,6 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
+#include "limits.h"
 
 USING_NS_CC;
 
@@ -18,14 +19,22 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
+    // extract the m_player from the m_playersheet
     m_player = new Player("Spritesheet/roguelikeChar_transparent.png", SPRITE_GRID_X,
                           SPRITE_GRID_Y, 100, 100);
-    // extract the m_player from the m_playersheet
-    this->addChild(m_player->getSprite(), 0);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
     this->addChild(m_hud, 2);
+    this->addChild(m_player->getSprite(), INT_MAX); // Player always on top
+
+    // Initialize Items
+    // TODO: MAP
+    items.push_back(new Food(300, 300));
+    items.push_back(new Food(290, 290));
+    for(auto it : items) {
+        this->addChild(it->getSprite());
+    }
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
@@ -98,8 +107,11 @@ void MainScene::update(float delta) {
         isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
         m_player->moveY(-(MOVE_STEP * delta));
     }
-
-    // Update the HUD
+    if(isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
+                for(auto it : items) {
+                    if( m_player->pickup(it) ) break;   // Only allow one pick up at a time
+                }
+    }
     m_hud->update();
 }
 // Because cocos2d-x requres createScene to be static, we need to make other

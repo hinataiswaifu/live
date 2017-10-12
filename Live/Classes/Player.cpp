@@ -1,4 +1,3 @@
-
 #include "Player.h"
 
 USING_NS_CC;
@@ -11,6 +10,13 @@ Player::Player(const std::string& sprite_file, unsigned int grid_pos_x,
 }
 
 void Player::updateHunger(float diff) { m_hunger += diff; }
+
+bool Player::pickup( Item *item ) {
+    if( distance(*item) < 20 ) {
+        return inventory.pickup(item);
+    }
+    return false;
+}
 
 float Player::getHunger() const { return m_hunger; }
 

@@ -18,4 +18,10 @@ Vec2 GameObject::getPosition() const { return m_sprite->getPosition(); }
 
 Sprite* GameObject::getSprite() { return m_sprite; }
 
-GameObject::~GameObject() { delete m_sprite; }
+const float GameObject::distance(const GameObject &other) {
+    return getPosition().distance(other.getPosition());
+}
+
+GameObject::~GameObject () {
+    delete m_sprite;
+}

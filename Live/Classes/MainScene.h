@@ -1,6 +1,9 @@
 #ifndef __MAIN_SCENE_H__
 #define __MAIN_SCENE_H__
 
+#include "Food.h"
+#include "Item.h"
+#include <vector>
 #include <map>
 #include "HUD/HUD.h"
 #include "Player.h"
@@ -23,6 +26,7 @@ private:
         keys;
     Player* m_player;
     HUD* m_hud;
+    std::vector<Item*> items;
 };
 
 #endif  // __MAIN_SCENE_H__
