@@ -5,8 +5,6 @@ USING_NS_CC;
 
 #define SPRITE_GRID_X 1
 #define SPRITE_GRID_Y 6
-#define SPRITE_DIM 17
-
 #define MOVE_STEP 50
 
 Scene* MainScene::createScene()
@@ -21,13 +19,10 @@ Scene* MainScene::createScene()
 // on "init" you need to initialize your instance
 bool MainScene::init()
 {
+    m_player = new Player("Spritesheet/roguelikeChar_transparent.png",
+            SPRITE_GRID_X, SPRITE_GRID_Y, 100,100);
     // extract the m_player from the m_playersheet
-    m_player = Sprite::create("Spritesheet/roguelikeChar_transparent.png",
-            Rect(SPRITE_GRID_X*SPRITE_DIM, SPRITE_GRID_Y*SPRITE_DIM, SPRITE_DIM, SPRITE_DIM));
-    m_player->setPosition(100, 100);
-    m_player->setScale(2.0);
-
-    this->addChild(m_player, 0);
+    this->addChild(m_player->getSprite(), 0);
 
 
     auto kb_listener = EventListenerKeyboard::create();
@@ -76,23 +71,22 @@ void MainScene::update(float delta) {
     // and if it is displays how long, otherwise tell the user to press it
     Node::update(delta);
 
-    Vec2 loc = m_player->getPosition();
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) delta *= 2;
     if(isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
                 isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
-                m_player->setPosition(loc.x-(MOVE_STEP*delta),loc.y);
+                m_player->moveX(-(MOVE_STEP*delta));
     }
     if(isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
                 isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
-                m_player->setPosition(loc.x+(MOVE_STEP*delta),loc.y);
+                m_player->moveX(+(MOVE_STEP*delta));
     }
     if(isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
                 isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
-                m_player->setPosition(loc.x,loc.y+(MOVE_STEP*delta));
+                m_player->moveY(+(MOVE_STEP*delta));
     }
     if(isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
                 isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
-                m_player->setPosition(loc.x,loc.y-(MOVE_STEP*delta));
+                m_player->moveY(-(MOVE_STEP*delta));
     }
 }
 // Because cocos2d-x requres createScene to be static, we need to make other non-pointer members static
