@@ -1,0 +1,23 @@
+ language: cpp
+ compiler: gcc
+ dist: xenial
+
+ before_install:
+   - sudo apt-get update -qq
+
+ install:
+   - sudo apt-get install -qq g++ cmake
+   - git clone https://github.com/cocos2d/cocos2d-x.git --depth=2
+   - cd cocos2d-x/
+   - ./setup.py --quiet
+   - cd build && sudo ./install-deps-linux.sh
+   - export
+
+ before_script:
+   - source /home/travis/.bashrc
+   - $COCOS_CONSOLE_ROOT/cocos --version
+
+ script:
+   - pwd
+   - cd Live
+   - $COCOS_CONSOLE_ROOT/cocos run -p linux
