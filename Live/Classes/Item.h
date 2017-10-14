@@ -1,5 +1,4 @@
-#ifndef __ITEM__H__
-#define __ITEM__H__
+#pragma once
 
 #include "GameObject.h"
 
@@ -14,5 +13,3 @@ public:
     virtual void use(Player &p) = 0;
     virtual void consume(Player &p) = 0;
 };
-
-#endif

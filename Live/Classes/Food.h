@@ -1,5 +1,4 @@
-#ifndef __FOOD__H__
-#define __FOOD__H__
+#pragma once
 
 #include "Item.h"
 
@@ -14,5 +13,3 @@ public:
     void use(Player &p) {}
     void consume(Player &p) {}
 };
-
-#endif

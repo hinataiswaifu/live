@@ -1,12 +1,11 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
-#include "limits.h"
 
 USING_NS_CC;
 
 #define SPRITE_GRID_X 1
 #define SPRITE_GRID_Y 6
-#define MOVE_STEP 50
+#define MOVE_STEP 100
 
 Scene* MainScene::createScene() {
     auto scene = Scene::create();
