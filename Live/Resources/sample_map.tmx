@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="2">
+ <tileset firstgid="1" source="medieval_tileset.tsx"/>
+ <layer name="Tile Layer 1" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJyNkwEOwCAIA9n/34ZPmE/YnrCZSHJrYJqsqWFULaCbmU+cE2PdJnyDM91An/EVx9qhG7hfXAsObZM72PF+x5pPnMc77LDb1wf9V35d8sIHY92+dXQB88KH1o75erfIoS7zVfWG+eqLmp6cq/VgHyMW/VVt1v+sr9kcVnNR+Wed6FPfRdZn6vU/96B/cug1ns3qn//V/I/9HpHGuwA=
+  </data>
+ </layer>
+ <layer name="Meta" width="16" height="16">
+  <properties>
+   <property name="collision" type="bool" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKAcrAXidRTo3wfE+wmYQ4wdMHOw6cUlR4w9xOolVS01AClhhs9vxPgbn9+IiUNcAKZnHZn6YXbvx+JGaqVNmPsoMQNfuqCWO0kFAGjpKqs=
+  </data>
+ </layer>
+</map>

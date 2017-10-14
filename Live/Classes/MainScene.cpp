@@ -18,8 +18,9 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
-    m_player = new Player("Spritesheet/roguelikeChar_transparent.png", SPRITE_GRID_X,
-                          SPRITE_GRID_Y, 100, 100);
+    m_player = new Player("Spritesheet/roguelikeChar_transparent.png", 
+                          SPRITE_GRID_X, SPRITE_GRID_Y, 40,40);
+
     // extract the m_player from the m_playersheet
     this->addChild(m_player->getSprite(), 0);
 
@@ -41,8 +42,8 @@ bool MainScene::init() {
         keys.erase(keyCode);
     };
 
-    TMXTiledMap* _tileMap = TMXTiledMap::create("map2.tmx");
-    this->addChild(_tileMap, -1);
+    m_map_manager = new MapManager();
+    this->addChild(m_map_manager->getTileMap(), -1);
 
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(kb_listener, this);
 
@@ -81,26 +82,45 @@ void MainScene::update(float delta) {
     // and if it is displays how long, otherwise tell the user to press it
     Node::update(delta);
 
+    // Lookahead variable stores result of movement to be used in collision checks
+    Point position_lookahead = m_player->getPosition();
+
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) delta *= 2;
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
-        isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
-        m_player->moveX(-(MOVE_STEP * delta));
+
+    if(isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
+       isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
+        position_lookahead += Point(-(MOVE_STEP*delta), 0);  
+
+        // Check if the movement results in collision. If so, undo the movement
+        if(m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(-(MOVE_STEP*delta), 0);
+        }              
     }
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
-        isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
-        m_player->moveX(+(MOVE_STEP * delta));
+    if(isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
+       isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
+        position_lookahead += Point(MOVE_STEP*delta, 0); 
+        if(m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(+(MOVE_STEP*delta), 0);
+        }
     }
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
-        isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
-        m_player->moveY(+(MOVE_STEP * delta));
+    if(isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
+       isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
+        position_lookahead += Point(0, MOVE_STEP*delta); 
+        if(m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, MOVE_STEP*delta);
+        }
     }
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
-        isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
-        m_player->moveY(-(MOVE_STEP * delta));
+    if(isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
+       isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
+        position_lookahead += Point(0, -(MOVE_STEP*delta)); 
+        if(m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, -(MOVE_STEP*delta)); 
+        }
     }
 
     // Update the HUD
     m_hud->update();
+    m_player->setPosition(position_lookahead);
 }
 // Because cocos2d-x requres createScene to be static, we need to make other
 // non-pointer members static
