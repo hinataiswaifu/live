@@ -26,8 +26,8 @@ bool MainScene::init()
     this->addChild(m_player->getSprite(), 0);
 
     // auto _hud = MessageHUD::createLayer("Health");
-    auto _hud = new HUDBar("Health", 100.0, 20, cocos2d::Director::getInstance()->getVisibleSize().height - 50);
-    this->addChild(_hud, 2);
+    m_hud = HUD::createLayer(m_player);
+    this->addChild(m_hud, 2);
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
@@ -57,8 +57,10 @@ bool MainScene::init()
 bool MainScene::isKeyPressed(EventKeyboard::KeyCode code) {
     // Check if the key is currently pressed by seeing it it's in the std::map keys
     // In retrospect, keys is a terrible name for a key/value paried datatype isnt it?
-    if(keys.find(code) != keys.end())
+    if(keys.find(code) != keys.end()) {
+        m_player->updateHunger(-0.01);
         return true;
+    }
     return false;
 }
 
@@ -95,6 +97,9 @@ void MainScene::update(float delta) {
                 isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
                 m_player->moveY(-(MOVE_STEP*delta));
     }
+
+    m_hud->update();
+
 }
 // Because cocos2d-x requres createScene to be static, we need to make other non-pointer members static
 std::map<cocos2d::EventKeyboard::KeyCode,

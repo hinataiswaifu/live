@@ -7,13 +7,14 @@ class Player : public GameObject {
 public:
     Player(const std::string& sprite_file, unsigned int grid_pos_x,
             unsigned int grid_pos_y, int sprite_x, int sprite_y);
-    void updateHealth(float difference);
+    void updateHunger(float difference);
     void moveX(float x);
     void moveY(float y);
     void move(float x, float y);
-    float getHealth() const;
+    float getHunger() const;
+    float getStamina() const;
 
 private:
-    float m_health;
+    float m_hunger;
     float m_stamina;
 };
