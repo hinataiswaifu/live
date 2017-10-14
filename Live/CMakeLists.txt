@@ -130,6 +130,7 @@ set(GAME_SRC
   Classes/MainScene.cpp
   Classes/GameObject.cpp
   Classes/Player.cpp
+  Classes/Hud.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
@@ -138,6 +139,7 @@ set(GAME_HEADERS
   Classes/MainScene.h
   Classes/GameObject.h
   Classes/Player.h
+  Classes/Hud.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
