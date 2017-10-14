@@ -25,7 +25,8 @@ bool MainScene::init()
     // extract the m_player from the m_playersheet
     this->addChild(m_player->getSprite(), 0);
 
-    auto _hud = MessageHUD::createLayer("helloworld");
+    // auto _hud = MessageHUD::createLayer("Health");
+    auto _hud = new HUDBar("Health", 100.0, 20, cocos2d::Director::getInstance()->getVisibleSize().height - 50);
     this->addChild(_hud, 2);
 
     auto kb_listener = EventListenerKeyboard::create();
