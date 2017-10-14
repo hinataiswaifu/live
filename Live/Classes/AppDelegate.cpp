@@ -1,3 +1,5 @@
+// clang-format off
+// Lots of PPDirectives in this file, don't go well with clang.
 #include "AppDelegate.h"
 #include "MainScene.h"
 

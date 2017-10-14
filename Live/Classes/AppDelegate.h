@@ -1,5 +1,5 @@
-#ifndef  _APP_DELEGATE_H_
-#define  _APP_DELEGATE_H_
+#ifndef _APP_DELEGATE_H_
+#define _APP_DELEGATE_H_
 
 #include "cocos2d.h"
 
@@ -8,8 +8,7 @@
 
 Private inheritance here hides part of interface from Director.
 */
-class  AppDelegate : private cocos2d::Application
-{
+class AppDelegate : private cocos2d::Application {
 public:
     AppDelegate();
     virtual ~AppDelegate();
@@ -36,5 +35,4 @@ public:
     virtual void applicationWillEnterForeground();
 };
 
-#endif // _APP_DELEGATE_H_
-
+#endif  // _APP_DELEGATE_H_

@@ -1,0 +1,11 @@
+ColumnLimit: 90
+
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AccessModifierOffset: -4
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+SortIncludes: false
