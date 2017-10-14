@@ -2,6 +2,7 @@
 #define __MAIN_SCENE_H__
 
 #include <map>
+#include "HUD/HUD.h"
 #include "Player.h"
 #include "cocos2d.h"
 
@@ -21,6 +22,7 @@ private:
                     std::chrono::high_resolution_clock::time_point>
         keys;
     Player* m_player;
+    HUD* m_hud;
 };
 
 #endif  // __MAIN_SCENE_H__
