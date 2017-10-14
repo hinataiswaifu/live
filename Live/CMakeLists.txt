@@ -125,19 +125,13 @@ if ( WIN32 )
 )
 endif( WIN32 )
 
-set(GAME_SRC
-  Classes/AppDelegate.cpp
-  Classes/MainScene.cpp
-  Classes/GameObject.cpp
-  Classes/Player.cpp
-  ${PLATFORM_SPECIFIC_SRC}
+file(GLOB_RECURSE GAME_SRC
+    Classes/*.cpp
+    ${PLATFORM_SPECIFIC_SRC}
 )
 
-set(GAME_HEADERS
-  Classes/AppDelegate.h
-  Classes/MainScene.h
-  Classes/GameObject.h
-  Classes/Player.h
+file(GLOB_RECURSE GAME_HEADERS
+  Classes/*.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
