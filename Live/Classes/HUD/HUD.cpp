@@ -30,8 +30,7 @@ void HUD::initComponents() {
     addChild(m_stamina_bar, 2);
 
     // Add Message Box
-    m_message_box =
-        new HUDMessage("hello world");
+    m_message_box = new HUDMessage("hello world");
     addChild(m_message_box, 4);
 }
 
