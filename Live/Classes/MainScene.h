@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Player.h"
+#include "Hud.h"
 #include <map>
 
 class MainScene : public cocos2d::Scene

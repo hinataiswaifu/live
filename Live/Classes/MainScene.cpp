@@ -11,6 +11,7 @@ Scene* MainScene::createScene()
 {
     auto scene = Scene::create();
     auto layer = MainScene::create();
+
     scene->addChild(layer);
 
     return scene;
@@ -24,6 +25,8 @@ bool MainScene::init()
     // extract the m_player from the m_playersheet
     this->addChild(m_player->getSprite(), 0);
 
+    auto _hud = MessageHUD::createLayer("helloworld");
+    this->addChild(_hud, 2);
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
