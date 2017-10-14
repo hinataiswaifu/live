@@ -1,12 +1,11 @@
 #ifndef __MAIN_SCENE_H__
 #define __MAIN_SCENE_H__
 
-#include "cocos2d.h"
-#include "Player.h"
 #include <map>
+#include "Player.h"
+#include "cocos2d.h"
 
-class MainScene : public cocos2d::Scene
-{
+class MainScene : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
@@ -19,8 +18,9 @@ public:
 
 private:
     static std::map<cocos2d::EventKeyboard::KeyCode,
-        std::chrono::high_resolution_clock::time_point> keys;
+                    std::chrono::high_resolution_clock::time_point>
+        keys;
     Player* m_player;
 };
 
-#endif // __MAIN_SCENE_H__
+#endif  // __MAIN_SCENE_H__
