@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "Player.h"
-#include "HUD/Hud.h"
 #include "HUD/HUDbar.h"
 #include <map>
 
