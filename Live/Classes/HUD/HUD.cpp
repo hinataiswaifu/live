@@ -1,39 +1,39 @@
 #include "HUD.h"
 
 HUD::HUD(Player* player) {
+    // Store references to game objects
     m_player = player;
+
+    // Create and customize HUD
+    create();
+    setColor(cocos2d::Color3B(0, 0, 0));
+    setContentSize(cocos2d::Size(1, 1));
+    setAnchorPoint(cocos2d::Vec2(0, 0));
+
+    // Create and add components to HUD
+    initComponents();
 }
 
 HUD::~HUD() {}
 
-HUD* HUD::createLayer(Player* player)
+void HUD::initComponents()
 {
-    HUD* a = new HUD(player);
-    a->create();
-    a->setColor(cocos2d::Color3B(0, 0, 0));
-
-    a->setContentSize(cocos2d::Size(1, 1));
-    a->setAnchorPoint(cocos2d::Vec2(0, 0));
-
-    a->initOptions();
-
-    return a;
-}
-
-void HUD::initOptions()
-{
+    // Add Hunger HUDBar
     m_hungerBar = new HUDBar("Hunger", 100, 50, cocos2d::Director::getInstance()->getVisibleSize().height - 50);
     addChild(m_hungerBar, 1);
 
+    // Add Stamina HUDBar
     m_staminaBar = new HUDBar("Stamina", 100, 50, cocos2d::Director::getInstance()->getVisibleSize().height - 150);
     addChild(m_staminaBar, 2);
 
 }
 
 void HUD::update() {
+    // Update values in HUDBars with appropriate Player values
     m_hungerBar->updateCurr(m_player->getHunger());
     m_staminaBar->updateCurr(m_player->getStamina());
 
+    // Update views
     m_hungerBar->update();
     m_staminaBar->update();
 }
