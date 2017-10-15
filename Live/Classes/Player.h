@@ -24,6 +24,6 @@ public:
 
 private:
     float m_hunger;
-    Inventory* inventory;
+    Inventory* m_inventory;
     float m_stamina;
 };

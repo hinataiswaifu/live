@@ -1,11 +1,10 @@
 #ifndef __MAIN_SCENE_H__
 #define __MAIN_SCENE_H__
 
-#include "Food.h"
-#include "Item.h"
-#include <vector>
 #include <map>
+#include <vector>
 #include "HUD/HUD.h"
+#include "Item.h"
 #include "Player.h"
 #include "cocos2d.h"
 

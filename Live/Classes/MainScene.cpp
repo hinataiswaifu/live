@@ -1,5 +1,7 @@
+#include "Food.h"
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
+
 USING_NS_CC;
 
 #define SPRITE_GRID_X 1
