@@ -19,23 +19,24 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
-    m_tile_map = TMXTiledMap::create("sample_map.tmx");
+    m_map_manager = new MapManager();
     // extract the m_player from the m_playersheet
     m_player = new Player("Spritesheet/roguelikeChar_transparent.png", SPRITE_GRID_X,
                           SPRITE_GRID_Y);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
-    this->addChild(m_tile_map, -1);
+    this->addChild(m_map_manager->getTileMap(), -1);
     this->addChild(m_hud, 2);
 
-    m_tile_map->addChild(m_player->newSprite(), INT_MAX);  // Player always on top
-    // m_player->setPosition(100, 100);
+    m_map_manager->getTileMap()->addChild(m_player->newSprite(),
+                                          INT_MAX);  // Player always on top
+    m_player->setPosition(Point(100, 100));
 
     m_map_items.push_back(new Food());
     m_map_items.push_back(new Food());
     for (auto it : m_map_items) {
-        m_tile_map->addChild(it->newSprite());
+        m_map_manager->getTileMap()->addChild(it->newSprite());
     }
     m_map_items[0]->setPosition(200, 300);
     m_map_items[1]->setPosition(300, 400);
@@ -143,7 +144,7 @@ void MainScene::update(float delta) {
                 Item* item = m_player->drop(i);
                 if (item != NULL) {
                     m_map_items.push_back(item);
-                    m_tile_map->addChild(item->newSprite());
+                    m_map_manager->getTileMap()->addChild(item->newSprite());
                     item->setPosition(m_player->getPosition());
                 }
             } else {

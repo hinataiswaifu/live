@@ -38,4 +38,4 @@ void Player::move(float x, float y) {
     m_sprite->setPosition(loc.x + x, loc.y + y);
 }
 
-void Player::setPosition(cocos2d::Vec2 pt) { m_sprite->setPosition(pt.x, pt.y); }
+void Player::setPosition(cocos2d::Point pt) { m_sprite->setPosition(pt.x, pt.y); }

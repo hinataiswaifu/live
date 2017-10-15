@@ -26,7 +26,6 @@ private:
         keys;
     Player* m_player;
     HUD* m_hud;
-    cocos2d::TMXTiledMap* m_tile_map;
     std::vector<Item*> m_map_items;
     MapManager* m_map_manager;
 };
