@@ -28,6 +28,11 @@ void HUD::initComponents() {
         new HUDBar("Stamina", 100, 50,
                    cocos2d::Director::getInstance()->getVisibleSize().height - 150);
     addChild(m_staminaBar, 2);
+
+    // Add Message Box
+    m_messageBox =
+        new HUDMessage("hello world");
+    addChild(m_messageBox, 4);
 }
 
 void HUD::update() {

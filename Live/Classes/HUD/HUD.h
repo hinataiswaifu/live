@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "HUDBar.h"
 #include "Player.h"
+#include "HUDMessage.h"
 
 class HUD : public cocos2d::Layer {
 public:
@@ -24,6 +25,7 @@ private:
     // Bars to display
     HUDBar* m_hungerBar;
     HUDBar* m_staminaBar;
+    HUDMessage* m_messageBox;
 
     // Stored references to game objects
     const Player* m_player;
