@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Player.h"
+#include "HUD/HUD.h"
 #include <map>
 
 class MainScene : public cocos2d::Scene
@@ -21,6 +22,7 @@ private:
     static std::map<cocos2d::EventKeyboard::KeyCode,
         std::chrono::high_resolution_clock::time_point> keys;
     Player* m_player;
+    HUD* m_hud;
 };
 
 #endif // __MAIN_SCENE_H__
