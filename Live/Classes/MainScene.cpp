@@ -4,9 +4,8 @@
 
 USING_NS_CC;
 
-#define SPRITE_GRID_X 1
-#define SPRITE_GRID_Y 6
 #define MOVE_STEP 100
+#define SPRITE_INDEX 6
 
 Scene* MainScene::createScene() {
     auto scene = Scene::create();
@@ -20,16 +19,15 @@ Scene* MainScene::createScene() {
 // on "init" you need to initialize your instance
 bool MainScene::init() {
     m_map_manager = new MapManager();
-    // extract the m_player from the m_playersheet
-    m_player = new Player("Spritesheet/roguelikeChar_transparent.png", SPRITE_GRID_X,
-                          SPRITE_GRID_Y);
+
+    m_player = new Player("Animation/boy_walk_down.plist",SPRITE_INDEX);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
     this->addChild(m_map_manager->getTileMap(), -1);
     this->addChild(m_hud, 2);
 
-    m_map_manager->getTileMap()->addChild(m_player->newSprite(),
+    m_map_manager->getTileMap()->addChild(m_player->getSprite(),
                                           INT_MAX);  // Player always on top
     m_player->setPosition(Point(100, 100));
 
@@ -95,30 +93,33 @@ void MainScene::update(float delta) {
     // Lookahead variable stores result of movement to be used in collision checks
     Point position_lookahead = m_player->getPosition();
 
+    Player::Direction dir = Player::DIR_DOWN;
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) delta *= 2;
 
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
-        isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
-        position_lookahead += Point(-(MOVE_STEP * delta), 0);
-
+    if(isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
+       isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
+        position_lookahead += Point(-(MOVE_STEP*delta), 0);
+        dir = Player::DIR_LEFT;
         // Check if the movement results in collision. If so, undo the movement
-        if (m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(-(MOVE_STEP * delta), 0);
+        if(m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(-(MOVE_STEP*delta), 0);
         }
     }
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
-        isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
-        position_lookahead += Point(MOVE_STEP * delta, 0);
-        if (m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(+(MOVE_STEP * delta), 0);
+    if(isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
+       isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
+        position_lookahead += Point(MOVE_STEP*delta, 0);
+        if(m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(+(MOVE_STEP*delta), 0);
         }
+        dir = Player::DIR_RIGHT;
     }
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
-        isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
-        position_lookahead += Point(0, MOVE_STEP * delta);
-        if (m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(0, MOVE_STEP * delta);
+    if(isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
+       isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
+        position_lookahead += Point(0, MOVE_STEP*delta);
+        if(m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, MOVE_STEP*delta);
         }
+        dir = Player::DIR_UP;
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
         isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
@@ -126,6 +127,7 @@ void MainScene::update(float delta) {
         if (m_map_manager->checkCollision(position_lookahead)) {
             position_lookahead -= Point(0, -(MOVE_STEP * delta));
         }
+        dir = Player::DIR_DOWN;
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_map_items) {
@@ -153,7 +155,7 @@ void MainScene::update(float delta) {
         }
     }
     m_hud->update();
-    m_player->setPosition(position_lookahead);
+    m_player->setPosition(position_lookahead, dir);
 }
 
 // Because cocos2d-x requres createScene to be static, we need to make other
