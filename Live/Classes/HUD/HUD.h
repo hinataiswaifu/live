@@ -9,7 +9,7 @@
 class HUD : public cocos2d::Layer {
 public:
     // HUD stores a reference to game objects that have the potential to update the HUD
-    HUD(const Player* player);
+    HUD(Player* player);
 
     ~HUD();
 
@@ -26,9 +26,9 @@ private:
     // Bars to display
     HUDBar* m_hunger_bar;
     HUDBar* m_stamina_bar;
+    HUDInventory* m_inventory;
     HUDMessage* m_message_box;
 
-    // Inventory
-    HUDInventory* m_inventory;
-    const Player* m_player;
+    // Stored references to game objects
+    Player* m_player;
 };

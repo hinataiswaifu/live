@@ -1,3 +1,4 @@
+#include "Food.h"
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 
@@ -5,7 +6,7 @@ USING_NS_CC;
 
 #define SPRITE_GRID_X 1
 #define SPRITE_GRID_Y 6
-#define MOVE_STEP 50
+#define MOVE_STEP 100
 
 Scene* MainScene::createScene() {
     auto scene = Scene::create();
@@ -18,15 +19,27 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
-    m_player = new Player("Spritesheet/roguelikeChar_transparent.png", 
-                          SPRITE_GRID_X, SPRITE_GRID_Y, 40,40);
-
+    m_map_manager = new MapManager();
     // extract the m_player from the m_playersheet
-    this->addChild(m_player->getSprite(), 0);
+    m_player = new Player("Spritesheet/roguelikeChar_transparent.png", SPRITE_GRID_X,
+                          SPRITE_GRID_Y);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
+    this->addChild(m_map_manager->getTileMap(), -1);
     this->addChild(m_hud, 2);
+
+    m_map_manager->getTileMap()->addChild(m_player->newSprite(),
+                                          INT_MAX);  // Player always on top
+    m_player->setPosition(Point(100, 100));
+
+    m_map_items.push_back(new Food());
+    m_map_items.push_back(new Food());
+    for (auto it : m_map_items) {
+        m_map_manager->getTileMap()->addChild(it->newSprite());
+    }
+    m_map_items[0]->setPosition(200, 300);
+    m_map_items[1]->setPosition(300, 400);
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
@@ -41,9 +54,6 @@ bool MainScene::init() {
         // remove the key.  std::map.erase() doesn't care if the key doesnt exist
         keys.erase(keyCode);
     };
-
-    m_map_manager = new MapManager();
-    this->addChild(m_map_manager->getTileMap(), -1);
 
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(kb_listener, this);
 
@@ -87,38 +97,61 @@ void MainScene::update(float delta) {
 
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) delta *= 2;
 
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
-        position_lookahead += Point(-(MOVE_STEP*delta), 0);  
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
+        position_lookahead += Point(-(MOVE_STEP * delta), 0);
 
         // Check if the movement results in collision. If so, undo the movement
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(-(MOVE_STEP*delta), 0);
-        }              
-    }
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
-        position_lookahead += Point(MOVE_STEP*delta, 0); 
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(+(MOVE_STEP*delta), 0);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
     }
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
-        position_lookahead += Point(0, MOVE_STEP*delta); 
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(0, MOVE_STEP*delta);
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
+        position_lookahead += Point(MOVE_STEP * delta, 0);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
     }
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
-        position_lookahead += Point(0, -(MOVE_STEP*delta)); 
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(0, -(MOVE_STEP*delta)); 
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
+        position_lookahead += Point(0, MOVE_STEP * delta);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, MOVE_STEP * delta);
+        }
+    }
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
+        position_lookahead += Point(0, -(MOVE_STEP * delta));
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, -(MOVE_STEP * delta));
+        }
+    }
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
+        for (auto it : m_map_items) {
+            if (m_player->pickup(it)) {
+                m_map_items.erase(
+                    std::remove(m_map_items.begin(), m_map_items.end(), it));
+                break;  // Only allow one pick up at a time
+            }
         }
     }
 
-    // Update the HUD
+    for (int i = 1; i <= 10; i++) {
+        int code = static_cast<int>(EventKeyboard::KeyCode::KEY_0) + i;
+        if (isKeyPressed(static_cast<EventKeyboard::KeyCode>(code))) {
+            if (isKeyPressed(EventKeyboard::KeyCode::KEY_X)) {
+                Item* item = m_player->drop(i);
+                if (item != NULL) {
+                    m_map_items.push_back(item);
+                    m_map_manager->getTileMap()->addChild(item->newSprite());
+                    item->setPosition(m_player->getPosition());
+                }
+            } else {
+                m_player->use(i);
+            }
+        }
+    }
     m_hud->update();
     m_player->setPosition(position_lookahead);
 }

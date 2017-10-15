@@ -1,11 +1,13 @@
 #ifndef __MAIN_SCENE_H__
 #define __MAIN_SCENE_H__
 
+#include <map>
+#include <vector>
 #include "HUD/HUD.h"
+#include "Item.h"
 #include "Player.h"
 #include "cocos2d.h"
 #include "MapManager.h"
-#include <map>
 
 class MainScene : public cocos2d::Scene {
 public:
@@ -24,6 +26,7 @@ private:
         keys;
     Player* m_player;
     HUD* m_hud;
+    std::vector<Item*> m_map_items;
     MapManager* m_map_manager;
 };
 
