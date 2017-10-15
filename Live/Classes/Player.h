@@ -10,6 +10,7 @@ public:
     void updateHunger(float difference);
     void moveX(float x);
     void moveY(float y);
+    void setPosition(cocos2d::Point point);
     void move(float x, float y);
     float getHunger() const;
     float getStamina() const;
