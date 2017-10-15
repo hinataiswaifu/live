@@ -1,12 +1,12 @@
 #pragma once
 
-#include "cocos2d.h"
 #include "GameObject.h"
+#include "cocos2d.h"
 
 class Player : public GameObject {
 public:
     Player(const std::string& sprite_file, unsigned int grid_pos_x,
-            unsigned int grid_pos_y, int sprite_x, int sprite_y);
+           unsigned int grid_pos_y, int sprite_x, int sprite_y);
     void updateHealth(float difference);
     void moveX(float x);
     void moveY(float y);
