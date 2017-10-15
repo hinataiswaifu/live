@@ -6,6 +6,7 @@
 
 class GameObject {
 public:
+    GameObject() {};
     GameObject(const std::string sprite_file, unsigned int grid_pos_x,
                unsigned int grid_pos_y);
     virtual ~GameObject();
