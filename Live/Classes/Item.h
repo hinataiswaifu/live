@@ -12,6 +12,6 @@ public:
          int sprite_x, int sprite_y, unsigned int weight)
         : GameObject(sprite_file, grid_pos_x, grid_pos_y, sprite_x, sprite_y),
           weight(weight) {}
-    virtual void use(Player& p) = 0;
-    virtual void consume(Player& p) = 0;
+    virtual bool use(Player& p) = 0;
+    unsigned int get_weight() { return weight; }
 };

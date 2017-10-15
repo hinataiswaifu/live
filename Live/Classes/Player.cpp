@@ -11,6 +11,8 @@ Player::Player(const std::string& sprite_file, unsigned int grid_pos_x,
 
 void Player::updateHunger(float diff) { m_hunger += diff; }
 
+float Player::getHunger() const { return m_hunger; }
+
 bool Player::pickup( Item *item ) {
     if( distanceFrom(*item) < 20 ) {
         return inventory.pickup(item);
@@ -18,7 +20,12 @@ bool Player::pickup( Item *item ) {
     return false;
 }
 
-float Player::getHunger() const { return m_hunger; }
+bool Player::drop(int i) {
+    cocos2d::Vec2 pos = getPosition();
+    return inventory.drop(i, pos.x, pos.y);
+}
+
+bool Player::use(int i) { return inventory.use(i, *this); }
 
 float Player::getStamina() const { return m_stamina; }
 

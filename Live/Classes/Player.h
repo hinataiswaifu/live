@@ -18,6 +18,8 @@ public:
     float getHunger() const;
     float getStamina() const;
     bool pickup(Item *item);
+    bool drop(int i);
+    bool use(int i);
 private:
     float m_hunger;
     Inventory inventory;
