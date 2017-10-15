@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "HUDBar.h"
+#include "HUDInventory.h"
 #include "Player.h"
 #include "HUDMessage.h"
 
@@ -27,6 +28,7 @@ private:
     HUDBar* m_stamina_bar;
     HUDMessage* m_message_box;
 
-    // Stored references to game objects
+    // Inventory
+    HUDInventory* m_inventory;
     const Player* m_player;
 };

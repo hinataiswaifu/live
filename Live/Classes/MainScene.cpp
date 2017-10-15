@@ -122,6 +122,7 @@ void MainScene::update(float delta) {
     m_hud->update();
     m_player->setPosition(position_lookahead);
 }
+
 // Because cocos2d-x requres createScene to be static, we need to make other
 // non-pointer members static
 std::map<cocos2d::EventKeyboard::KeyCode, std::chrono::high_resolution_clock::time_point>

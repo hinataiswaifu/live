@@ -17,7 +17,7 @@ HUDMessage::HUDMessage(const std::string& message) {
     this->addChild(bg, 0);
 
     // Create, customize, and add label
-    m_label = Label::createWithSystemFont(message.c_str(), "Ubuntu", 22);
+    m_label = Label::createWithTTF(message, "fonts/emulogic.ttf", 22);
     m_label->setColor(Color3B(0, 0, 0));
     m_label->setPosition(Vec2(MSG_WIDTH/2, 30));
     this->addChild(m_label, 1);
