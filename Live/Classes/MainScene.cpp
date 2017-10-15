@@ -10,6 +10,7 @@ USING_NS_CC;
 Scene* MainScene::createScene() {
     auto scene = Scene::create();
     auto layer = MainScene::create();
+
     scene->addChild(layer);
 
     return scene;
@@ -21,6 +22,10 @@ bool MainScene::init() {
                           SPRITE_GRID_Y, 100, 100);
     // extract the m_player from the m_playersheet
     this->addChild(m_player->getSprite(), 0);
+
+    // Instantiate HUD and add to scene
+    m_hud = new HUD(m_player);
+    this->addChild(m_hud, 2);
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
@@ -48,11 +53,14 @@ bool MainScene::init() {
 }
 
 bool MainScene::isKeyPressed(EventKeyboard::KeyCode code) {
-    // Check if the key is currently pressed by seeing it it's in the std::map
-    // keys
-    // In retrospect, keys is a terrible name for a key/value paried datatype isnt
-    // it?
-    if (keys.find(code) != keys.end()) return true;
+    // Check if the key is currently pressed by seeing it it's in the std::map keys
+    // In retrospect, keys is a terrible name for a key/value paried datatype isnt it?
+    if (keys.find(code) != keys.end()) {
+        // For now, let's update hunger here until we abstract away input into a separate
+        // class?
+        m_player->updateHunger(-0.01);
+        return true;
+    }
     return false;
 }
 
@@ -90,6 +98,9 @@ void MainScene::update(float delta) {
         isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
         m_player->moveY(-(MOVE_STEP * delta));
     }
+
+    // Update the HUD
+    m_hud->update();
 }
 // Because cocos2d-x requres createScene to be static, we need to make other
 // non-pointer members static
