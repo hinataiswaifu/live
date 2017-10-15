@@ -7,20 +7,19 @@ HUDMessage::HUDMessage(const std::string& message) {
     m_message = message;
 
     // Set size and position of this component
-    double msg_width = 590;
-    setPosition(Vec2(Director::getInstance()->getVisibleSize().width/2 - msg_width/2, 60));
-    setContentSize(Size(msg_width,100));
+    setPosition(Vec2(Director::getInstance()->getVisibleSize().width/2 - MSG_WIDTH/2, 60));
+    setContentSize(Size(MSG_WIDTH,100));
 
     // Create sprite as background
     Sprite* bg = Sprite::create("messageBackground.png");
-    bg->setPosition(Vec2(msg_width/2, 60));
+    bg->setPosition(Vec2(MSG_WIDTH/2, 60));
     bg->setOpacity(100);
     this->addChild(bg, 0);
 
     // Create, customize, and add label
     m_label = Label::createWithSystemFont(message.c_str(), "Ubuntu", 22);
     m_label->setColor(Color3B(0, 0, 0));
-    m_label->setPosition(Vec2(msg_width/2, 30));
+    m_label->setPosition(Vec2(MSG_WIDTH/2, 30));
     this->addChild(m_label, 1);
 }
 

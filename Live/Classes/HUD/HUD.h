@@ -23,9 +23,9 @@ private:
     void initComponents();
 
     // Bars to display
-    HUDBar* m_hungerBar;
-    HUDBar* m_staminaBar;
-    HUDMessage* m_messageBox;
+    HUDBar* m_hunger_bar;
+    HUDBar* m_stamina_bar;
+    HUDMessage* m_message_box;
 
     // Stored references to game objects
     const Player* m_player;

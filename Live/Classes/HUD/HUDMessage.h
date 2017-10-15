@@ -2,6 +2,8 @@
 
 #include "cocos2d.h"
 
+#define MSG_WIDTH 590
+
 class HUDMessage : public cocos2d::Layer {
 public:
     HUDMessage(const std::string& message);
