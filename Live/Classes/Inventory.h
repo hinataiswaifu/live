@@ -10,11 +10,12 @@ private:
     unsigned int m_max_weight = DEFAULT_MAX_WEIGHT;
     unsigned int m_current_weight;
     unsigned int m_num_items;
-    Item *m_items[MAX_ITEMS];
+    Item* m_items[MAX_ITEMS];
+
 public:
     Inventory();
-    bool consume( Item *i );
-    bool use( Item *i );
-    bool pickup( Item *i );
-    bool drop( Item *i );
+    bool consume(Item* i);
+    bool use(Item* i);
+    bool pickup(Item* i);
+    bool drop(Item* i);
 };

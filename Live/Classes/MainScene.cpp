@@ -31,7 +31,7 @@ bool MainScene::init() {
     // TODO: MAP
     items.push_back(new Food(300, 300));
     items.push_back(new Food(290, 290));
-    for(auto it : items) {
+    for (auto it : items) {
         this->addChild(it->getSprite());
     }
 
@@ -63,12 +63,16 @@ bool MainScene::init() {
 bool MainScene::isKeyPressed(EventKeyboard::KeyCode code) {
     // Check if the key is currently pressed by seeing it it's in the std::map keys
     // In retrospect, keys is a terrible name for a key/value paried datatype isnt it?
+<<<<<<< HEAD
     if (keys.find(code) != keys.end()) {
         // For now, let's update hunger here until we abstract away input into a separate
         // class?
         m_player->updateHunger(-0.01);
         return true;
     }
+=======
+    if (keys.find(code) != keys.end()) return true;
+>>>>>>> 0b8552c... formatting
     return false;
 }
 
@@ -106,14 +110,19 @@ void MainScene::update(float delta) {
         isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
         m_player->moveY(-(MOVE_STEP * delta));
     }
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
-                for(auto it : items) {
-                    if( m_player->pickup(it) ) break;   // Only allow one pick up at a time
-                }
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
+        for (auto it : items) {
+            if (m_player->pickup(it)) break;  // Only allow one pick up at a time
+        }
     }
     m_hud->update();
 }
+<<<<<<< HEAD
 // Because cocos2d-x requres createScene to be static, we need to make other
 // non-pointer members static
+=======
+// Because cocos2d-x requres createScene to be static, we need to make other non-pointer
+// members static
+>>>>>>> 0b8552c... formatting
 std::map<cocos2d::EventKeyboard::KeyCode, std::chrono::high_resolution_clock::time_point>
     MainScene::keys;
