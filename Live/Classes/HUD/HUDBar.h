@@ -4,7 +4,7 @@
 
 class HUDBar : public cocos2d::Layer {
 public:
-    HUDBar(const std::string& _title, double max, int x, int y);
+    HUDBar(const std::string& _title, double max, int x, int y, cocos2d::Sprite* bar_sprite);
     ~HUDBar();
 
     // static method to create instance of HUDBar
@@ -28,6 +28,7 @@ private:
 
     // Stored properties
     std::string m_title;
+    std::string m_sprite_file;
     double m_max_value;
     double m_curr_value;
 };

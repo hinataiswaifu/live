@@ -1,5 +1,7 @@
 #include "HUD.h"
 
+USING_NS_CC;
+
 HUD::HUD(const Player* player) {
     // Store references to game objects
     m_player = player;
@@ -18,15 +20,17 @@ HUD::~HUD() {}
 
 void HUD::initComponents() {
     // Add Hunger HUDBar
+    Sprite* hunger_bar_sprite = Sprite::create("UI/spr_bar_hunger.png");
     m_hunger_bar =
         new HUDBar("Hunger", 100, 50,
-                   cocos2d::Director::getInstance()->getVisibleSize().height - 50);
+                   Director::getInstance()->getVisibleSize().height - 25, hunger_bar_sprite);
     addChild(m_hunger_bar, 1);
 
     // Add Stamina HUDBar
+    Sprite* stamina_bar_sprite = Sprite::create("UI/spr_bar_stamina.png");
     m_stamina_bar =
         new HUDBar("Stamina", 100, 50,
-                   cocos2d::Director::getInstance()->getVisibleSize().height - 150);
+                   Director::getInstance()->getVisibleSize().height - 60, stamina_bar_sprite);
     addChild(m_stamina_bar, 2);
 
     // Add Message Box
