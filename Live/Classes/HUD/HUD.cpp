@@ -1,6 +1,6 @@
 #include "HUD.h"
 
-HUD::HUD(const Player* player) {
+HUD::HUD(Player* player) {
     // Store references to game objects
     m_player = player;
 
@@ -28,6 +28,9 @@ void HUD::initComponents() {
         new HUDBar("Stamina", 100, 50,
                    cocos2d::Director::getInstance()->getVisibleSize().height - 150);
     addChild(m_staminaBar, 2);
+
+    m_inventory = new HUDInventory(m_player->get_inventory());
+    addChild(m_inventory, 3);
 }
 
 void HUD::update() {
@@ -38,6 +41,7 @@ void HUD::update() {
     // Update views
     m_hungerBar->update();
     m_staminaBar->update();
+    m_inventory->update();
 }
 
 void HUD::draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform,

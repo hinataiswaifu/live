@@ -9,9 +9,8 @@ protected:
 
 public:
     Item(const std::string& sprite_file, unsigned int grid_pos_x, unsigned int grid_pos_y,
-         int sprite_x, int sprite_y, unsigned int weight)
-        : GameObject(sprite_file, grid_pos_x, grid_pos_y, sprite_x, sprite_y),
-          weight(weight) {}
+         unsigned int weight)
+        : GameObject(sprite_file, grid_pos_x, grid_pos_y), weight(weight) {}
     virtual bool use(Player& p) = 0;
     unsigned int get_weight() { return weight; }
 };

@@ -4,48 +4,47 @@
 
 Inventory::Inventory() {
     for (int i = 0; i < MAX_ITEMS; i++) {
-        m_filled[i] = false;
+        m_items[i] = NULL;
     }
     m_current_weight = 0;
 }
 
 int Inventory::reindex(int i) { return (i + MAX_ITEMS - 1) % MAX_ITEMS; }
 
-bool Inventory::remove(int i) {
-    if (!m_filled[i]) return false;
-    m_filled[i] = false;
-    return true;
+Item* Inventory::remove(int i) {
+    Item* temp = m_items[i];
+    m_items[i] = NULL;
+    return temp;
 }
 
 bool Inventory::pickup(Item* item) {
     // Test for validity
-    int next_free =
-        std::distance(m_filled, std::find(m_filled, m_filled + MAX_ITEMS, false));
+    int next_free = 0;
+    for (; next_free < MAX_ITEMS; next_free++) {
+        if (m_items[next_free] == NULL) break;
+    }
     if (next_free >= MAX_ITEMS) return false;
     if (m_current_weight + item->get_weight() > MAX_WEIGHT) return false;
 
     // Add item
-    item->setPosition(-1, -1);
     m_items[next_free] = item;
-    m_filled[next_free] = true;
+    m_items[next_free]->getSprite()->removeFromParent();
     return true;
 }
 
 bool Inventory::use(int i, Player& p) {
     i = reindex(i);
-    if (!m_filled[i]) return false;
+    if (m_items[i] == NULL) return false;
     if (m_items[i]->use(p)) {
+        delete m_items[i];  // Must remove from scene first.
         remove(i);
-        // delete m_items[i];           // Must remove from scene first.
     }
     return true;
 }
 
-bool Inventory::drop(int i, float drop_x, float drop_y) {
+Item* Inventory::get_item(int i) { return m_items[i]; }
+
+Item* Inventory::drop(int i) {
     i = reindex(i);
-    if (!remove(i)) return false;
-    // TODO return ownership to MAP instance
-    Item* to_drop = m_items[i];
-    to_drop->setPosition(drop_x, drop_y);
-    return true;
+    return remove(i);
 }

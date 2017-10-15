@@ -1,6 +1,6 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
-
+#include <iostream>
 USING_NS_CC;
 
 #define SPRITE_GRID_X 1
@@ -20,20 +20,22 @@ Scene* MainScene::createScene() {
 bool MainScene::init() {
     // extract the m_player from the m_playersheet
     m_player = new Player("Spritesheet/roguelikeChar_transparent.png", SPRITE_GRID_X,
-                          SPRITE_GRID_Y, 100, 100);
+                          SPRITE_GRID_Y);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
     this->addChild(m_hud, 2);
-    this->addChild(m_player->getSprite(), INT_MAX);  // Player always on top
-
+    this->addChild(m_player->newSprite(), INT_MAX);  // Player always on top
+    m_player->setPosition(100, 100);
     // Initialize Items
     // TODO: MAP
-    items.push_back(new Food(300, 300));
-    items.push_back(new Food(290, 290));
-    for (auto it : items) {
-        this->addChild(it->getSprite());
+    m_items.push_back(new Food());
+    m_items.push_back(new Food());
+    for (auto it : m_items) {
+        this->addChild(it->newSprite());
     }
+    m_items[0]->setPosition(200, 300);
+    m_items[1]->setPosition(300, 400);
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
@@ -107,8 +109,12 @@ void MainScene::update(float delta) {
         m_player->moveY(-(MOVE_STEP * delta));
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
-        for (auto it : items) {
-            if (m_player->pickup(it)) break;  // Only allow one pick up at a time
+        for (auto it : m_items) {
+            if (m_player->pickup(it)) {
+                m_items.erase(std::remove(m_items.begin(), m_items.end(), it));
+                std::cerr << m_items.size() << std::endl;
+                break;  // Only allow one pick up at a time
+            }
         }
     }
 
@@ -116,7 +122,13 @@ void MainScene::update(float delta) {
         int code = static_cast<int>(EventKeyboard::KeyCode::KEY_0) + i;
         if (isKeyPressed(static_cast<EventKeyboard::KeyCode>(code))) {
             if (isKeyPressed(EventKeyboard::KeyCode::KEY_X)) {
-                m_player->drop(i);
+                Item* item = m_player->drop(i);
+                if (item != NULL) {
+                    Vec2 pos = m_player->getPosition();
+                    m_items.push_back(item);
+                    addChild(item->newSprite());
+                    item->setPosition(pos.x, pos.y);
+                }
             } else {
                 m_player->use(i);
             }

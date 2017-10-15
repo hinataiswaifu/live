@@ -26,7 +26,7 @@ private:
         keys;
     Player* m_player;
     HUD* m_hud;
-    std::vector<Item*> items;
+    std::vector<Item*> m_items;
 };
 
 #endif  // __MAIN_SCENE_H__

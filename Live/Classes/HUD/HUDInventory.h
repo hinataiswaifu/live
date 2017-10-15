@@ -2,24 +2,24 @@
 
 #include "cocos2d.h"
 #include "HUDInventoryItem.h"
+#include "../Inventory.h"
 
-#define INVENTORY_SLOTS 9
+class HUDInventory : public cocos2d::LayerColor {
+public:
+    HUDInventory(Inventory* inventory);
+    ~HUDInventory();
 
-class HUDInventory : public cocos2d::LayerColor
-{
-    public:
-        HUDInventory();
-        ~HUDInventory();
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform,
+                      bool transformUpdated);
 
-        virtual void draw (cocos2d::Renderer * renderer, const cocos2d::Mat4 & transform, bool transformUpdated);
+    //
+    // void addItem();
 
-        //
-        // void addItem();
+    // Update views
+    void update();
 
-        // Update views
-        void update();
-
-    private:
-        // Components of a HUDInventory
-        HUDInventoryItem* m_items[INVENTORY_SLOTS];
+private:
+    // Components of a HUDInventory
+    Inventory* inventory;
+    HUDInventoryItem* hud_items[MAX_ITEMS];
 };

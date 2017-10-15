@@ -9,13 +9,13 @@ class Inventory {
 private:
     unsigned int m_current_weight;
     Item* m_items[MAX_ITEMS];
-    bool m_filled[MAX_ITEMS];
-    bool remove(int i);
+    Item* remove(int i);
     int reindex(int i);
 
 public:
     Inventory();
     bool pickup(Item* i);
     bool use(int i, Player& p);
-    bool drop(int i, float drop_x, float drop_y);
+    Item* get_item(int i);
+    Item* drop(int i);
 };
