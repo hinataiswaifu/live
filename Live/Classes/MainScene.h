@@ -26,7 +26,8 @@ private:
         keys;
     Player* m_player;
     HUD* m_hud;
-    std::vector<Item*> m_items;
+    cocos2d::TMXTiledMap* m_tile_map;
+    std::vector<Item*> m_map_items;
 };
 
 #endif  // __MAIN_SCENE_H__

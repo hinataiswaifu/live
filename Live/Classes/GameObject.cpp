@@ -2,20 +2,22 @@
 
 USING_NS_CC;
 
-GameObject::GameObject(const std::string& sprite_file, unsigned int grid_pos_x,
+GameObject::GameObject(const std::string sprite_file, unsigned int grid_pos_x,
                        unsigned int grid_pos_y)
-    : sprite_file(sprite_file), grid_pos_x(grid_pos_x), grid_pos_y(grid_pos_y) {
+    : m_sprite_file(sprite_file), m_grid_pos_x(grid_pos_x), m_grid_pos_y(grid_pos_y) {
     m_sprite = NULL;
 }
 
 void GameObject::setPosition(float x, float y) { m_sprite->setPosition(x, y); }
 
+void GameObject::setPosition(Vec2 pos) { m_sprite->setPosition(pos); }
+
 Vec2 GameObject::getPosition() const { return m_sprite->getPosition(); }
 
 Sprite* GameObject::newSprite() {
-    m_sprite = Sprite::create(
-        "Spritesheet/roguelikeChar_transparent.png",
-        Rect(grid_pos_x * SPRITE_DIM, grid_pos_y * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM));
+    m_sprite = Sprite::create(m_sprite_file,
+                              Rect(m_grid_pos_x * SPRITE_DIM, m_grid_pos_y * SPRITE_DIM,
+                                   SPRITE_DIM, SPRITE_DIM));
     m_sprite->setScale(2.0);
     return m_sprite;
 }

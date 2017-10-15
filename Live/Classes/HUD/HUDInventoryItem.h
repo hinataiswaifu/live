@@ -7,7 +7,7 @@
 
 class HUDInventoryItem : public cocos2d::LayerColor {
 public:
-    HUDInventoryItem(Inventory* inventory, int index, double x, double y);
+    HUDInventoryItem(Item** item, double x, double y);
     ~HUDInventoryItem();
 
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform,
@@ -17,6 +17,5 @@ public:
     void update();
 
 private:
-    int index;
-    Inventory* inventory;
+    Item** item;
 };

@@ -1,6 +1,5 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
-#include <iostream>
 USING_NS_CC;
 
 #define SPRITE_GRID_X 1
@@ -18,24 +17,26 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
+    m_tile_map = TMXTiledMap::create("map2.tmx");
     // extract the m_player from the m_playersheet
     m_player = new Player("Spritesheet/roguelikeChar_transparent.png", SPRITE_GRID_X,
                           SPRITE_GRID_Y);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
+    this->addChild(m_tile_map, -1);
     this->addChild(m_hud, 2);
-    this->addChild(m_player->newSprite(), INT_MAX);  // Player always on top
+
+    m_tile_map->addChild(m_player->newSprite(), INT_MAX);  // Player always on top
     m_player->setPosition(100, 100);
-    // Initialize Items
-    // TODO: MAP
-    m_items.push_back(new Food());
-    m_items.push_back(new Food());
-    for (auto it : m_items) {
-        this->addChild(it->newSprite());
+
+    m_map_items.push_back(new Food());
+    m_map_items.push_back(new Food());
+    for (auto it : m_map_items) {
+        m_tile_map->addChild(it->newSprite());
     }
-    m_items[0]->setPosition(200, 300);
-    m_items[1]->setPosition(300, 400);
+    m_map_items[0]->setPosition(200, 300);
+    m_map_items[1]->setPosition(300, 400);
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
@@ -50,9 +51,6 @@ bool MainScene::init() {
         // remove the key.  std::map.erase() doesn't care if the key doesnt exist
         keys.erase(keyCode);
     };
-
-    TMXTiledMap* _tileMap = TMXTiledMap::create("map2.tmx");
-    this->addChild(_tileMap, -1);
 
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(kb_listener, this);
 
@@ -109,10 +107,10 @@ void MainScene::update(float delta) {
         m_player->moveY(-(MOVE_STEP * delta));
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
-        for (auto it : m_items) {
+        for (auto it : m_map_items) {
             if (m_player->pickup(it)) {
-                m_items.erase(std::remove(m_items.begin(), m_items.end(), it));
-                std::cerr << m_items.size() << std::endl;
+                m_map_items.erase(
+                    std::remove(m_map_items.begin(), m_map_items.end(), it));
                 break;  // Only allow one pick up at a time
             }
         }
@@ -124,10 +122,9 @@ void MainScene::update(float delta) {
             if (isKeyPressed(EventKeyboard::KeyCode::KEY_X)) {
                 Item* item = m_player->drop(i);
                 if (item != NULL) {
-                    Vec2 pos = m_player->getPosition();
-                    m_items.push_back(item);
-                    addChild(item->newSprite());
-                    item->setPosition(pos.x, pos.y);
+                    m_map_items.push_back(item);
+                    m_tile_map->addChild(item->newSprite());
+                    item->setPosition(m_player->getPosition());
                 }
             } else {
                 m_player->use(i);

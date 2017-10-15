@@ -13,7 +13,7 @@ public:
         : Item("Spritesheet/roguelikeChar_transparent.png", FOOD_X, FOOD_Y, FOOD_WEIGHT) {
     }
     bool use(Player& p) {
-        p.updateHunger(50);
+        p.updateHunger(10);
         return true;
     }
 };

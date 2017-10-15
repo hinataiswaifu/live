@@ -4,6 +4,8 @@
 #include "HUDInventoryItem.h"
 #include "../Inventory.h"
 
+#define BORDER_PX 5
+
 class HUDInventory : public cocos2d::LayerColor {
 public:
     HUDInventory(Inventory* inventory);

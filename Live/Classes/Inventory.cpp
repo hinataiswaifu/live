@@ -14,6 +14,7 @@ int Inventory::reindex(int i) { return (i + MAX_ITEMS - 1) % MAX_ITEMS; }
 Item* Inventory::remove(int i) {
     Item* temp = m_items[i];
     m_items[i] = NULL;
+    if (temp != NULL) m_current_weight -= temp->getWeight();
     return temp;
 }
 
@@ -24,9 +25,10 @@ bool Inventory::pickup(Item* item) {
         if (m_items[next_free] == NULL) break;
     }
     if (next_free >= MAX_ITEMS) return false;
-    if (m_current_weight + item->get_weight() > MAX_WEIGHT) return false;
+    if (m_current_weight + item->getWeight() > MAX_WEIGHT) return false;
 
     // Add item
+    m_current_weight += item->getWeight();
     m_items[next_free] = item;
     m_items[next_free]->getSprite()->removeFromParent();
     return true;
@@ -36,13 +38,13 @@ bool Inventory::use(int i, Player& p) {
     i = reindex(i);
     if (m_items[i] == NULL) return false;
     if (m_items[i]->use(p)) {
-        delete m_items[i];  // Must remove from scene first.
+        delete m_items[i];
         remove(i);
     }
     return true;
 }
 
-Item* Inventory::get_item(int i) { return m_items[i]; }
+Item** Inventory::getItemSlot(int i) { return &m_items[i]; }
 
 Item* Inventory::drop(int i) {
     i = reindex(i);

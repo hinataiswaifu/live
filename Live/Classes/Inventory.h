@@ -16,6 +16,6 @@ public:
     Inventory();
     bool pickup(Item* i);
     bool use(int i, Player& p);
-    Item* get_item(int i);
+    Item** getItemSlot(int i);
     Item* drop(int i);
 };
