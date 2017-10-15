@@ -7,6 +7,7 @@
 #include "Item.h"
 #include "Player.h"
 #include "cocos2d.h"
+#include "MapManager.h"
 
 class MainScene : public cocos2d::Scene {
 public:
@@ -27,6 +28,7 @@ private:
     HUD* m_hud;
     cocos2d::TMXTiledMap* m_tile_map;
     std::vector<Item*> m_map_items;
+    MapManager* m_map_manager;
 };
 
 #endif  // __MAIN_SCENE_H__

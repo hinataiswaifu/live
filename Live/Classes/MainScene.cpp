@@ -19,7 +19,7 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
-    m_tile_map = TMXTiledMap::create("map2.tmx");
+    m_tile_map = TMXTiledMap::create("sample_map.tmx");
     // extract the m_player from the m_playersheet
     m_player = new Player("Spritesheet/roguelikeChar_transparent.png", SPRITE_GRID_X,
                           SPRITE_GRID_Y);
@@ -30,7 +30,7 @@ bool MainScene::init() {
     this->addChild(m_hud, 2);
 
     m_tile_map->addChild(m_player->newSprite(), INT_MAX);  // Player always on top
-    m_player->setPosition(100, 100);
+    // m_player->setPosition(100, 100);
 
     m_map_items.push_back(new Food());
     m_map_items.push_back(new Food());
@@ -91,22 +91,40 @@ void MainScene::update(float delta) {
     // and if it is displays how long, otherwise tell the user to press it
     Node::update(delta);
 
+    // Lookahead variable stores result of movement to be used in collision checks
+    Point position_lookahead = m_player->getPosition();
+
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) delta *= 2;
+
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
         isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
-        m_player->moveX(-(MOVE_STEP * delta));
+        position_lookahead += Point(-(MOVE_STEP * delta), 0);
+
+        // Check if the movement results in collision. If so, undo the movement
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(-(MOVE_STEP * delta), 0);
+        }
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
         isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
-        m_player->moveX(+(MOVE_STEP * delta));
+        position_lookahead += Point(MOVE_STEP * delta, 0);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(+(MOVE_STEP * delta), 0);
+        }
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
         isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
-        m_player->moveY(+(MOVE_STEP * delta));
+        position_lookahead += Point(0, MOVE_STEP * delta);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, MOVE_STEP * delta);
+        }
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
         isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
-        m_player->moveY(-(MOVE_STEP * delta));
+        position_lookahead += Point(0, -(MOVE_STEP * delta));
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, -(MOVE_STEP * delta));
+        }
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_map_items) {
@@ -134,6 +152,7 @@ void MainScene::update(float delta) {
         }
     }
     m_hud->update();
+    m_player->setPosition(position_lookahead);
 }
 // Because cocos2d-x requres createScene to be static, we need to make other
 // non-pointer members static

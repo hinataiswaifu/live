@@ -18,29 +18,33 @@ HUD::~HUD() {}
 
 void HUD::initComponents() {
     // Add Hunger HUDBar
-    m_hungerBar =
+    m_hunger_bar =
         new HUDBar("Hunger", 100, 50,
                    cocos2d::Director::getInstance()->getVisibleSize().height - 50);
-    addChild(m_hungerBar, 1);
+    addChild(m_hunger_bar, 1);
 
     // Add Stamina HUDBar
-    m_staminaBar =
+    m_stamina_bar =
         new HUDBar("Stamina", 100, 50,
                    cocos2d::Director::getInstance()->getVisibleSize().height - 150);
-    addChild(m_staminaBar, 2);
+    addChild(m_stamina_bar, 2);
 
     m_inventory = new HUDInventory(m_player->get_inventory());
     addChild(m_inventory, 3);
+
+    // Add Message Box
+    // m_message_box = new HUDMessage("hello world");
+    // addChild(m_message_box, 4);
 }
 
 void HUD::update() {
     // Update values in HUDBars with appropriate Player values
-    m_hungerBar->updateCurr(m_player->getHunger());
-    m_staminaBar->updateCurr(m_player->getStamina());
+    m_hunger_bar->updateCurr(m_player->getHunger());
+    m_stamina_bar->updateCurr(m_player->getStamina());
 
     // Update views
-    m_hungerBar->update();
-    m_staminaBar->update();
+    m_hunger_bar->update();
+    m_stamina_bar->update();
     m_inventory->update();
 }
 

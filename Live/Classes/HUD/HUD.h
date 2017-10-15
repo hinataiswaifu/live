@@ -4,6 +4,7 @@
 #include "HUDBar.h"
 #include "HUDInventory.h"
 #include "Player.h"
+#include "HUDMessage.h"
 
 class HUD : public cocos2d::Layer {
 public:
@@ -23,9 +24,10 @@ private:
     void initComponents();
 
     // Bars to display
-    HUDBar* m_hungerBar;
-    HUDBar* m_staminaBar;
+    HUDBar* m_hunger_bar;
+    HUDBar* m_stamina_bar;
     HUDInventory* m_inventory;
+    HUDMessage* m_message_box;
 
     // Stored references to game objects
     Player* m_player;
