@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cocos2d.h"
-#include "../Inventory.h"
+#include "../Item.h"
 
 #define INVENTORY_SLOT_SIZE 60
 

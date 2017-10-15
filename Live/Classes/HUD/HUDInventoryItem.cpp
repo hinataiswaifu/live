@@ -2,8 +2,6 @@
 
 USING_NS_CC;
 
-HUDInventoryItem::~HUDInventoryItem() {}
-
 HUDInventoryItem::HUDInventoryItem(Item** item, double x, double y) : item(item) {
     LayerColor::initWithColor(Color4B(170, 170, 170, 170));
     setPosition(Vec2(x, y));
@@ -20,3 +18,5 @@ void HUDInventoryItem::update() {
     (*item)->setPosition(0, INVENTORY_SLOT_SIZE);
     (*item)->getSprite()->setScale(2 * INVENTORY_SLOT_SIZE / SPRITE_DIM);
 }
+
+HUDInventoryItem::~HUDInventoryItem() {}

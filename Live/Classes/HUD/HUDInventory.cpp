@@ -2,8 +2,6 @@
 
 USING_NS_CC;
 
-HUDInventory::~HUDInventory() {}
-
 HUDInventory::HUDInventory(Inventory* inventory) : inventory(inventory) {
     LayerColor::initWithColor(Color4B(255, 255, 255, 255));
     double inv_width = BORDER_PX + (INVENTORY_SLOT_SIZE + BORDER_PX) * MAX_ITEMS;
@@ -27,3 +25,5 @@ void HUDInventory::update() {
 
 void HUDInventory::draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform,
                         bool transformUpdated) {}
+
+HUDInventory::~HUDInventory() {}
