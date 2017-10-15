@@ -39,6 +39,9 @@ void HUD::initComponents() {
     // Add Message Box
     m_message_box = new HUDMessage("hello world");
     addChild(m_message_box, 4);
+
+    m_timer_hud = new HUDTimer();
+    addChild(m_timer_hud, 5);
 }
 
 void HUD::update() {
@@ -50,6 +53,7 @@ void HUD::update() {
     m_hunger_bar->update();
     m_stamina_bar->update();
     m_inventory->update();
+    m_timer_hud->update();
 }
 
 void HUD::draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform,

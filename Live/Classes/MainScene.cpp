@@ -19,7 +19,7 @@ Scene* MainScene::createScene() {
 // on "init" you need to initialize your instance
 bool MainScene::init() {
     m_map_manager = new MapManager();
-
+    
     m_player = new Player("Animation/boy_walk_down.plist",SPRITE_INDEX);
 
     // Instantiate HUD and add to scene
