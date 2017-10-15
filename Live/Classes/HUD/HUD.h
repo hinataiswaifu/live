@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "HUDBar.h"
+#include "HUDInventory.h"
 #include "Player.h"
 #include "HUDMessage.h"
 
