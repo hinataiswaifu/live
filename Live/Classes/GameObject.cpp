@@ -14,11 +14,22 @@ void GameObject::setPosition(Vec2 pos) { m_sprite->setPosition(pos); }
 
 Vec2 GameObject::getPosition() const { return m_sprite->getPosition(); }
 
+void GameObject::setZOrder(float z) {
+    m_sprite->setZOrder(z);
+}
+
 Sprite* GameObject::newSprite() {
     m_sprite = Sprite::create(m_sprite_file,
                               Rect(m_grid_pos_x * SPRITE_DIM, m_grid_pos_y * SPRITE_DIM,
                                    SPRITE_DIM, SPRITE_DIM));
     m_sprite->setScale(2.0);
+    return m_sprite;
+}
+
+Sprite* GameObject::newSprite(int width, int length) {
+    m_sprite = Sprite::create(m_sprite_file,
+                              Rect(m_grid_pos_x, m_grid_pos_y,
+                                   width, length));
     return m_sprite;
 }
 

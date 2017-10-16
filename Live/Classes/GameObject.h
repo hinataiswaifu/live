@@ -12,9 +12,11 @@ public:
     virtual ~GameObject();
     virtual void setPosition(float x, float y);
     virtual void setPosition(cocos2d::Vec2);
+    virtual void setZOrder(float z);
     virtual cocos2d::Vec2 getPosition() const;
     const float distanceFrom(const GameObject& other);
     virtual cocos2d::Sprite* newSprite();
+    virtual cocos2d::Sprite* newSprite(int width, int length);
     virtual cocos2d::Sprite* getSprite();
 
 protected:
