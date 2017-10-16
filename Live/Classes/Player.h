@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Item.h"
 #include "Inventory.h"
+#include "Direction.h"
 
 #define MAX_PICKUP_DISTANCE 40
 
@@ -19,25 +20,18 @@
 #define DEFAULT_MAX_HUNGER 100
 #define DEFAULT_MAX_STAMINA 100
 
+#define PLAYER_SPRITE_HEIGHT 48
+#define PLAYER_SPRITE_WIDTH 16
 
 class Player : public GameObject {
 public:
-    // Define all the different directions
-    typedef enum {
-        DIR_DOWN,
-        DIR_LEFT,
-        DIR_RIGHT,
-        DIR_UP,
-
-        NUM_DIR
-    } Direction;
     // Takes in the plist file and the initial sprite frame file index
     Player(const std::string& sprite_frame_file, unsigned int index);
     void updateHunger(float difference);
     void updateStamina(float difference);
     void moveX(float x);
     void moveY(float y);
-    void setPosition(cocos2d::Point point, Direction dir = DIR_DOWN);
+    void setPosition(cocos2d::Point point, Direction dir = Direction::DIR_DOWN);
     void move(float x, float y);
     void stopMove();
     float getHunger() const;
@@ -46,6 +40,7 @@ public:
     Item* drop(int i);
     bool use(int i);
     Inventory* get_inventory();
+    virtual cocos2d::Rect getHitbox();
 
 private:
     float m_hunger;

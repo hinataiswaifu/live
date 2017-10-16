@@ -6,6 +6,9 @@
 
 USING_NS_CC;
 
+#define PLAYER_HITBOX_WIDTH 4
+#define PLAYER_HITBOX_HEIGHT 12
+
 Player::Player(const std::string& sprite_frame_file, unsigned int index) :
     m_hunger(DEFAULT_MAX_HUNGER),
     m_stamina(DEFAULT_MAX_STAMINA),
@@ -99,4 +102,8 @@ void Player::stopMove() {
     m_state = STANDING;
     m_sprite->stopAllActions();
     m_sprite->setDisplayFrame(m_anim_map[m_orientation].at(STATIONARY_INDEX));
+}
+
+Rect Player::getHitbox() {
+    return Rect(getPosition().x-PLAYER_HITBOX_WIDTH/2,getPosition().y-PLAYER_HITBOX_HEIGHT/2, PLAYER_HITBOX_WIDTH, PLAYER_HITBOX_HEIGHT);
 }
