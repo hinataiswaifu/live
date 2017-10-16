@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 #include "../Item.h"
 
-#define INVENTORY_SLOT_SIZE 60
+#define INVENTORY_SLOT_SIZE 54
 
 class HUDInventoryItem : public cocos2d::LayerColor {
 public:

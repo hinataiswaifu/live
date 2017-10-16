@@ -4,9 +4,10 @@
 #include "HUDInventoryItem.h"
 #include "../Inventory.h"
 
-#define BORDER_PX 5
+#define INVENTORY_HORIZONTAL_PADDING_PX 20
+#define INVENTORY_VERTICAL_PADDING_PX 10
 
-class HUDInventory : public cocos2d::LayerColor {
+class HUDInventory : public cocos2d::Layer {
 public:
     HUDInventory(Inventory* inventory);
     ~HUDInventory();

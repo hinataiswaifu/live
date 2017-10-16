@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 
 #define MSG_WIDTH 590
+#define MSG_PADDING 60
 
 class HUDMessage : public cocos2d::Layer {
 public:
