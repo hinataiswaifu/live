@@ -106,7 +106,14 @@ void MainScene::update(float delta) {
     Point position_lookahead = m_player->getPosition();
 
     Player::Direction dir = Player::DIR_DOWN;
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) delta *= 2;
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) {
+        if (m_player->getStamina() > 0) {
+            delta *= 2;
+            m_player->updateStamina(-1);
+        }
+    } else {
+        m_player->updateStamina(0.5);
+    }
 
     if(isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
        isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
@@ -172,6 +179,7 @@ void MainScene::update(float delta) {
             }
         }
     }
+    m_player->updateHunger(-0.005);
     m_hud->update();
     m_player->setPosition(position_lookahead, dir);
 }

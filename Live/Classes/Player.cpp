@@ -1,15 +1,18 @@
 #include <iomanip>
 #include <sstream>
+#include <algorithm>
 
 #include "Player.h"
 
 USING_NS_CC;
 
 Player::Player(const std::string& sprite_frame_file, unsigned int index) :
-    m_hunger(100),
-    m_stamina(100),
+    m_hunger(DEFAULT_MAX_HUNGER),
+    m_stamina(DEFAULT_MAX_STAMINA),
     m_orientation(DIR_DOWN),        // look in the down direction by default
-    m_state(STANDING)
+    m_state(STANDING),
+    m_max_hunger(DEFAULT_MAX_HUNGER),
+    m_max_stamina(DEFAULT_MAX_STAMINA)
 {
     m_inventory = new Inventory();
     m_frame_cache = SpriteFrameCache::getInstance();
@@ -35,7 +38,17 @@ Player::Player(const std::string& sprite_frame_file, unsigned int index) :
     }
 }
 
-void Player::updateHunger(float diff) { m_hunger += diff; }
+void Player::updateHunger(float diff) {
+    m_hunger += diff;
+    m_hunger = std::min(m_hunger, m_max_hunger);
+    m_hunger = std::max(m_hunger, 0.0f);
+}
+
+void Player::updateStamina(float diff) {
+    m_stamina += diff;
+    m_stamina = std::min(m_stamina, m_max_stamina);
+    m_stamina = std::max(m_stamina, 0.0f);
+}
 
 float Player::getHunger() const { return m_hunger; }
 
