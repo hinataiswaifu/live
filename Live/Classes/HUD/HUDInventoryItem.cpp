@@ -1,5 +1,4 @@
 #include "HUDInventoryItem.h"
-
 USING_NS_CC;
 
 HUDInventoryItem::HUDInventoryItem(Item** item, double x, double y) : item(item) {
@@ -14,9 +13,13 @@ void HUDInventoryItem::draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& tr
 void HUDInventoryItem::update() {
     removeAllChildren();
     if (*item == NULL) return;
-    addChild((*item)->newSprite());
-    (*item)->setPosition(0, INVENTORY_SLOT_SIZE);
-    (*item)->getSprite()->setScale(2 * INVENTORY_SLOT_SIZE / SPRITE_DIM);
+    Sprite* itemSprite = (*item)->newSprite();
+    addChild(itemSprite);
+    float base_x = itemSprite->getContentSize().width;
+    float base_y = itemSprite->getContentSize().height;
+
+    (*item)->getSprite()->setAnchorPoint(Vec2(0, 0));
+    (*item)->setScale(INVENTORY_SLOT_SIZE / base_x, INVENTORY_SLOT_SIZE / base_y);
 }
 
 HUDInventoryItem::~HUDInventoryItem() {}

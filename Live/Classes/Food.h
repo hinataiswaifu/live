@@ -3,17 +3,20 @@
 #include "Item.h"
 #include "Player.h"
 
-#define FOOD_X 36
-#define FOOD_Y 1
-#define FOOD_WEIGHT 6
+USING_NS_CC;
 
 class Food : public Item {
+protected:
+    int health_increase = 0;
+
 public:
-    Food()
-        : Item("Spritesheet/roguelikeChar_transparent.png", FOOD_X, FOOD_Y, FOOD_WEIGHT) {
-    }
+    Food(const std::string& sprite_file, unsigned int weight)
+        : Item(sprite_file, weight) {}
+    Food(const std::string& sprite_file, unsigned int grid_pos_x, unsigned int grid_pos_y,
+         unsigned int weight)
+        : Item(sprite_file, grid_pos_x, grid_pos_y, weight) {}
     bool use(Player& p) {
-        p.updateHunger(10);
+        p.updateHunger(health_increase);
         return true;
     }
 };

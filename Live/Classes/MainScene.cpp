@@ -1,4 +1,4 @@
-#include "Food.h"
+#include "Fruit.h"
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 
@@ -19,8 +19,8 @@ Scene* MainScene::createScene() {
 // on "init" you need to initialize your instance
 bool MainScene::init() {
     m_map_manager = new MapManager();
-    
-    m_player = new Player("Animation/boy_walk_down.plist",SPRITE_INDEX);
+
+    m_player = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
@@ -31,13 +31,18 @@ bool MainScene::init() {
                                           INT_MAX);  // Player always on top
     m_player->setPosition(Point(100, 100));
 
-    m_map_items.push_back(new Food());
-    m_map_items.push_back(new Food());
+    m_map_items.push_back(new Pear());
+    m_map_items.push_back(new Pear());
+    m_map_items.push_back(new Orange());
+    m_map_items.push_back(new Apple());
+
     for (auto it : m_map_items) {
         m_map_manager->getTileMap()->addChild(it->newSprite());
     }
     m_map_items[0]->setPosition(200, 300);
-    m_map_items[1]->setPosition(300, 400);
+    m_map_items[1]->setPosition(300, 600);
+    m_map_items[2]->setPosition(600, 600);
+    m_map_items[3]->setPosition(500, 600);
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
@@ -96,28 +101,28 @@ void MainScene::update(float delta) {
     Player::Direction dir = Player::DIR_DOWN;
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) delta *= 2;
 
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
-        position_lookahead += Point(-(MOVE_STEP*delta), 0);
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
+        position_lookahead += Point(-(MOVE_STEP * delta), 0);
         dir = Player::DIR_LEFT;
         // Check if the movement results in collision. If so, undo the movement
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(-(MOVE_STEP*delta), 0);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
     }
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
-        position_lookahead += Point(MOVE_STEP*delta, 0);
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(+(MOVE_STEP*delta), 0);
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
+        position_lookahead += Point(MOVE_STEP * delta, 0);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
         dir = Player::DIR_RIGHT;
     }
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
-        position_lookahead += Point(0, MOVE_STEP*delta);
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(0, MOVE_STEP*delta);
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
+        position_lookahead += Point(0, MOVE_STEP * delta);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, MOVE_STEP * delta);
         }
         dir = Player::DIR_UP;
     }
