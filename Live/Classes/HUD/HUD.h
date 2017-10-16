@@ -5,6 +5,7 @@
 #include "HUDInventory.h"
 #include "Player.h"
 #include "HUDMessage.h"
+#include "HUDTimer.h"
 
 class HUD : public cocos2d::Layer {
 public:
@@ -28,6 +29,7 @@ private:
     HUDBar* m_stamina_bar;
     HUDInventory* m_inventory;
     HUDMessage* m_message_box;
+    HUDTimer* m_timer_hud;
 
     // Stored references to game objects
     Player* m_player;
