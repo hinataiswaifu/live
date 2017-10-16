@@ -18,18 +18,21 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
+    m_game_layer = Layer::create();
     m_map_manager = new MapManager();
 
     m_player = new Player("Animation/boy_walk_down.plist",SPRITE_INDEX);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
-    this->addChild(m_map_manager->getTileMap(), -1);
+    m_game_layer->addChild(m_map_manager->getTileMap(), -1);
+    // add HUD to the root layer
     this->addChild(m_hud, 2);
+    this->addChild(m_game_layer,0);
 
-    m_map_manager->getTileMap()->addChild(m_player->getSprite(),
+    m_game_layer->addChild(m_player->getSprite(),
                                           INT_MAX);  // Player always on top
-    m_player->setPosition(Point(100, 100));
+    m_player->setPosition(Point(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
 
     m_map_items.push_back(new Food());
     m_map_items.push_back(new Food());
@@ -57,6 +60,11 @@ bool MainScene::init() {
 
     // Let cocos know we have an update function to be called.
     this->scheduleUpdate();
+
+    // Setup camera to follow the player
+    m_camera = Follow::create(m_player->getSprite(),Rect::ZERO);
+    m_camera->retain();
+    m_game_layer->runAction(m_camera);
 
     return true;
 }

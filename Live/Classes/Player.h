@@ -9,7 +9,7 @@
 
 #define START_X     100
 #define START_Y     100
-#define ANIM_SEC    0.3f
+#define ANIM_SEC    0.2f
 #define STATIONARY_INDEX 1  // Refers to where in the sprite frames the stationary
                             // sprite is
 #define FRAME_COUNT 3
