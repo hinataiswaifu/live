@@ -5,6 +5,7 @@ USING_NS_CC;
 // Half the length of the player square's side
 // Needed to form the player hitbox, since the player is defined by a center position
 #define PLAYER_HALF_SIZE 12
+#define RESOURCE_LAYER_Z_ORDER 2       // Needs to be >1 for now due to foreground layer on demo map
 
 // Default constructor
 MapManager::MapManager() {
@@ -12,14 +13,24 @@ MapManager::MapManager() {
     m_collision_layer = m_tile_map->getLayer("Meta");
     m_map_width = m_tile_map->getMapSize().width * m_tile_map->getTileSize().width;
     m_map_height = m_tile_map->getMapSize().height * m_tile_map->getTileSize().height;
+    m_resources = new ResourceLayer();
+    m_tile_map->addChild(m_resources, RESOURCE_LAYER_Z_ORDER);
 }
 
 // Return reference to tile map so that it can be added to scene
 TMXTiledMap* MapManager::getTileMap() { return m_tile_map; }
 
+void MapManager::addPlayer(Player* player) {
+    m_resources->addChild(player->getSprite());
+}
+
 // Checks if a pixel coordinate lies on a collision tile
 bool MapManager::checkCollision(Point position) {
     // TODO: Implement using Rect
+    
+    if(m_resources->checkCollision(position)) {
+        return true;
+    }
 
     // Create a hitbox using 4 corners around the position
     Point* hitbox[4];
