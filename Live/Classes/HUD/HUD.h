@@ -19,6 +19,8 @@ public:
 
     // Update HUD based on current state of members
     void update();
+    void enqueueMessage(const std::string& message);
+    void dismissMessage();
 
 private:
     // Helper method to initialize components

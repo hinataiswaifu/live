@@ -28,6 +28,10 @@ private:
     HUD* m_hud;
     std::vector<Item*> m_map_items;
     MapManager* m_map_manager;
+    // used to track release state of C key, until more sophisticated input impl
+    bool m_key_c_released = true;
+    // used to track gameover state, currently used to reject keyboard input
+    bool m_game_over = false;
 };
 
 #endif  // __MAIN_SCENE_H__

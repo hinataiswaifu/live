@@ -19,7 +19,7 @@ Scene* MainScene::createScene() {
 // on "init" you need to initialize your instance
 bool MainScene::init() {
     m_map_manager = new MapManager();
-    
+
     m_player = new Player("Animation/boy_walk_down.plist",SPRITE_INDEX);
 
     // Instantiate HUD and add to scene
@@ -64,10 +64,14 @@ bool MainScene::init() {
 bool MainScene::isKeyPressed(EventKeyboard::KeyCode code) {
     // Check if the key is currently pressed by seeing it it's in the std::map keys
     // In retrospect, keys is a terrible name for a key/value paried datatype isnt it?
-    if (keys.find(code) != keys.end()) {
+    if (keys.find(code) != keys.end() && !m_game_over) {
         // For now, let's update hunger here until we abstract away input into a separate
         // class?
         m_player->updateHunger(-0.01);
+        if(m_player->getHunger() <= 0) {
+            m_hud->enqueueMessage("Game over!");
+            m_game_over = true;
+        }
         return true;
     }
     return false;
@@ -137,6 +141,12 @@ void MainScene::update(float delta) {
                 break;  // Only allow one pick up at a time
             }
         }
+    }
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_C) && m_key_c_released) {
+        m_hud->dismissMessage();
+        m_key_c_released = false;
+    } else {
+        m_key_c_released = true;
     }
 
     for (int i = 1; i <= 10; i++) {
