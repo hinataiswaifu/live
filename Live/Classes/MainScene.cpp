@@ -18,18 +18,21 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
+    m_game_layer = Layer::create();
     m_map_manager = new MapManager();
 
     m_player = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
-    this->addChild(m_map_manager->getTileMap(), -1);
+    m_game_layer->addChild(m_map_manager->getTileMap(), -1);
+    // add HUD to the root layer
     this->addChild(m_hud, 2);
+    this->addChild(m_game_layer,0);
 
-    m_map_manager->getTileMap()->addChild(m_player->getSprite(),
+    m_game_layer->addChild(m_player->getSprite(),
                                           INT_MAX);  // Player always on top
-    m_player->setPosition(Point(100, 100));
+    m_player->setPosition(Point(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
 
     m_map_items.push_back(new Pear());
     m_map_items.push_back(new Pear());
@@ -63,16 +66,25 @@ bool MainScene::init() {
     // Let cocos know we have an update function to be called.
     this->scheduleUpdate();
 
+    // Setup camera to follow the player
+    m_camera = Follow::create(m_player->getSprite(),Rect::ZERO);
+    m_camera->retain();
+    m_game_layer->runAction(m_camera);
+
     return true;
 }
 
 bool MainScene::isKeyPressed(EventKeyboard::KeyCode code) {
     // Check if the key is currently pressed by seeing it it's in the std::map keys
     // In retrospect, keys is a terrible name for a key/value paried datatype isnt it?
-    if (keys.find(code) != keys.end()) {
+    if (keys.find(code) != keys.end() && !m_game_over) {
         // For now, let's update hunger here until we abstract away input into a separate
         // class?
         m_player->updateHunger(-0.01);
+        if(m_player->getHunger() <= 0) {
+            m_hud->enqueueMessage("Game over!");
+            m_game_over = true;
+        }
         return true;
     }
     return false;
@@ -99,7 +111,14 @@ void MainScene::update(float delta) {
     Point position_lookahead = m_player->getPosition();
 
     Player::Direction dir = Player::DIR_DOWN;
-    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) delta *= 2;
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) {
+        if (m_player->getStamina() > 0) {
+            delta *= 2;
+            m_player->updateStamina(-1);
+        }
+    } else {
+        m_player->updateStamina(0.5);
+    }
 
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
         isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
@@ -143,6 +162,12 @@ void MainScene::update(float delta) {
             }
         }
     }
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_C) && m_key_c_released) {
+        m_hud->dismissMessage();
+        m_key_c_released = false;
+    } else {
+        m_key_c_released = true;
+    }
 
     for (int i = 1; i <= 10; i++) {
         int code = static_cast<int>(EventKeyboard::KeyCode::KEY_0) + i;
@@ -159,6 +184,7 @@ void MainScene::update(float delta) {
             }
         }
     }
+    m_player->updateHunger(-0.005);
     m_hud->update();
     m_player->setPosition(position_lookahead, dir);
 }

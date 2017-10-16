@@ -37,7 +37,7 @@ void HUD::initComponents() {
     addChild(m_inventory, 3);
 
     // Add Message Box
-    m_message_box = new HUDMessage("hello world");
+    m_message_box = new HUDMessage();
     addChild(m_message_box, 4);
 
     m_timer_hud = new HUDTimer();
@@ -54,6 +54,14 @@ void HUD::update() {
     m_stamina_bar->update();
     m_inventory->update();
     m_timer_hud->update();
+}
+
+void HUD::enqueueMessage(const std::string& message) {
+    m_message_box->enqueueMessage(message);
+}
+
+void HUD::dismissMessage() {
+    m_message_box->dismissMessage();
 }
 
 void HUD::draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform,

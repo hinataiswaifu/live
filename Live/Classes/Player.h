@@ -9,13 +9,15 @@
 
 #define START_X     100
 #define START_Y     100
-#define ANIM_SEC    0.3f
+#define ANIM_SEC    0.2f
 #define STATIONARY_INDEX 1  // Refers to where in the sprite frames the stationary
                             // sprite is
 #define FRAME_COUNT 3
 #define NUM_CHAR    4       // This indicates the number of different characters
                             // in the animation sprite sheet, required for index
                             // jumping
+#define DEFAULT_MAX_HUNGER 100
+#define DEFAULT_MAX_STAMINA 100
 
 
 class Player : public GameObject {
@@ -32,6 +34,7 @@ public:
     // Takes in the plist file and the initial sprite frame file index
     Player(const std::string& sprite_frame_file, unsigned int index);
     void updateHunger(float difference);
+    void updateStamina(float difference);
     void moveX(float x);
     void moveY(float y);
     void setPosition(cocos2d::Point point, Direction dir = DIR_DOWN);
@@ -46,8 +49,10 @@ public:
 
 private:
     float m_hunger;
+    float m_max_hunger;
     Inventory* m_inventory;
     float m_stamina;
+    float m_max_stamina;
     typedef enum {
         MOVING,
         STANDING,
