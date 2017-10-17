@@ -8,6 +8,8 @@ protected:
     const unsigned int weight;
 
 public:
+    Item(const std::string& sprite_file, unsigned int weight)
+        : GameObject(sprite_file), weight(weight) {}
     Item(const std::string& sprite_file, unsigned int grid_pos_x, unsigned int grid_pos_y,
          unsigned int weight)
         : GameObject(sprite_file, grid_pos_x, grid_pos_y), weight(weight) {}

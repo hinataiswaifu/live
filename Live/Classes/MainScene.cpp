@@ -1,4 +1,4 @@
-#include "Food.h"
+#include "Fruit.h"
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "Direction.h"
@@ -23,25 +23,30 @@ bool MainScene::init() {
     m_game_layer = Layer::create();
     m_map_manager = new MapManager();
 
-    m_player = new Player("Animation/boy_walk_down.plist",SPRITE_INDEX);
+    m_player = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
     m_game_layer->addChild(m_map_manager->getTileMap(), -1);
     // add HUD to the root layer
     this->addChild(m_hud, 2);
-    this->addChild(m_game_layer,0);
+    this->addChild(m_game_layer, 0);
 
     m_map_manager->addPlayer(m_player);
-    m_player->setPosition(Point(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
+    m_player->setPosition(Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 
-    m_map_items.push_back(new Food());
-    m_map_items.push_back(new Food());
+    m_map_items.push_back(new Pear());
+    m_map_items.push_back(new Pear());
+    m_map_items.push_back(new Orange());
+    m_map_items.push_back(new Apple());
+
     for (auto it : m_map_items) {
         m_map_manager->getTileMap()->addChild(it->newSprite());
     }
     m_map_items[0]->setPosition(200, 300);
-    m_map_items[1]->setPosition(300, 400);
+    m_map_items[1]->setPosition(300, 600);
+    m_map_items[2]->setPosition(600, 600);
+    m_map_items[3]->setPosition(500, 600);
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
@@ -63,7 +68,7 @@ bool MainScene::init() {
     this->scheduleUpdate();
 
     // Setup camera to follow the player
-    m_camera = Follow::create(m_player->getSprite(),Rect::ZERO);
+    m_camera = Follow::create(m_player->getSprite(), Rect::ZERO);
     m_camera->retain();
     m_game_layer->runAction(m_camera);
 
@@ -77,7 +82,7 @@ bool MainScene::isKeyPressed(EventKeyboard::KeyCode code) {
         // For now, let's update hunger here until we abstract away input into a separate
         // class?
         m_player->updateHunger(-0.01);
-        if(m_player->getHunger() <= 0) {
+        if (m_player->getHunger() <= 0) {
             m_hud->enqueueMessage("Game over!");
             m_game_over = true;
         }
@@ -116,28 +121,28 @@ void MainScene::update(float delta) {
         m_player->updateStamina(0.5);
     }
 
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
-        position_lookahead += Point(-(MOVE_STEP*delta), 0);
-        dir = Direction::DIR_LEFT;
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
+        position_lookahead += Point(-(MOVE_STEP * delta), 0);
         // Check if the movement results in collision. If so, undo the movement
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(-(MOVE_STEP*delta), 0);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
+        dir = Direction::DIR_LEFT;
     }
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
-        position_lookahead += Point(MOVE_STEP*delta, 0);
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(+(MOVE_STEP*delta), 0);
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
+        position_lookahead += Point(MOVE_STEP * delta, 0);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_RIGHT;
     }
-    if(isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
-       isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
-        position_lookahead += Point(0, MOVE_STEP*delta);
-        if(m_map_manager->checkCollision(position_lookahead)) {
-            position_lookahead -= Point(0, MOVE_STEP*delta);
+    if (isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
+        isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
+        position_lookahead += Point(0, MOVE_STEP * delta);
+        if (m_map_manager->checkCollision(position_lookahead)) {
+            position_lookahead -= Point(0, MOVE_STEP * delta);
         }
         dir = Direction::DIR_UP;
     }
@@ -185,7 +190,7 @@ void MainScene::update(float delta) {
     m_player->setPosition(position_lookahead, dir);
 
     // Set player's z order based on player sprite's lower edge
-    m_player->setZOrder(-(m_player->getPosition().y-PLAYER_SPRITE_HEIGHT/2));
+    m_player->setZOrder(-(m_player->getPosition().y - PLAYER_SPRITE_HEIGHT / 2));
 }
 
 // Because cocos2d-x requres createScene to be static, we need to make other
