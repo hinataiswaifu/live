@@ -12,6 +12,7 @@ public:
     virtual ~GameObject();
     virtual void setPosition(float x, float y);
     virtual void setPosition(cocos2d::Vec2);
+    virtual void setScale(float xy);
     virtual void setScale(float x, float y);
     virtual void setZOrder(float z);
     virtual cocos2d::Vec2 getPosition() const;

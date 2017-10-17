@@ -160,7 +160,7 @@ void MainScene::update(float delta) {
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_map_items) {
-            if (m_player->pickup(it)) {
+            if (m_player->distanceFrom(*it) < 20 && m_player->pickup(it)) {
                 m_map_items.erase(
                     std::remove(m_map_items.begin(), m_map_items.end(), it));
                 break;  // Only allow one pick up at a time
@@ -168,8 +168,8 @@ void MainScene::update(float delta) {
         }
         Item* resource = m_map_manager->gatherResource(position_lookahead, dir);
         if (resource != nullptr) {
-            // regenerate the sprite
-            m_map_manager->getTileMap()->addChild(resource->newSprite());
+            // Drop the resource and add it to the map
+            resource->setPosition(position_lookahead);
             m_player->pickup(resource);
         }
     }

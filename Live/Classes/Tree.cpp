@@ -20,14 +20,14 @@ Tree::Tree(const std::string& sprite_file, float pos_x, float pos_y)
     m_hitbox = Rect(pos_x-(m_width/2),pos_y - m_height/2,
             m_width, m_height/4);		// Set hitbox to lower quarter of sprite
 
-    m_last_day = GameTimer::getDays();
+    m_last_day = GameTimer::getDaysElapsed();
 
     setZOrder(-(pos_y-(m_height/2)));
 }
 
 void Tree::update() {
     // randomly places a new fruit on the tree
-    if ((rand() % (AVERAGE_DAY*2) < (GameTimer::getDays() - m_last_day)) &&
+    if ((rand() % (AVERAGE_DAY*2) < (GameTimer::getDaysElapsed() - m_last_day)) &&
             m_fruits.size() < MAX_FRUITS) {
         // generate a fruit
         int x = rand() % (m_width - FRUIT_PADDING_X);
@@ -36,37 +36,36 @@ void Tree::update() {
         m_fruits.push(new Cherry(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
         m_sprite->addChild(m_fruits.back()->getSprite());
     }
-    m_last_day = GameTimer::getDays();
+    m_last_day = GameTimer::getDaysElapsed();
 }
 
 // Gather resource, given that you are facing the obstacle
 Item* Tree::gather(cocos2d::Point pt, Direction dir) {
 
-	// Create a point in front of the player
-	Point ray = pt;
+    // Create a point in front of the player
+    Point ray = pt;
 
-	if(m_fruits.size() <= 0) {
-		return nullptr;
-	}
+    if(m_fruits.size() <= 0) {
+        return nullptr;
+    }
 
-	if(dir == DIR_LEFT) {
-		ray += Point(-6, 0);
-	} else if(dir == DIR_RIGHT) {
-		ray += Point(6, 0);
-	} else if(dir == DIR_DOWN) {
-		ray += Point(0, -6);
-	} else if(dir == DIR_UP) {
-		ray += Point(0, 6);
-	}
+    if(dir == DIR_LEFT) {
+        ray += Point(-6, 0);
+    } else if(dir == DIR_RIGHT) {
+        ray += Point(6, 0);
+    } else if(dir == DIR_DOWN) {
+        ray += Point(0, -6);
+    } else if(dir == DIR_UP) {
+        ray += Point(0, 6);
+    }
 
-	if(m_hitbox.containsPoint(ray)) {
-		Cherry* pickup = m_fruits.front();
+    if(m_hitbox.containsPoint(ray)) {
+        Cherry* pickup = m_fruits.front();
         m_fruits.pop();
-        m_sprite->removeChild(pickup->getSprite(), true);
-		//Change sprite
-		return pickup;
-	}
-	return nullptr;
+        //Change sprite
+        return pickup;
+    }
+    return nullptr;
 }
 
 Tree::~Tree() {

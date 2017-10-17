@@ -1,5 +1,4 @@
-#ifndef __MAP_MANAGER_H__
-#define __MAP_MANAGER_H__
+#pragma once
 
 #include "cocos2d.h"
 #include "ResourceLayer.h"
@@ -8,6 +7,8 @@
 
 #define MAP_FILE_NAME "sample_map.tmx"
 #define COLLISION_LAYER_NAME "Meta"
+
+#define RESOURCE_LAYER_Z_ORDER 2       // Needs to be >1 for now due to foreground layer on demo map
 
 class MapManager
 {
@@ -29,5 +30,3 @@ private:
     float m_map_width;
     float m_map_height;
 };
-
-#endif // __MAIN_SCENE_H__

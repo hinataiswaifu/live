@@ -11,6 +11,8 @@ void GameObject::setPosition(float x, float y) { m_sprite->setPosition(x, y); }
 
 void GameObject::setPosition(Vec2 pos) { m_sprite->setPosition(pos); }
 
+void GameObject::setScale(float xy) { m_sprite->setScale(xy); }
+
 void GameObject::setScale(float x, float y) { m_sprite->setScale(x, y); }
 
 Vec2 GameObject::getPosition() const { return m_sprite->getPosition(); }

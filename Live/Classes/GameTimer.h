@@ -12,7 +12,7 @@ public:
   static GameTimer *getInstance();
 
   static int getTime();
-  static int getDays();
+  static int getDaysElapsed();
 
   DayPhase getCurrentDayPhase();
 
@@ -20,5 +20,4 @@ public:
 private:
   static GameTimer *instance;
   static std::chrono::time_point<Clock> start_time;
-
 };

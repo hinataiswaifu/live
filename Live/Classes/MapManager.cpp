@@ -2,11 +2,6 @@
 
 USING_NS_CC;
 
-// Half the length of the player square's side
-// Needed to form the player hitbox, since the player is defined by a center position
-#define PLAYER_HALF_SIZE 12
-#define RESOURCE_LAYER_Z_ORDER 2       // Needs to be >1 for now due to foreground layer on demo map
-
 // Default constructor
 MapManager::MapManager() {
     m_tile_map = TMXTiledMap::create(MAP_FILE_NAME);

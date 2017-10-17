@@ -17,7 +17,7 @@ public:
 
 private:
     std::queue<Cherry*> m_fruits;
-    // store what the last day a fruit blossomed
+    // store the last day a fruit blossomed
     int m_last_day;
     int m_width;
     int m_height;

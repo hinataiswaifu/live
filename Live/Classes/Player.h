@@ -21,7 +21,10 @@
 #define DEFAULT_MAX_STAMINA 100
 
 #define PLAYER_SPRITE_HEIGHT 48
-#define PLAYER_SPRITE_WIDTH 16
+#define PLAYER_SPRITE_WIDTH 32
+// Half the length of the player square's side
+// Needed to form the player hitbox, since the player is defined by a center position
+#define PLAYER_HALF_SIZE PLAYER_SPRITE_HEIGHT/2
 
 #define PLAYER_HITBOX_WIDTH 4
 #define PLAYER_HITBOX_HEIGHT 12
@@ -29,6 +32,8 @@
 #define HUNGER_DEGEN -0.1f
 #define STAMINA_DEGEN -10
 #define STAMINA_REGEN 2
+
+#define PICKUP_RADIUS 20
 
 class Player : public GameObject {
 public:

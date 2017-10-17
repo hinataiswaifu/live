@@ -4,6 +4,8 @@
 
 USING_NS_CC;
 
+#define ANCHOR_OFFSET 32
+
 #define MAP_WIDTH 12500
 #define MAP_HEIGHT 8600
 
@@ -23,7 +25,9 @@ ResourceLayer::ResourceLayer() : Layer() {
 
         //This is a hack to avoid the pond on the bottom right of the demo map
         //  as well as the player spawn location
-        while((x >= 1050 && y <= 380) || (std::abs(x-512)<50 && std::abs(y-364) < 50)) {
+        while((x >= 1050 && y <= 380) ||
+                (std::abs(x-512)<50 && std::abs(y-364) < 50) ||
+                x < ANCHOR_OFFSET || y < ANCHOR_OFFSET) {
             r = rand() % MAP_WIDTH;
             x = r/10;
             r = rand() % MAP_HEIGHT;
