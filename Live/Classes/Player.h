@@ -23,6 +23,13 @@
 #define PLAYER_SPRITE_HEIGHT 48
 #define PLAYER_SPRITE_WIDTH 16
 
+#define PLAYER_HITBOX_WIDTH 4
+#define PLAYER_HITBOX_HEIGHT 12
+
+#define HUNGER_DEGEN -0.1f
+#define STAMINA_DEGEN -10
+#define STAMINA_REGEN 2
+
 class Player : public GameObject {
 public:
     // Takes in the plist file and the initial sprite frame file index

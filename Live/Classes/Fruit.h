@@ -43,3 +43,21 @@ public:
         return temp;
     }
 };
+
+#define FRUIT_SCALE 0.4
+class Cherry : public Food {
+public:
+    Cherry() : Food("Spritesheet/trees/cherry.png", APPLE_WEIGHT) {
+        Food::health_increase = 14;
+        m_sprite = newSprite();
+    }
+    Cherry(float x, float y) : Cherry() {
+        setPosition(x,y);
+    }
+    Sprite* newSprite() {
+        Sprite* temp = GameObject::newSprite();
+        temp->setScale(FRUIT_SCALE);
+        return temp;
+    }
+
+};

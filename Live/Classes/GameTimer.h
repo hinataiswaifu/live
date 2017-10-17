@@ -11,8 +11,8 @@ public:
   ~GameTimer();
   static GameTimer *getInstance();
 
-  int getTime();
-  int getDays();
+  static int getTime();
+  static int getDays();
 
   DayPhase getCurrentDayPhase();
 

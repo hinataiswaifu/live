@@ -6,9 +6,6 @@
 
 USING_NS_CC;
 
-#define PLAYER_HITBOX_WIDTH 4
-#define PLAYER_HITBOX_HEIGHT 12
-
 Player::Player(const std::string& sprite_frame_file, unsigned int index) :
     m_hunger(DEFAULT_MAX_HUNGER),
     m_stamina(DEFAULT_MAX_STAMINA),

@@ -18,14 +18,16 @@ public:
     bool checkCollision(cocos2d::Point position, float x, float y);
     cocos2d::TMXTiledMap* getTileMap();
     void addPlayer(Player* player);
+    void update(float delta);
+    Item* gatherResource(cocos2d::Point position, Direction dir);
 
 private:
     cocos2d::TMXTiledMap *m_tile_map;
     cocos2d::TMXLayer *m_collision_layer;
     cocos2d::Point tileCoordForPosition(cocos2d::Point);
     ResourceLayer *m_resources;
-    float m_map_width; 
-    float m_map_height; 
+    float m_map_width;
+    float m_map_height;
 };
 
 #endif // __MAIN_SCENE_H__

@@ -10,7 +10,7 @@ USING_NS_CC;
 ResourceLayer::ResourceLayer() : Layer() {
     srand ( time(NULL) );
 
-    // Note that resources can be generated on top of each other no issue, 
+    // Note that resources can be generated on top of each other no issue,
     //      just watch out for collisions with map file's collision layer
     for(int i = 0; i < MAX_RESOURCES; i++) {
         // TODO: Implement collision detection with main map during generation
@@ -31,7 +31,7 @@ ResourceLayer::ResourceLayer() : Layer() {
         }
 
         //Choose between rock or tree
-
+        // TODO We need this part to be zonal
         r = rand() % 8;
         if(r == 1) {
             m_resources[i] = new ResourceObstacle("Spritesheet/mapPack_spritesheet.png", 10*64, 3*64, x, y);
@@ -40,6 +40,17 @@ ResourceLayer::ResourceLayer() : Layer() {
         }
 
         this->addChild(m_resources[i]->getSprite());
+
+    }
+    // FIXME Hardcoded fruit trees
+    // Initialize foliage, hardcoded values because sprite sheet is weird, we may
+    // want to add a Create() that takes in an enum for the type of tree
+    m_trees.push_back(new Tree("Foliage/PNG/foliagePack_008.png", 400, 300));
+    m_trees.push_back(new Tree("Foliage/PNG/foliagePack_011.png", 600, 500));
+    m_trees.push_back(new Tree("Foliage/PNG/foliagePack_010.png", 800, 250));
+
+    for (auto iter : m_trees) {
+        this->addChild(iter->getSprite());
     }
 }
 
@@ -51,15 +62,31 @@ bool ResourceLayer::checkCollision(cocos2d::Point position) {
             return true;
         }
     }
-    return false;
-}
-
-bool ResourceLayer::gather(cocos2d::Point position, Direction dir) {
-    for(int i = 0; i < MAX_RESOURCES; i++) {
-        if(m_resources[i]->gather(position, dir)) {
+    for (int i = 0; i < m_trees.size(); i++) {
+        if(m_trees[i]->checkCollision(playerHitbox)) {
             return true;
         }
     }
     return false;
 }
 
+Item* ResourceLayer::gather(cocos2d::Point position, Direction dir) {
+    /*
+    for(int i = 0; i < MAX_RESOURCES; i++) {
+        if(m_resources[i]->gather(position, dir)) {
+            return true;
+        }
+    }*/ //FIXME
+
+    for(int i = 0; i < m_trees.size(); i++) {
+        Item* res = m_trees[i]->gather(position, dir);
+        if (res) return res;
+    }
+    return nullptr;
+}
+
+void ResourceLayer::update() {
+    for (auto iter : m_trees) {
+        iter->update();
+    }
+}

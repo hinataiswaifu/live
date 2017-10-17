@@ -27,7 +27,7 @@ void MapManager::addPlayer(Player* player) {
 // Checks if a pixel coordinate lies on a collision tile
 bool MapManager::checkCollision(Point position) {
     // TODO: Implement using Rect
-    
+
     if(m_resources->checkCollision(position)) {
         return true;
     }
@@ -83,4 +83,13 @@ Point MapManager::tileCoordForPosition(Point position) {
              position.y) /
             m_tile_map->getTileSize().height;
     return Point(x, y);
+}
+
+Item* MapManager::gatherResource(cocos2d::Point position, Direction dir) {
+    return m_resources->gather(position, dir);
+}
+
+void MapManager::update(float delta) {
+    // delta to be used later on for adding dynamic effects WOW!
+    m_resources->update();
 }
