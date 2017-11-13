@@ -6,9 +6,6 @@
 
 USING_NS_CC;
 
-#define PLAYER_HITBOX_WIDTH 4
-#define PLAYER_HITBOX_HEIGHT 12
-
 Player::Player(const std::string& sprite_frame_file, unsigned int index) :
     m_hunger(DEFAULT_MAX_HUNGER),
     m_stamina(DEFAULT_MAX_STAMINA),
@@ -58,7 +55,8 @@ float Player::getHunger() const { return m_hunger; }
 Inventory* Player::get_inventory() { return m_inventory; }
 
 bool Player::pickup(Item* item) {
-    if (distanceFrom(*item) < 20) {
+    // FIXME the logic for picking up game objects should be in map manager
+    if (distanceFrom(*item) < PICKUP_RADIUS) {
         return m_inventory->pickup(item);
     }
     return false;

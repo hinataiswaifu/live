@@ -10,7 +10,7 @@ int GameTimer::getTime() {
     return std::chrono::duration_cast<std::chrono::seconds>(Clock::now()-start_time).count();
 }
 
-int GameTimer::getDays() {
+int GameTimer::getDaysElapsed() {
     return getTime()/10;
 }
 

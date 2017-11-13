@@ -2,10 +2,7 @@
 
 USING_NS_CC;
 
-#define TREE_WIDTH 64
-#define TREE_HEIGHT 64
-
-ResourceObstacle::ResourceObstacle(const std::string spritesheet, int spritesheet_x, int spritesheet_y, float posX, float posY) 
+ResourceObstacle::ResourceObstacle(const std::string spritesheet, int spritesheet_x, int spritesheet_y, float posX, float posY)
 	: RigidGameObject(spritesheet, spritesheet_x, spritesheet_y), m_resource_count(3)
 {
 	newSprite(TREE_WIDTH, TREE_HEIGHT);
@@ -17,18 +14,18 @@ ResourceObstacle::ResourceObstacle(const std::string spritesheet, int spriteshee
     setZOrder(-(posY-(TREE_HEIGHT/2)));
 }
 
-ResourceObstacle::ResourceObstacle(float x, float y) 
+ResourceObstacle::ResourceObstacle(float x, float y)
 	: ResourceObstacle("Spritesheet/mapPack_spritesheet.png", 5*64, 7*64, x, y)
 {}
 
 // Gather resource, given that you are facing the obstacle
-bool ResourceObstacle::gather(cocos2d::Point pt, Direction dir) {
+Item* ResourceObstacle::gather(cocos2d::Point pt, Direction dir) {
 
 	// Create a point in front of the player
 	Point ray = pt;
 
 	if(m_resource_count <= 0) {
-		return false;
+		return nullptr;
 	}
 
 	if(dir == DIR_LEFT) {
@@ -44,7 +41,7 @@ bool ResourceObstacle::gather(cocos2d::Point pt, Direction dir) {
 	if(m_hitbox.containsPoint(ray)) {
 		m_resource_count -= 1;
 		//Change sprite
-		return true;
+		return nullptr;
 	}
-	return false;
+	return nullptr;
 }

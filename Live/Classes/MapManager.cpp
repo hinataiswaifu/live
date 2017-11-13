@@ -2,11 +2,6 @@
 
 USING_NS_CC;
 
-// Half the length of the player square's side
-// Needed to form the player hitbox, since the player is defined by a center position
-#define PLAYER_HALF_SIZE 12
-#define RESOURCE_LAYER_Z_ORDER 2       // Needs to be >1 for now due to foreground layer on demo map
-
 // Default constructor
 MapManager::MapManager() {
     m_tile_map = TMXTiledMap::create(MAP_FILE_NAME);
@@ -27,7 +22,7 @@ void MapManager::addPlayer(Player* player) {
 // Checks if a pixel coordinate lies on a collision tile
 bool MapManager::checkCollision(Point position) {
     // TODO: Implement using Rect
-    
+
     if(m_resources->checkCollision(position)) {
         return true;
     }
@@ -83,4 +78,13 @@ Point MapManager::tileCoordForPosition(Point position) {
              position.y) /
             m_tile_map->getTileSize().height;
     return Point(x, y);
+}
+
+Item* MapManager::gatherResource(cocos2d::Point position, Direction dir) {
+    return m_resources->gather(position, dir);
+}
+
+void MapManager::update(float delta) {
+    // delta to be used later on for adding dynamic effects WOW!
+    m_resources->update();
 }

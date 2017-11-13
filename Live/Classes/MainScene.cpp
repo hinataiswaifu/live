@@ -6,8 +6,12 @@
 
 USING_NS_CC;
 
-#define MOVE_STEP 100
+#define MOVE_STEP 50
 #define SPRITE_INDEX 6
+
+#define TREE_X 5
+#define TREE_Y 7
+#define MAP_SPR_SHT_PX 64
 
 Scene* MainScene::createScene() {
     auto scene = Scene::create();
@@ -48,6 +52,7 @@ bool MainScene::init() {
     m_map_items[2]->setPosition(600, 600);
     m_map_items[3]->setPosition(500, 600);
 
+
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
     kb_listener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
@@ -81,7 +86,6 @@ bool MainScene::isKeyPressed(EventKeyboard::KeyCode code) {
     if (keys.find(code) != keys.end() && !m_game_over) {
         // For now, let's update hunger here until we abstract away input into a separate
         // class?
-        m_player->updateHunger(-0.01);
         if (m_player->getHunger() <= 0) {
             m_hud->enqueueMessage("Game over!");
             m_game_over = true;
@@ -115,10 +119,10 @@ void MainScene::update(float delta) {
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) {
         if (m_player->getStamina() > 0) {
             delta *= 2;
-            m_player->updateStamina(-1);
+            m_player->updateStamina(STAMINA_DEGEN * delta);
         }
     } else {
-        m_player->updateStamina(0.5);
+        m_player->updateStamina(STAMINA_REGEN * delta);
     }
 
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
@@ -156,11 +160,17 @@ void MainScene::update(float delta) {
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_map_items) {
-            if (m_player->pickup(it)) {
+            if (m_player->distanceFrom(*it) < 20 && m_player->pickup(it)) {
                 m_map_items.erase(
                     std::remove(m_map_items.begin(), m_map_items.end(), it));
                 break;  // Only allow one pick up at a time
             }
+        }
+        Item* resource = m_map_manager->gatherResource(position_lookahead, dir);
+        if (resource != nullptr) {
+            // Drop the resource and add it to the map
+            resource->setPosition(position_lookahead);
+            m_player->pickup(resource);
         }
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_C) && m_key_c_released) {
@@ -185,7 +195,8 @@ void MainScene::update(float delta) {
             }
         }
     }
-    m_player->updateHunger(-0.005);
+    m_map_manager->update(delta);
+    m_player->updateHunger(delta*HUNGER_DEGEN);
     m_hud->update();
     m_player->setPosition(position_lookahead, dir);
 

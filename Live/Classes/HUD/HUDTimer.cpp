@@ -9,7 +9,7 @@ HUDTimer::HUDTimer() {
     setContentSize(Size(200,100));
 
     // Create, customize, and add label
-    m_label = Label::createWithTTF("Day " + std::to_string(GameTimer::getInstance()->getDays()),
+    m_label = Label::createWithTTF("Day " + std::to_string(GameTimer::getInstance()->getDaysElapsed()),
         "fonts/emulogic.ttf", 16);
     m_label->setColor(Color3B(255, 255, 255));
     m_label->setPosition(Vec2(0, 0));
@@ -18,9 +18,9 @@ HUDTimer::HUDTimer() {
 
 void HUDTimer::update() {
     if(GameTimer::getInstance()->getCurrentDayPhase() == GameTimer::DAY) {
-        m_label->setString("Day " + std::to_string(GameTimer::getInstance()->getDays()));
+        m_label->setString("Day " + std::to_string(GameTimer::getInstance()->getDaysElapsed()));
     } else {
-        m_label->setString("Night " + std::to_string(GameTimer::getInstance()->getDays()));
+        m_label->setString("Night " + std::to_string(GameTimer::getInstance()->getDaysElapsed()));
     }
 }
 

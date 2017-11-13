@@ -2,20 +2,16 @@
 
 USING_NS_CC;
 
-GameObject::GameObject(const std::string sprite_file) : m_sprite_file(sprite_file) {
-    m_grid_pos_x = -1;
-    m_grid_pos_y = -1;
-    m_sprite = NULL;
-}
-
-GameObject::GameObject(const std::string sprite_file, int grid_pos_x, int grid_pos_y)
-    : m_sprite_file(sprite_file), m_grid_pos_x(grid_pos_x), m_grid_pos_y(grid_pos_y) {
+GameObject::GameObject(const std::string& spritesheet_file, int grid_pos_x, int grid_pos_y)
+    : m_sprite_file(spritesheet_file), m_grid_pos_x(grid_pos_x), m_grid_pos_y(grid_pos_y) {
     m_sprite = NULL;
 }
 
 void GameObject::setPosition(float x, float y) { m_sprite->setPosition(x, y); }
 
 void GameObject::setPosition(Vec2 pos) { m_sprite->setPosition(pos); }
+
+void GameObject::setScale(float xy) { m_sprite->setScale(xy); }
 
 void GameObject::setScale(float x, float y) { m_sprite->setScale(x, y); }
 

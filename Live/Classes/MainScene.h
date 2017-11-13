@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "cocos2d.h"
 #include "MapManager.h"
+#include "Tree.h"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768

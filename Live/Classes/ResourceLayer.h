@@ -2,8 +2,9 @@
 #define __RESOURCE_LAYER_H__
 
 #include "cocos2d.h"
-#include <map>
-#include <stdlib.h> 
+#include <vector>
+#include <stdlib.h>
+#include "Tree.h"
 #include "ResourceObstacle.h"
 
 #define MAX_RESOURCES 75
@@ -13,10 +14,12 @@ class ResourceLayer : public cocos2d::Layer
 public:
     ResourceLayer();
     bool checkCollision(cocos2d::Point position);
-    bool gather(cocos2d::Point position, Direction);	// Attempt to gather a resource from a resource obstacle you are facing
+    Item* gather(cocos2d::Point position, Direction);	// Attempt to gather a resource from a resource obstacle you are facing
+    void update();
 
 private:
     ResourceObstacle* m_resources[MAX_RESOURCES];
+    std::vector<Tree*> m_trees;
 };
 
 
