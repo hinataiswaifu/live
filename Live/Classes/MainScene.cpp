@@ -26,12 +26,12 @@ Scene* MainScene::createScene() {
 bool MainScene::init() {
     m_game_layer = Layer::create();
     m_map_manager = new MapManager();
+    m_game_layer->addChild(m_map_manager->getMap());
 
     m_player = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
-    m_game_layer->addChild(m_map_manager->getTileMap(), -1);
     // add HUD to the root layer
     this->addChild(m_hud, 2);
     this->addChild(m_game_layer, 0);
@@ -51,7 +51,6 @@ bool MainScene::init() {
     m_map_items[1]->setPosition(300, 600);
     m_map_items[2]->setPosition(600, 600);
     m_map_items[3]->setPosition(500, 600);
-
 
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
