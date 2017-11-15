@@ -5,6 +5,7 @@
 #include "Item.h"
 #include "Inventory.h"
 #include "Direction.h"
+#include "InputManager.h"
 
 #define MAX_PICKUP_DISTANCE 40
 
@@ -35,10 +36,19 @@
 
 #define PICKUP_RADIUS 20
 
+typedef struct mapping {
+    cocos2d::EventKeyboard::KeyCode north, south, west, east, interact;
+} Mapping;
+
+
 class Player : public GameObject {
 public:
     // Takes in the plist file and the initial sprite frame file index
-    Player(const std::string& sprite_frame_file, unsigned int index);
+    Player(const std::string& sprite_frame_file, unsigned int index,
+            Mapping mapping = {.north = cocos2d::EventKeyboard::KeyCode::KEY_W,
+            .south = cocos2d::EventKeyboard::KeyCode::KEY_S,
+            .west = cocos2d::EventKeyboard::KeyCode::KEY_A,
+            .east = cocos2d::EventKeyboard::KeyCode::KEY_D});
     void updateHunger(float difference);
     void updateStamina(float difference);
     void moveX(float x);
@@ -76,4 +86,6 @@ private:
            int start, int count);
 
     std::map<Direction, cocos2d::Vector<cocos2d::SpriteFrame*> > m_anim_map;
+    // TODO Not being used yet, last resort use for local multiplayer
+    Mapping m_mapping;
 };

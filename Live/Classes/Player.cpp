@@ -6,13 +6,14 @@
 
 USING_NS_CC;
 
-Player::Player(const std::string& sprite_frame_file, unsigned int index) :
+Player::Player(const std::string& sprite_frame_file, unsigned int index, Mapping mapping) :
     m_hunger(DEFAULT_MAX_HUNGER),
     m_stamina(DEFAULT_MAX_STAMINA),
     m_orientation(DIR_DOWN),        // look in the down direction by default
     m_state(STANDING),
     m_max_hunger(DEFAULT_MAX_HUNGER),
-    m_max_stamina(DEFAULT_MAX_STAMINA)
+    m_max_stamina(DEFAULT_MAX_STAMINA),
+    m_mapping(mapping)
 {
     m_inventory = new Inventory();
     m_frame_cache = SpriteFrameCache::getInstance();
