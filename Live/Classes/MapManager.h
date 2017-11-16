@@ -4,6 +4,7 @@
 #include "ResourceLayer.h"
 #include <map>
 #include "Player.h"
+#include "WeatherManager.h"
 
 #define MAP_FILE_NAME "sample_map.tmx"
 #define COLLISION_LAYER_NAME "Meta"
@@ -18,6 +19,7 @@ public:
     bool checkCollision(cocos2d::Point position);
     bool checkCollision(cocos2d::Point position, float x, float y);
     cocos2d::TMXTiledMap* getTileMap();
+    cocos2d::Layer* getMap();
     void addPlayer(Player* player);
     void update(float delta);
     Item* gatherResource(cocos2d::Point position, Direction dir);
@@ -29,4 +31,6 @@ private:
     ResourceLayer *m_resources;
     float m_map_width;
     float m_map_height;
+    Layer* m_base_layer;
+    WeatherManager* m_weather_manager;
 };
