@@ -1,13 +1,9 @@
 #include "Fruit.h"
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
-#include "Direction.h"
-#include "ResourceLayer.h"
 #include "InputManager.h"
 
 USING_NS_CC;
-
-#define SPRITE_INDEX 6
 
 #define TREE_X 5
 #define TREE_Y 7
@@ -39,18 +35,9 @@ bool MainScene::init() {
     m_map_manager->addPlayer(m_player);
     m_player->setPosition(Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 
-    m_map_items.push_back(new Pear());
-    m_map_items.push_back(new Pear());
-    m_map_items.push_back(new Orange());
-    m_map_items.push_back(new Apple());
-
     for (auto it : m_map_items) {
         m_map_manager->getTileMap()->addChild(it->newSprite());
     }
-    m_map_items[0]->setPosition(200, 300);
-    m_map_items[1]->setPosition(300, 600);
-    m_map_items[2]->setPosition(600, 600);
-    m_map_items[3]->setPosition(500, 600);
 
     // Let cocos know we have an update function to be called.
     this->scheduleUpdate();
