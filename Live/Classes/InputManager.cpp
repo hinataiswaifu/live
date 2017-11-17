@@ -64,16 +64,7 @@ void InputManager::update(float delta) {
 
     // Lookahead variable stores result of movement to be used in collision checks
     Point position_lookahead = m_scene->getPlayer()->getPosition();
-
     Direction dir = Direction::DIR_DOWN;
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)) {
-        if (m_scene->getPlayer()->getStamina() > 0) {
-            delta *= 2;
-            m_scene->getPlayer()->updateStamina(STAMINA_DEGEN * delta);
-        }
-    } else {
-        m_scene->getPlayer()->updateStamina(STAMINA_REGEN * delta);
-    }
 
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
@@ -145,6 +136,19 @@ void InputManager::update(float delta) {
             }
         }
     }
+
+    Point move_distance = position_lookahead - m_scene->getPlayer()->getPosition();
+    // update the stamina
+    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)
+            && move_distance.getLengthSq() > 0.0001f) {
+        if (m_scene->getPlayer()->getStamina() > 0) {
+            position_lookahead += move_distance;
+            m_scene->getPlayer()->updateStamina(STAMINA_DEGEN * delta);
+        }
+    } else {
+        m_scene->getPlayer()->updateStamina(STAMINA_REGEN * delta);
+    }
+
     // update the player's position
     m_scene->getPlayer()->setPosition(position_lookahead, dir);
 
