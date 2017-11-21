@@ -2,6 +2,7 @@
 
 AudioManager::AudioManager() {
   engine = CocosDenshion::SimpleAudioEngine::getInstance();
+  engine->setEffectsVolume(0.5);
 }
 
 void AudioManager::preloadEffect(AudioComponent *clip) {
