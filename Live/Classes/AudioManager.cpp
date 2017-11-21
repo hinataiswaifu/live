@@ -6,20 +6,20 @@ AudioManager::AudioManager() {
 }
 
 void AudioManager::preloadEffect(AudioComponent clip) {
-  engine->preloadEffect(clip->getFilePath());
+  engine->preloadEffect(clip.getFilePath());
 }
 
 void AudioManager::changeBackgroundMusic(AudioComponent bgm) {
   m_game_bg_music = bgm;
   engine->stopBackgroundMusic();
-  engine->playBackgroundMusic(bgm->getFilePath(), true);
+  engine->playBackgroundMusic(bgm.getFilePath(), true);
 }
 
 void AudioManager::changeWeatherSFX(AudioComponent bgm) {
   if (m_weather_bg_music != nullptr)
-    engine->stopEffect(m_weather_bg_music->getId());
+    engine->stopEffect(m_weather_bg_music.getId());
   m_weather_bg_music = bgm;
-  m_weather_bg_music->setId(engine->playEffect(bgm->getFilePath(), true));
+  m_weather_bg_music->setId(engine->playEffect(bgm.getFilePath(), true));
 }
 
 // void AudioManager::enqueueRandomSFX(AudioComponent clips, int size) {
@@ -29,7 +29,7 @@ void AudioManager::changeWeatherSFX(AudioComponent bgm) {
 
 void AudioManager::stopWeatherSFX() {
   if (m_weather_bg_music != nullptr)
-    engine->stopEffect(m_weather_bg_music->getId());
+    engine->stopEffect(m_weather_bg_music.getId());
 }
 
 void AudioManager::enqueueSFX(AudioComponent clip) {
@@ -39,7 +39,7 @@ void AudioManager::enqueueSFX(AudioComponent clip) {
 
 void AudioManager::dequeueSFXIfAvailable() {
   if (m_audio_queue.size() == 0) {
-    engine->playEffect(m_audio_queue.front()->getFilePath(), false);
+    engine->playEffect(m_audio_queue.front().getFilePath(), false);
     m_audio_queue.pop();
   }
 }
