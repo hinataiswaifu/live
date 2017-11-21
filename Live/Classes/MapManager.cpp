@@ -21,6 +21,23 @@ MapManager::MapManager() {
     m_base_layer->addChild(m_weather_manager->getWeatherLayer());
 }
 
+MapManager::MapManager(GeneratedResources& resources) {
+    m_tile_map = TMXTiledMap::create(MAP_FILE_NAME);
+    m_collision_layer = m_tile_map->getLayer("Meta");
+    m_map_width = m_tile_map->getMapSize().width * m_tile_map->getTileSize().width;
+    m_map_height = m_tile_map->getMapSize().height * m_tile_map->getTileSize().height;
+    m_resources = new ResourceLayer(resources.m_obstacles, resources.m_resources);
+    m_tile_map->addChild(m_resources, RESOURCE_LAYER_Z_ORDER);
+
+    m_base_layer = Layer::create();
+    // make base layer the same size as the map
+    m_base_layer->setContentSize(Size(m_map_width, m_map_height));
+    m_base_layer->addChild(m_tile_map, -1);
+
+    m_weather_manager = new WeatherManager(m_map_width, m_map_height);
+    m_base_layer->addChild(m_weather_manager->getWeatherLayer());
+}
+
 // Return reference to tile map so that it can be added to scene
 TMXTiledMap* MapManager::getTileMap() { return m_tile_map; }
 

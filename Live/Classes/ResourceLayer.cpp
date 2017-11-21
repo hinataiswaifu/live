@@ -14,7 +14,7 @@ ResourceLayer::ResourceLayer() : Layer() {
 
     // Note that resources can be generated on top of each other no issue,
     //      just watch out for collisions with map file's collision layer
-    for(int i = 0; i < MAX_RESOURCES; i++) {
+    for(unsigned int i = 0; i < m_resources.size(); i++) {
         // TODO: Implement collision detection with main map during generation
         //  Randomly generate resource locations based on demo map
         //  Currently hardcoded to ensure no collision with water or beach areas
@@ -58,10 +58,20 @@ ResourceLayer::ResourceLayer() : Layer() {
     }
 }
 
+ResourceLayer::ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees) : Layer(), m_resources(obstacles), m_trees(trees) {
+    for(unsigned int i = 0; i < m_resources.size(); i++) {
+        this->addChild(m_resources[i]->getSprite());
+    }
+
+        for(unsigned int i = 0; i < m_trees.size(); i++) {
+        this->addChild(m_trees[i]->getSprite());
+    }
+}
+
 bool ResourceLayer::checkCollision(cocos2d::Point position) {
     // TODO: Replace point with rect, update MainScene.cpp to pass in a rect
     Rect playerHitbox = Rect(position.x-2,position.y-24, 4, 12);
-    for(int i = 0; i < MAX_RESOURCES; i++) {
+    for(int i = 0; i < m_resources.size(); i++) {
         if(m_resources[i]->checkCollision(playerHitbox)) {
             return true;
         }

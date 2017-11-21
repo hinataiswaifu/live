@@ -2,6 +2,11 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "InputManager.h"
+#include "Direction.h"
+#include "ResourceLayer.h"
+#include "Mapgen/MapGenerator.h"
+#include "Mapgen/GeneratedResources.h"
+#include <iostream>
 
 USING_NS_CC;
 
@@ -9,6 +14,8 @@ USING_NS_CC;
 #define TREE_Y 7
 #define MAP_SPR_SHT_PX 64
 #define SPRITE_INDEX 6
+#define MAP_WIDTH 128
+#define MAP_HEIGHT 128
 
 Scene* MainScene::createScene() {
     auto scene = Scene::create();
@@ -22,10 +29,16 @@ Scene* MainScene::createScene() {
 // on "init" you need to initialize your instance
 bool MainScene::init() {
     m_game_layer = Layer::create();
-    m_map_manager = new MapManager();
-    m_game_layer->addChild(m_map_manager->getMap());
 
     m_player = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
+
+    MapGenerator* mapgen = new MapGenerator();
+    GeneratedResources mapResources = mapgen->createMap(MAP_WIDTH, MAP_HEIGHT);
+    delete mapgen;
+    
+    m_player->setPosition(mapResources.m_spawn_point);
+    m_map_manager = new MapManager(mapResources);
+    m_game_layer->addChild(m_map_manager->getMap());
 
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
@@ -34,7 +47,6 @@ bool MainScene::init() {
     this->addChild(m_game_layer, 0);
 
     m_map_manager->addPlayer(m_player);
-    m_player->setPosition(Point(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 
     for (auto it : m_map_items) {
         m_map_manager->getTileMap()->addChild(it->newSprite());
