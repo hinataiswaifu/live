@@ -1,6 +1,9 @@
 #include "AudioComponent.h"
+#include "AudioManager.h"
 
-AudioComponent::AudioComponent(const char* filePath, const int length): m_filePath(filePath), m_length(length) {}
+AudioComponent::AudioComponent(const char* filePath, const int length): m_filePath(filePath), m_length(length) {
+  AudioManager::getInstance()->preloadEffect(this);
+}
 
 const char* AudioComponent::getFilePath() const {
   return m_filePath;

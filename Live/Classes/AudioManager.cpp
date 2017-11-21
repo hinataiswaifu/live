@@ -4,6 +4,10 @@ AudioManager::AudioManager() {
   engine = CocosDenshion::SimpleAudioEngine::getInstance();
 }
 
+void AudioManager::preloadEffect(AudioComponent *clip) {
+  engine->preloadEffect(clip->getFilePath());
+}
+
 void AudioManager::changeBackgroundMusic(AudioComponent *bgm) {
   m_game_bg_music = bgm;
   engine->stopBackgroundMusic();
