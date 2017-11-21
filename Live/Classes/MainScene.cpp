@@ -53,6 +53,9 @@ bool MainScene::init() {
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(
             InputManager::initializeInputManager(this), this);
 
+    // setup the audio manager
+    AudioManager::getInstance()->changeBackgroundMusic(AudioComponent("Audio/global_bg.mp3", 280));
+
     return true;
 }
 

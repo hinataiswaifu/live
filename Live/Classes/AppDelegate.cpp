@@ -35,6 +35,7 @@ AppDelegate::~AppDelegate() {
 #elif USE_SIMPLE_AUDIO_ENGINE
     SimpleAudioEngine::end();
 #endif
+  AudioManager::end();
 }
 
 // if you want a different context, modify the value of glContextAttrs
@@ -120,6 +121,8 @@ void AppDelegate::applicationDidEnterBackground() {
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     SimpleAudioEngine::getInstance()->pauseAllEffects();
 #endif
+  AudioManager::getInstance()->pauseBackgroundMusic();
+  AudioManager::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
@@ -132,4 +135,6 @@ void AppDelegate::applicationWillEnterForeground() {
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 #endif
+  AudioManager::getInstance()->resumeBackgroundMusic();
+  AudioManager::getInstance()->resumeAllEffects();
 }
