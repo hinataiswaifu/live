@@ -1,16 +1,19 @@
 #pragma once
 
+#include <string>
+
 struct AudioComponent {
 public:
-  AudioComponent(const char* filePath, const int length);
+  AudioComponent(const string filePath, const int length);
   const char* getFilePath() const;
   const int getLength();
   const int getId();
   void setId(int id);
+  bool isEmpty();
   bool operator==(const AudioComponent &other) const;
   AudioComponent& operator=(const AudioComponent&);
 private:
-  const char* m_filePath;
+  const string m_filePath;
   const int m_length;
   int m_id;
 };

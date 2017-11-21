@@ -1,12 +1,12 @@
 #include "AudioComponent.h"
 #include "AudioManager.h"
 
-AudioComponent::AudioComponent(const char* filePath, const int length): m_filePath(filePath), m_length(length) {
+AudioComponent::AudioComponent(const string filePath, const int length): m_filePath(filePath), m_length(length) {
   AudioManager::getInstance()->preloadEffect(this);
 }
 
 const char* AudioComponent::getFilePath() const {
-  return m_filePath;
+  return m_filePath.c_str();
 }
 
 const int AudioComponent::getLength() {
@@ -19,6 +19,10 @@ const int AudioComponent::getId() {
 
 void AudioComponent::setId(int id) {
   m_id = id;
+}
+
+bool AudioComponent::isEmpty() {
+  return m_filePath == nullptr;
 }
 
 bool AudioComponent::operator==(const AudioComponent &other) const {
