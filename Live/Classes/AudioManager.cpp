@@ -22,6 +22,11 @@ void AudioManager::changeWeatherSFX(AudioComponent *bgm) {
 //   dequeueSFXIfAvailable();
 // }
 
+void AudioManager::stopWeatherSFX() {
+  if (m_weather_bg_music != nullptr)
+    engine->stopEffect(m_weather_bg_music->getId());
+}
+
 void AudioManager::enqueueSFX(AudioComponent *clip) {
   m_audio_queue.push(clip);
   dequeueSFXIfAvailable();

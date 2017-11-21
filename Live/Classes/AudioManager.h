@@ -12,6 +12,7 @@ public:
   static AudioManager* getInstance();
   void changeBackgroundMusic(AudioComponent* bgm);
   void changeWeatherSFX(AudioComponent* bgm);
+  void stopWeatherSFX();
   // void enqueueRandomSFX(AudioComponent[] clips);
   void enqueueSFX(AudioComponent* clip);
 
