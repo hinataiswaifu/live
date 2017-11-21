@@ -52,9 +52,17 @@ void WeatherManager::update() {
     if(day % 2 == 0 && m_day < day) {
         m_day = day;
         switch(day % 3) {
-            case 0: setWeather(SUNNY); break;
-            case 1: setWeather(RAINING); break;
-            case 2: setWeather(SNOWING); break;
+        case 0:
+          setWeather(SUNNY);
+          break;
+        case 1:
+          setWeather(RAINING);
+          AudioManager::getInstance()->changeWeatherSFX(new AudioComponent("Audio/rain.mp3", 110))
+          break;
+        case 2:
+          setWeather(SNOWING);
+          AudioManager::getInstance()->changeWeatherSFX(new AudioComponent("Audio/blizzard.mp3", 121))
+          break;
         }
     }
 }
