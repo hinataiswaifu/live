@@ -1,6 +1,6 @@
 #pragma once
 
-class AudioComponent {
+struct AudioComponent {
 public:
   AudioComponent(const char* filePath, const int length);
   const char* getFilePath() const;
