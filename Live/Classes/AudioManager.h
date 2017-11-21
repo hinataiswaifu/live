@@ -10,6 +10,7 @@ public:
   ~AudioManager();
 
   static AudioManager* getInstance();
+  void preloadEffect(AudioComponent *clip);
   void changeBackgroundMusic(AudioComponent* bgm);
   void changeWeatherSFX(AudioComponent* bgm);
   void stopWeatherSFX();
