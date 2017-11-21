@@ -1,5 +1,6 @@
 #include "WeatherManager.h"
 #include "GameTimer.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 
