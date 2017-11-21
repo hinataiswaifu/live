@@ -20,7 +20,7 @@ private:
   AudioComponent* m_weather_bg_music;
   std::queue<AudioComponent*> m_audio_queue;
 
-  static AudioComponent *instance;
+  static AudioManager *instance;
   CocosDenshion::SimpleAudioEngine *engine;
 
   void dequeueSFXIfAvailable();

@@ -1,20 +1,20 @@
 #include "AudioManager.h"
 
-void AudioManager::AudioManager() {
+AudioManager::AudioManager() {
   engine = CocosDenshion::SimpleAudioEngine::getInstance();
 }
 
 void AudioManager::changeBackgroundMusic(AudioComponent *bgm) {
   m_game_bg_music = bgm;
-  stopBackgroundMusic();
-  playBackgroundMusic(bgm->getFilePath(), true);
+  engine->stopBackgroundMusic();
+  engine->playBackgroundMusic(bgm->getFilePath(), true);
 }
 
 void AudioManager::changeWeatherSFX(AudioComponent *bgm) {
-  if (m_weather_bg_music != NULL)
-    stopEffect(m_weather_bg_music->getId());
+  if (m_weather_bg_music != nullptr)
+    engine->stopEffect(m_weather_bg_music->getId());
   m_weather_bg_music = bgm;
-  m_weather_bg_music->setId(playEffect(bgm->getFilePath(), true));
+  m_weather_bg_music->setId(engine->playEffect(bgm->getFilePath(), true));
 }
 
 // void AudioManager::enqueueRandomSFX(AudioComponent clips, int size) {
@@ -29,7 +29,7 @@ void AudioManager::enqueueSFX(AudioComponent *clip) {
 
 void AudioManager::dequeueSFXIfAvailable() {
   if (m_audio_queue.size() == 0) {
-    playEffect(*(m_audio_queue.front())->getFilePath(), false);
+    engine->playEffect(*(m_audio_queue.front())->getFilePath(), false);
     m_audio_queue.pop();
   }
 }
@@ -39,5 +39,3 @@ AudioManager* AudioManager::getInstance() {
         AudioManager::instance = new AudioManager();
     return AudioManager::instance;
 }
-
-AudioManager* AudioManager::instance = nullptr;

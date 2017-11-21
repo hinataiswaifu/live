@@ -56,7 +56,8 @@ bool MainScene::init() {
             InputManager::initializeInputManager(this), this);
 
     // setup the audio manager
-    AudioManager::getInstance()->changeBackgroundMusic(AudioComponent("Audio/global_bg.mp3", 280));
+    AudioComponent * bg_audio = AudioComponent("Audio/global_bg.mp3", 280);
+    AudioManager::getInstance()->changeBackgroundMusic(bg_audio);
 
     return true;
 }
