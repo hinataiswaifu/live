@@ -2,7 +2,7 @@
 
 AudioComponent::AudioComponent(const char* filePath, const int length): m_filePath(filePath), m_length(length) {}
 
-const char* AudioComponent::getFilePath() {
+const char* AudioComponent::getFilePath() const {
   return m_filePath;
 }
 
