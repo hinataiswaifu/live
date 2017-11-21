@@ -29,7 +29,7 @@ void AudioManager::enqueueSFX(AudioComponent *clip) {
 
 void AudioManager::dequeueSFXIfAvailable() {
   if (m_audio_queue.size() == 0) {
-    engine->playEffect(*(m_audio_queue.front())->getFilePath(), false);
+    engine->playEffect(m_audio_queue.front()->getFilePath(), false);
     m_audio_queue.pop();
   }
 }

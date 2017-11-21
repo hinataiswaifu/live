@@ -7,7 +7,7 @@ public:
   const int getLength();
   const int getId();
   void setId(int id);
-
+  bool AudioComponent::operator==(const AudioComponent &other) const;
 private:
   const char* m_filePath;
   const int m_length;
