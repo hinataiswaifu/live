@@ -8,6 +8,7 @@ public:
   const int getId();
   void setId(int id);
   bool operator==(const AudioComponent &other) const;
+  AudioComponent& AudioComponent::operator=(const AudioComponent&);
 private:
   const char* m_filePath;
   const int m_length;
