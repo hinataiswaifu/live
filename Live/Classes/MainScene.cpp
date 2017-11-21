@@ -8,6 +8,7 @@ USING_NS_CC;
 #define TREE_X 5
 #define TREE_Y 7
 #define MAP_SPR_SHT_PX 64
+#define SPRITE_INDEX 6
 
 Scene* MainScene::createScene() {
     auto scene = Scene::create();
