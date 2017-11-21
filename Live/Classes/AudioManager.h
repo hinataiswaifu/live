@@ -2,6 +2,7 @@
 
 #include <queue>
 #include "audio/include/SimpleAudioEngine.h"
+#include "AudioComponent.h"
 
 class AudioManager: CocosDenshion::SimpleAudioEngine {
 public:

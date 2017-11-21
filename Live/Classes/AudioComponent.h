@@ -6,7 +6,7 @@ public:
   const char* getFilePath();
   const int getLength();
   const int getId();
-  void setId();
+  void setId(int id);
 
 private:
   const char* m_filePath;

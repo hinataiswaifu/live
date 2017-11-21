@@ -2,6 +2,8 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "InputManager.h"
+#include "AudioManager.h"
+#include "AudioComponent.h"
 
 USING_NS_CC;
 

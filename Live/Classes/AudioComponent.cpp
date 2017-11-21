@@ -1,6 +1,6 @@
 #include "AudioComponent.h"
 
-AudioComponent::AudioComponent(const char* filePath, const int length): filePath(filePath), length(length) {}
+AudioComponent::AudioComponent(const char* filePath, const int length): m_filePath(filePath), m_length(length) {}
 
 const char* AudioComponent::getFilePath() {
   return m_filePath;

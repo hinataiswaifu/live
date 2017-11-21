@@ -1,4 +1,4 @@
-#include "AudioComponent.h"
+#include "AudioManager.h"
 
 void AudioManager::changeBackgroundMusic(AudioComponent bgm) {
   m_game_bg_music = bgm;
