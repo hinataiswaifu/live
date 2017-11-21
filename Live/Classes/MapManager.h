@@ -5,6 +5,7 @@
 #include <map>
 #include "Player.h"
 #include "WeatherManager.h"
+#include "Mapgen/GeneratedResources.h"
 
 #define MAP_FILE_NAME "sample_map.tmx"
 #define COLLISION_LAYER_NAME "Meta"
@@ -15,7 +16,7 @@ class MapManager
 {
 public:
     MapManager();
-
+    MapManager(GeneratedResources&);
     bool checkCollision(cocos2d::Point position);
     bool checkCollision(cocos2d::Point position, float x, float y);
     cocos2d::TMXTiledMap* getTileMap();
