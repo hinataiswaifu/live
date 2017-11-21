@@ -1,20 +1,20 @@
 #include "AudioComponent.h"
 
-AudioComponent(const char* filePath, const int length): filePath(filePath), length(length) {}
+AudioComponent::AudioComponent(const char* filePath, const int length): filePath(filePath), length(length) {}
 
-const char* getFilePath() {
+const char* AudioComponent::getFilePath() {
   return m_filePath;
 }
 
-const int getLength() {
+const int AudioComponent::getLength() {
   return m_length;
 }
 
-const int getId() {
+const int AudioComponent::getId() {
   return m_id;
 }
 
-void setId(int id) {
+void AudioComponent::setId(int id) {
   m_id = id;
 }
 

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <queue>
 #include "audio/include/SimpleAudioEngine.h"
 
@@ -6,7 +8,7 @@ public:
   AudioManager() {};
   ~AudioManager();
 
-  static AudioManager *getInstance();
+  static AudioManager* getInstance();
   void changeBackgroundMusic(AudioComponent bgm);
   void changeWeatherSFX(AudioComponent bgm);
   void enqueueRandomSFX(AudioComponent[] clips);
@@ -18,4 +20,4 @@ private:
   std::queue<AudioComponent> m_audio_queue;
 
   void dequeueSFXIfAvailable();
-}
+};

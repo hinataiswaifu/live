@@ -2,6 +2,7 @@
 // Lots of PPDirectives in this file, don't go well with clang.
 #include "AppDelegate.h"
 #include "MainScene.h"
+#include "AudioManager.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1

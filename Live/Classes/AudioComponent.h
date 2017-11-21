@@ -1,3 +1,5 @@
+#pragma once
+
 class AudioComponent {
 public:
   AudioComponent(const char* filePath, const int length);
@@ -10,4 +12,4 @@ private:
   const char* m_filePath;
   const int m_length;
   int m_id;
-}
+};
