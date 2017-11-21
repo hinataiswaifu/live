@@ -65,8 +65,8 @@ void WeatherManager::update() {
           setWeather(SNOWING);
           AudioManager::getInstance()->changeWeatherSFX(new AudioComponent("Audio/blizzard.mp3", 121));
           break;
+        default:
+          AudioManager::getInstance()->stopWeatherSFX();
         }
-    } else {
-      AudioManager::getInstance()->stopWeatherSFX();
     }
 }
