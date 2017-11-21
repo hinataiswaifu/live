@@ -39,3 +39,5 @@ AudioManager* AudioManager::getInstance() {
         AudioManager::instance = new AudioManager();
     return AudioManager::instance;
 }
+
+AudioManager* AudioManager::instance = nullptr;
