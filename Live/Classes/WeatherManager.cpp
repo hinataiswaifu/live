@@ -57,11 +57,11 @@ void WeatherManager::update() {
           break;
         case 1:
           setWeather(RAINING);
-          AudioManager::getInstance()->changeWeatherSFX(new AudioComponent("Audio/rain.mp3", 110))
+          AudioManager::getInstance()->changeWeatherSFX(new AudioComponent("Audio/rain.mp3", 110));
           break;
         case 2:
           setWeather(SNOWING);
-          AudioManager::getInstance()->changeWeatherSFX(new AudioComponent("Audio/blizzard.mp3", 121))
+          AudioManager::getInstance()->changeWeatherSFX(new AudioComponent("Audio/blizzard.mp3", 121));
           break;
         }
     }
