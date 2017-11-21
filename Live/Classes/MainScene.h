@@ -10,6 +10,7 @@
 #include "MapManager.h"
 #include "NetworkManager.h"
 #include "Tree.h"
+#include "Animal.h"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768

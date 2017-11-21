@@ -53,7 +53,13 @@ ResourceLayer::ResourceLayer() : Layer() {
     m_trees.push_back(new Tree("Foliage/PNG/foliagePack_011.png", 600, 500));
     m_trees.push_back(new Tree("Foliage/PNG/foliagePack_010.png", 800, 250));
 
+    m_animals.push_back(new Animal("SheepAnimation/0.plist", 450, 300, 0, 0.1));
+
     for (auto iter : m_trees) {
+        this->addChild(iter->getSprite());
+    }
+
+    for (auto iter : m_animals) {
         this->addChild(iter->getSprite());
     }
 }
@@ -101,6 +107,10 @@ Item* ResourceLayer::gather(cocos2d::Point position, Direction dir) {
 
 void ResourceLayer::update() {
     for (auto iter : m_trees) {
+        iter->update();
+    }
+
+    for (auto iter : m_animals) {
         iter->update();
     }
 }

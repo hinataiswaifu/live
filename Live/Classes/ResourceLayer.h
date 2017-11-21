@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "Tree.h"
 #include "ResourceObstacle.h"
+#include "Animal.h"
 
 class ResourceLayer : public cocos2d::Layer
 {
@@ -19,6 +20,7 @@ public:
 private:
     std::vector<ResourceObstacle*> m_resources;
     std::vector<Tree*> m_trees;
+    std::vector<Animal*> m_animals;
 };
 
 
