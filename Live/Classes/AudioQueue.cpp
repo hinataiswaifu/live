@@ -24,7 +24,7 @@ void AudioQueue::clear() {
 
 void AudioQueue::dequeueSFXIfAvailable() {
   if (m_audio_queue.size() == 1) {
-    std::thread t1(&AudioManager::dequeueSFX, this);
+    std::thread t1(&AudioQueue::dequeueSFX, this);
     t1.join();
   }
 }
