@@ -33,6 +33,7 @@ EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
 
     InputManager::m_scene = scene;
 
+    // preload footsteps
     for(int i = 1; i < 7; i++) {
       CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(
         ("Audio/Footsteps/footstep"
@@ -66,6 +67,7 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
 
 void enqueueFootstep(int id) {
   if (AudioManager::getInstance()->getAudioQueueSize(id) < 1) {
+    std::cout << "enqueueeee" << std::endl;
     AudioManager::getInstance()->enqueueIntoAudioQueue(
       id,
       AudioComponent( "Audio/Footsteps/footstep"
