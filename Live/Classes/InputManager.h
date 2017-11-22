@@ -32,5 +32,5 @@ private:
     static void enqueueFootstep(int id);
     static int m_footsteps_audio_queue_id;
     static AudioComponent m_footsteps[6];
-    static AudioManager m_audio_mgr;
+    static AudioManager* m_audio_mgr;
 };

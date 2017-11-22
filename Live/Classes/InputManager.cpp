@@ -15,6 +15,7 @@ bool InputManager::m_key_c_released = true;
 bool InputManager::m_game_over = false;
 MainScene* InputManager::m_scene = nullptr;
 int InputManager::m_footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
+AudioManager* InputManager::m_audio_mgr = AudioManager::getInstance();
 AudioComponent InputManager::m_footsteps[6] = {
  AudioComponent( "Audio/Footsteps/footstep1.mp3", 1),
  AudioComponent( "Audio/Footsteps/footstep2.mp3", 1),
@@ -75,8 +76,8 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
 }
 
 void InputManager::enqueueFootstep(int id) {
-  if (AudioManager::getInstance()->getAudioQueueSize(id) < 1) {
-    AudioManager::getInstance()->enqueueIntoAudioQueue(
+  if (InputManager::m_audio_mgr->getAudioQueueSize(id) < 1) {
+    InputManager::m_audio_mgr->enqueueIntoAudioQueue(
       id,
       InputManager::m_footsteps[rand()%6]
     );
