@@ -1,10 +1,12 @@
 #pragma once
 
+#define MULTIPLAYER 0
+#if MULTIPLAYER
 #include "cocos/network/WebSocket.h"
 
 #define selfPlayer 0
 #define opponentPlayer 1
-#define host "localhost:4200"
+#define HOST "localhost:4200"
 class MainScene;
 
 class WebSocketClientDelegate : public network::WebSocket::Delegate {
@@ -28,3 +30,4 @@ public:
     NetworkManager(MainScene *m_scene);
     void update();
 };
+#endif

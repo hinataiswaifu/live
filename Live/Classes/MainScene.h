@@ -15,6 +15,7 @@
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
 
+
 class MainScene : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();
@@ -32,11 +33,13 @@ public:
 private:
     bool m_started = false;
     Player* m_player;
+#if MULTIPLAYER
     Player* m_player2;
+    NetworkManager* m_network_manager;
+#endif
     HUD* m_hud;
     std::vector<Item*> m_map_items;
     MapManager* m_map_manager;
-    NetworkManager* m_network_manager;
     cocos2d::Follow* m_camera;
     cocos2d::Layer* m_game_layer;
 };
