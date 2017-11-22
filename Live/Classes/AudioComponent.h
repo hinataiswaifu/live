@@ -12,7 +12,6 @@ public:
   void setId(int id);
   bool isEmpty();
   bool operator==(const AudioComponent &other) const;
-  // AudioComponent& operator=(const AudioComponent&);
 private:
   std::string m_filePath;
   int m_length;
