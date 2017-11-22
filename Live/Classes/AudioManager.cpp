@@ -39,7 +39,7 @@ int AudioManager::enqueueIntoAudioQueue(int id, AudioComponent clip) {
   dict[id].enqueueSFX(clip);
 }
 
-int randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size) {
+int AudioManager::randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size) {
   dict[id].enqueueRandomSFX(clips, size);
 }
 
