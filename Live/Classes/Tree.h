@@ -14,7 +14,6 @@ public:
     Tree(const std::string& sprite_sheet, float pos_x, float pos_y);
     Tree(const std::string& sprite_sheet, float pos_x, float pos_y, FruitType ftype);
     virtual void update();
-    virtual Item* gather(cocos2d::Point, Direction);		// Gather a resource from an obstacle you are facing
     virtual ~Tree();
 private:
     std::queue<Food*> m_fruits;

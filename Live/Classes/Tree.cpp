@@ -34,54 +34,25 @@ Tree::Tree (const std::string& sprite_file, float pos_x, float pos_y, Tree::Frui
 void Tree::update() {
     // randomly places a new fruit on the tree
     if ((rand() % (AVERAGE_DAY*2) < (GameTimer::getDaysElapsed() - m_last_day)) &&
-            m_fruits.size() < MAX_FRUITS) {
+            m_items.size() < MAX_FRUITS) {
         // generate a fruit
         int x = rand() % (m_width - FRUIT_PADDING_X);
         int y = rand() % (m_height - FRUIT_PADDING_Y);
 
         if(m_fruit_type == Tree::CHERRY) {
-             m_fruits.push(new Cherry(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
+             m_items.push(new Cherry(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
         } else {
-             m_fruits.push(new Apple(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
+             m_items.push(new Apple(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
         }
-       
-        m_sprite->addChild(m_fruits.back()->getSprite());
+
+        m_sprite->addChild(m_items.back()->getSprite());
     }
     m_last_day = GameTimer::getDaysElapsed();
 }
 
-// Gather resource, given that you are facing the obstacle
-Item* Tree::gather(cocos2d::Point pt, Direction dir) {
-
-    // Create a point in front of the player
-    Point ray = pt;
-
-    if(m_fruits.size() <= 0) {
-        return nullptr;
-    }
-
-    if(dir == DIR_LEFT) {
-        ray += Point(-6, 0);
-    } else if(dir == DIR_RIGHT) {
-        ray += Point(6, 0);
-    } else if(dir == DIR_DOWN) {
-        ray += Point(0, -6);
-    } else if(dir == DIR_UP) {
-        ray += Point(0, 6);
-    }
-
-    if(m_hitbox.containsPoint(ray)) {
-        Food* pickup = m_fruits.front();
-        m_fruits.pop();
-        //Change sprite
-        return pickup;
-    }
-    return nullptr;
-}
-
 Tree::~Tree() {
-    while (!m_fruits.empty()) {
-        m_fruits.pop();
+    while (!m_items.empty()) {
+        m_items.pop();
     }
     delete m_sprite;
 }

@@ -11,6 +11,7 @@ USING_NS_CC;
 std::map<cocos2d::EventKeyboard::KeyCode, std::chrono::high_resolution_clock::time_point>
     InputManager::keys;
 bool InputManager::m_key_c_released = true;
+bool InputManager::m_key_v_released = true;
 // used to track gameover state, currently used to reject keyboard input
 bool InputManager::m_game_over = false;
 MainScene* InputManager::m_scene = nullptr;
@@ -146,11 +147,24 @@ void InputManager::update(float delta) {
             }
         }
     }
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_C) && m_key_c_released) {
-        m_scene->getHUD()->dismissMessage();
+    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_C)) {
+        if(m_key_c_released) {
+            m_scene->getHUD()->dismissMessage();
+        }
         m_key_c_released = false;
     } else {
         m_key_c_released = true;
+    }
+    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_V)) {
+        if(m_key_v_released) {
+            Arrow* arrow = m_scene->getPlayer()->action();
+            if(arrow != NULL) {
+                m_scene->getMapManager()->getProjectiles().push_back(arrow);
+            }
+        }
+        m_key_v_released = false;
+    } else {
+        m_key_v_released = true;
     }
 
     for (int i = 1; i <= 10; i++) {

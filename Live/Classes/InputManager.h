@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include "AudioComponent.h"
 #include "AudioManager.h"
+#include "Equipment/Arrow.h"
 
 #define MOVE_STEP 50
 
@@ -26,6 +27,7 @@ private:
     static MainScene* m_scene;
     // used to track release state of C key, until more sophisticated input impl
     static bool m_key_c_released;
+    static bool m_key_v_released;
     // used to track gameover state, currently used to reject keyboard input
     static bool m_game_over;
 

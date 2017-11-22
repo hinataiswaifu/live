@@ -3,7 +3,7 @@
 USING_NS_CC;
 
 ResourceObstacle::ResourceObstacle(const std::string spritesheet, int spritesheet_x, int spritesheet_y, float posX, float posY)
-	: RigidGameObject(spritesheet, spritesheet_x, spritesheet_y), m_resource_count(3)
+	: RigidGameObject(spritesheet, spritesheet_x, spritesheet_y)
 {
 	newSprite(TREE_WIDTH, TREE_HEIGHT);
     setPosition(posX, posY);
@@ -24,10 +24,6 @@ Item* ResourceObstacle::gather(cocos2d::Point pt, Direction dir) {
 	// Create a point in front of the player
 	Point ray = pt;
 
-	if(m_resource_count <= 0) {
-		return nullptr;
-	}
-
 	if(dir == DIR_LEFT) {
 		ray += Point(-6, 0);
 	} else if(dir == DIR_RIGHT) {
@@ -38,10 +34,11 @@ Item* ResourceObstacle::gather(cocos2d::Point pt, Direction dir) {
 		ray += Point(0, 6);
 	}
 
-	if(m_hitbox.containsPoint(ray)) {
-		m_resource_count -= 1;
-		//Change sprite
-		return nullptr;
+	if(m_hitbox.containsPoint(ray) && !m_items.empty()) {
+
+		Item* pickup = m_items.front();
+        m_items.pop();
+		return pickup;
 	}
 	return nullptr;
 }

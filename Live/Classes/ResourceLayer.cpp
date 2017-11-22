@@ -1,4 +1,5 @@
 #include "ResourceLayer.h"
+#include "Bow.h"
 #include <ctime>
 #include <cstdlib>
 
@@ -62,9 +63,12 @@ ResourceLayer::ResourceLayer() : Layer() {
     for (auto iter : m_animals) {
         this->addChild(iter->getSprite());
     }
+    m_dropped_items.push_back(new Bow());
+
+    this->addChild(m_dropped_items.back()->getSprite());
 }
 
-ResourceLayer::ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees, std::vector<Animal*> &animals) : 
+ResourceLayer::ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees, std::vector<Animal*> &animals) :
     Layer(),
     m_resources(obstacles),
     m_trees(trees),
@@ -81,6 +85,9 @@ ResourceLayer::ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vec
     for(unsigned int i = 0; i < m_animals.size(); i++) {
         this->addChild(m_animals[i]->getSprite());
     }
+    m_dropped_items.push_back(new Bow());
+
+    this->addChild(m_dropped_items.back()->getSprite());
 }
 
 bool ResourceLayer::checkCollision(cocos2d::Point position) {
@@ -107,10 +114,20 @@ Item* ResourceLayer::gather(cocos2d::Point position, Direction dir) {
         }
     }*/ //FIXME
 
+    for(int i = 0; i < m_dropped_items.size(); i++) {
+        if( m_dropped_items[i]->checkCollision(position)) {
+            Item* temp = m_dropped_items[i];
+            m_dropped_items.erase(m_dropped_items.begin()+i);
+            return temp;
+        }
+    }
+
+    // Check trees
     for(int i = 0; i < m_trees.size(); i++) {
         Item* res = m_trees[i]->gather(position, dir);
         if (res) return res;
     }
+
     return nullptr;
 }
 

@@ -1,5 +1,4 @@
 #include "WeatherManager.h"
-#include "GameTimer.h"
 #include "AudioManager.h"
 
 USING_NS_CC;
@@ -26,7 +25,7 @@ void WeatherManager::setWeather(WeatherManager::Weather weather) {
         if(m_overlay != nullptr) {
             m_weather_layer->removeChild(m_overlay);
             m_overlay = nullptr;
-        }   
+        }
 
         if(weather == RAINING) {
             m_particle_generator = ParticleRain::createWithTotalParticles(100000);
@@ -88,4 +87,18 @@ void WeatherManager::update() {
     if(m_particle_generator != nullptr) {
         m_particle_generator->setSourcePosition(p);
     }
+
+    GameTimer::DayPhase phase = GameTimer::getInstance()->getCurrentDayPhase();
+    if( phase == GameTimer::NIGHT ) {
+        if ( phase != m_prev_phase ) {
+            m_night_overlay = cocos2d::LayerColor::create(Color4B(5, 5, 55, 50));
+            m_night_overlay->setContentSize(m_weather_layer->getContentSize());
+            m_weather_layer->addChild(m_night_overlay);
+        }
+    } else {
+        if ( phase != m_prev_phase ) {
+            m_weather_layer->removeChild(m_night_overlay);
+        }
+    }
+    m_prev_phase = phase;
 }
