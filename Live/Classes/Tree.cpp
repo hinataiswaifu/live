@@ -34,22 +34,23 @@ Tree::Tree (const std::string& sprite_file, float pos_x, float pos_y, Tree::Frui
 void Tree::update() {
     // randomly places a new fruit on the tree
     if ((rand() % (AVERAGE_DAY*2) < (GameTimer::getDaysElapsed() - m_last_day)) &&
-            m_fruits.size() < MAX_FRUITS) {
+            m_items.size() < MAX_FRUITS) {
         // generate a fruit
         int x = rand() % (m_width - FRUIT_PADDING_X);
         int y = rand() % (m_height - FRUIT_PADDING_Y);
 
         if(m_fruit_type == Tree::CHERRY) {
-             m_fruits.push(new Cherry(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
+             m_items.push(new Cherry(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
         } else {
-             m_fruits.push(new Apple(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
+             m_items.push(new Apple(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
         }
-       
-        m_sprite->addChild(m_fruits.back()->getSprite());
+
+        m_sprite->addChild(m_items.back()->getSprite());
     }
     m_last_day = GameTimer::getDaysElapsed();
 }
 
+<<<<<<< HEAD
 // Gather resource, given that you are facing the obstacle
 Item* Tree::gather(cocos2d::Point pt, Direction dir) {
 
@@ -79,9 +80,11 @@ Item* Tree::gather(cocos2d::Point pt, Direction dir) {
     return nullptr;
 }
 
+=======
+>>>>>>> 1b96fb2... Squashed commits manually for bow and arrow
 Tree::~Tree() {
-    while (!m_fruits.empty()) {
-        m_fruits.pop();
+    while (!m_items.empty()) {
+        m_items.pop();
     }
     delete m_sprite;
 }

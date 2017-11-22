@@ -113,9 +113,22 @@ Item* MapManager::gatherResource(cocos2d::Point position, Direction dir) {
     return m_resources->gather(position, dir);
 }
 
+std::vector<Arrow*>& MapManager::getProjectiles() {
+    return m_projectiles;
+}
+
 void MapManager::update(float delta) {
     // delta to be used later on for adding dynamic effects WOW!
     m_resources->update();
 
     m_weather_manager->update();
+
+    for(int i = 0; i < m_projectiles.size(); i++) {
+        m_projectiles[i]->update();
+        if(m_projectiles[i]->isExpired()) {
+            Arrow* temp = m_projectiles[i];
+            m_projectiles.erase(m_projectiles.begin() + i);
+            delete temp;
+        }
+    }
 }

@@ -19,6 +19,6 @@ public:
 	ResourceObstacle(const std::string spritesheet, int spritesheet_x, int spritesheet_y, float posX, float posY);
     ResourceObstacle(float x, float y);
     virtual Item* gather(cocos2d::Point, Direction);		// Gather a resource from an obstacle you are facing
-private:
-	int m_resource_count;
+protected:
+    std::queue<Item*> m_items;
 };
