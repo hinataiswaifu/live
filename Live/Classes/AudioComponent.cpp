@@ -23,7 +23,7 @@ void AudioComponent::setId(int id) {
 }
 
 bool AudioComponent::isEmpty() {
-  return m_filePath == nullptr;
+  return m_filePath.isspace();
 }
 
 bool AudioComponent::operator==(const AudioComponent &other) const {

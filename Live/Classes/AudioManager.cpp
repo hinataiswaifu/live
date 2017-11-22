@@ -16,7 +16,7 @@ void AudioManager::changeBackgroundMusic(AudioComponent bgm) {
 }
 
 void AudioManager::changeWeatherSFX(AudioComponent bgm) {
-  if (m_weather_bg_music != nullptr)
+  if (~m_weather_bg_music.isEmpty())
     engine->stopEffect(m_weather_bg_music.getId());
   m_weather_bg_music = bgm;
   m_weather_bg_music.setId(engine->playEffect(bgm.getFilePath(), true));
@@ -28,7 +28,7 @@ void AudioManager::changeWeatherSFX(AudioComponent bgm) {
 // }
 
 void AudioManager::stopWeatherSFX() {
-  if (m_weather_bg_music != NULL)
+  if (~m_weather_bg_music.isEmpty())
     engine->stopEffect(m_weather_bg_music.getId());
 }
 
