@@ -68,7 +68,7 @@ bool MainScene::init() {
       AudioComponent("Audio/Footsteps/footstep6.mp3", 1)
     };
     for (int i = 0; i < 6; i++) {
-      AudioManager::getInstance()->enqueueRandomSFX(footsteps, 6)
+      AudioManager::getInstance()->enqueueRandomSFX(footsteps, 6);
     }
 
     return true;
