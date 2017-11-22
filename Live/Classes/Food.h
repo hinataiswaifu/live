@@ -10,11 +10,11 @@ protected:
     int health_increase = 0;
 
 public:
-    Food(const std::string& sprite_file, unsigned int weight)
-        : Item(sprite_file, weight) {}
+    Food(const std::string& sprite_file, unsigned int weight, std::string name)
+        : Item(sprite_file, weight, name) {}
     Food(const std::string& sprite_file, unsigned int grid_pos_x, unsigned int grid_pos_y,
-         unsigned int weight)
-        : Item(sprite_file, grid_pos_x, grid_pos_y, weight) {}
+         unsigned int weight, std::string name)
+        : Item(sprite_file, grid_pos_x, grid_pos_y, weight, name) {}
     bool use(Player& p) {
         p.updateHunger(health_increase);
         return true;

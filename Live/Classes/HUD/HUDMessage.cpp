@@ -44,10 +44,11 @@ void HUDMessage::readMessage() {
 
 void HUDMessage::dismissMessage() {
     // dismiss message hud if no more messages
-    if (m_message_queue.size() == 0) {
+    if (m_message_queue.size() == 1) {
         m_label->setOpacity(0);
         m_background->setOpacity(0);
-    } else {
+        m_message_queue.pop();
+    } else if (m_message_queue.size() > 1) {
         // read next message
         m_message_queue.pop();
         readMessage();
