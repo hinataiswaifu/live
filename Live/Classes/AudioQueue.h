@@ -17,4 +17,4 @@ private:
   void dequeueSFX();
 
   CocosDenshion::SimpleAudioEngine *engine;
-}
+};

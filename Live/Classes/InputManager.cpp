@@ -31,7 +31,7 @@ EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
 
     InputManager::m_scene = scene;
 
-    InputManager::footsteps_audio_queue_id = AudioManager::createNewAudioQueue();
+    InputManager::footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
 
     return kb_listener;
 }
@@ -59,7 +59,7 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
 
 void enqueueFootstep() {
   AudioManager::getInstance()->enqueueIntoAudioQueue(
-    AudioComponent( InputManager::footsteps_audio_queue_id,
+    AudioComponent( footsteps_audio_queue_id,
                     "Audio/Footsteps/footstep"
                       + std::to_string(rand()%6+1)
                       + ".mp3",
