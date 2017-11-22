@@ -41,7 +41,9 @@ void AudioManager::enqueueSFX(AudioComponent clip) {
 }
 
 void AudioManager::clearQueue() {
-  m_audio_queue.clear();
+  while (!m_audio_queue.empty()) {
+    m_audio_queue.clear();
+  }
 }
 
 void AudioManager::dequeueSFXIfAvailable() {
