@@ -48,9 +48,6 @@ void MainScene::startGame( int seed ) {
     GeneratedResources mapResources = mapgen->createMap(MAP_WIDTH, MAP_HEIGHT);
     delete mapgen;
 
-    m_player->setPosition(mapResources.m_spawn_point);
-    m_player2->setPosition(mapResources.m_spawn_point);
-
     m_map_manager = new MapManager(mapResources);
     m_game_layer->addChild(m_map_manager->getMap());
 
