@@ -1,20 +1,21 @@
 #include "AudioComponent.h"
 #include "AudioManager.h"
+#include <cctype>
 
 AudioComponent::AudioComponent(const std::string filePath, const int length):
   m_filePath(filePath), m_length(length) {
-  AudioManager::getInstance()->preloadEffect(this);
+  AudioManager::getInstance()->preloadEffect(*this);
 }
 
 const char* AudioComponent::getFilePath() const {
   return m_filePath.c_str();
 }
 
-const int AudioComponent::getLength() {
+int AudioComponent::getLength() const {
   return m_length;
 }
 
-const int AudioComponent::getId() {
+int AudioComponent::getId() const {
   return m_id;
 }
 
@@ -23,7 +24,7 @@ void AudioComponent::setId(int id) {
 }
 
 bool AudioComponent::isEmpty() {
-  return m_filePath.isspace();
+  return isspace(m_filePath);
 }
 
 bool AudioComponent::operator==(const AudioComponent &other) const {

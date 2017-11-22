@@ -7,8 +7,8 @@ public:
   AudioComponent();
   AudioComponent(const std::string filePath, const int length);
   const char* getFilePath() const;
-  const int getLength();
-  const int getId();
+  int getLength() const;
+  int getId() const;
   void setId(int id);
   bool isEmpty();
   bool operator==(const AudioComponent &other) const;
