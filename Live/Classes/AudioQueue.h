@@ -11,6 +11,9 @@ public:
   // enqueue it the given AudioComponent
   void enqueueSFX(AudioComponent clip);
 
+  // given an array of AudioComponents, choose one at random and enqueue it
+  void enqueueRandomSFX(AudioComponent clips[], int size);
+
   // clear the queue
   void clear();
 
