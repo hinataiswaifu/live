@@ -40,6 +40,10 @@ void AudioManager::enqueueSFX(AudioComponent clip) {
   dequeueSFXIfAvailable();
 }
 
+void AudioManager::clearQueue() {
+  m_audio_queue.clear();
+}
+
 void AudioManager::dequeueSFXIfAvailable() {
   if (m_audio_queue.size() == 1) {
     std::thread t1(&AudioManager::dequeueSFX, this);

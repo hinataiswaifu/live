@@ -74,6 +74,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_LEFT;
+        AudioManager::getInstance()->enqueueSFX("footstep" + std::to_string(rand()%6]) + ".mp3");
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
@@ -82,6 +83,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_RIGHT;
+        AudioManager::getInstance()->enqueueSFX("footstep" + std::to_string(rand()%6]) + ".mp3");
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
@@ -90,6 +92,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, MOVE_STEP * delta);
         }
         dir = Direction::DIR_UP;
+        AudioManager::getInstance()->enqueueSFX("footstep" + std::to_string(rand()%6]) + ".mp3");
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
@@ -98,6 +101,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, -(MOVE_STEP * delta));
         }
         dir = Direction::DIR_DOWN;
+        AudioManager::getInstance()->enqueueSFX("footstep" + std::to_string(rand()%6]) + ".mp3");
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_scene->getMapItems()) {

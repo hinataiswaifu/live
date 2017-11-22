@@ -16,6 +16,7 @@ public:
   void stopWeatherSFX();
   void enqueueRandomSFX(AudioComponent clips[], int size);
   void enqueueSFX(AudioComponent clip);
+  void clearQueue();
 
 private:
   AudioComponent m_game_bg_music;
