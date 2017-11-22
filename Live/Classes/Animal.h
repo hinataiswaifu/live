@@ -5,9 +5,9 @@
 #include "Animate.h"
 
 #define ANIMAL_MAX_HEALTH   100
+#define ANIMAL_SPRITE_HEIGHT 50
 #define ANIMAL_FRAME_COUNT  3
 #define NUM_ANIMALS         4
-
 class Animal : public ResourceObstacle, public Live::Animate {
 public:
     Animal(const std::string& sprite_frame_file,

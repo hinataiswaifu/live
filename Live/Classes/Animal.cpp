@@ -64,6 +64,8 @@ void Animal::update(float delta) {
     } else {
         stopMove();
     }
+
+    setZOrder(-(getPosition().y - ANIMAL_SPRITE_HEIGHT / 2));
 }
 
 void Animal::animateMove() {
