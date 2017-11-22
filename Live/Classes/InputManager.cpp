@@ -15,7 +15,7 @@ bool InputManager::m_key_c_released = true;
 bool InputManager::m_game_over = false;
 MainScene* InputManager::m_scene = nullptr;
 int InputManager::footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
-AudioComponent footsteps[6] = {
+AudioComponent InputManager::footsteps[6] = {
  AudioComponent( "Audio/Footsteps/footstep1.mp3", 1),
  AudioComponent( "Audio/Footsteps/footstep2.mp3", 1),
  AudioComponent( "Audio/Footsteps/footstep3.mp3", 1),
