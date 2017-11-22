@@ -55,15 +55,15 @@ void WeatherManager::update() {
         switch(day % 3) {
         case 0:
           setWeather(SUNNY);
-          AudioManager::getInstance()->changeWeatherSFX(AudioComponent("Audio/sunny.mp3", 264));
+          AudioManager::getInstance()->changeWeatherSFX(AudioComponent("Audio/sunny.mp3", 264000));
           break;
         case 1:
           setWeather(RAINING);
-          AudioManager::getInstance()->changeWeatherSFX(AudioComponent("Audio/rain.mp3", 110));
+          AudioManager::getInstance()->changeWeatherSFX(AudioComponent("Audio/rain.mp3", 110000));
           break;
         case 2:
           setWeather(SNOWING);
-          AudioManager::getInstance()->changeWeatherSFX(AudioComponent("Audio/blizzard.mp3", 121));
+          AudioManager::getInstance()->changeWeatherSFX(AudioComponent("Audio/blizzard.mp3", 121000));
           break;
         default:
           AudioManager::getInstance()->stopWeatherSFX();

@@ -35,7 +35,7 @@ void AudioQueue::dequeueSFXIfAvailable() {
 
 void AudioQueue::dequeueSFX() {
   engine->playEffect(m_audio_queue.front().getFilePath(), false);
-  std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::seconds(m_audio_queue.front().getLength()));
+  std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(m_audio_queue.front().getLength()));
   m_audio_queue.pop();
   if (!m_audio_queue.empty()) {
     dequeueSFX();

@@ -74,7 +74,7 @@ void InputManager::enqueueFootstep(int id) {
       AudioComponent( "Audio/Footsteps/footstep"
                       + std::to_string(rand()%6+1)
                       + ".mp3",
-                    1)
+                    1000)
     );
   }
 }
