@@ -107,11 +107,13 @@ void InputManager::update(float delta) {
                 break;  // Only allow one pick up at a time
             }
         }
-        Item* resource = m_scene->getMapManager()->gatherResource(position_lookahead, dir);
-        if (resource != nullptr) {
-            // Drop the resource and add it to the map
-            resource->setPosition(position_lookahead);
-            m_scene->getPlayer()->pickup(resource);
+        if(!m_scene->getPlayer()->get_inventory()->isFull()) {
+            Item* resource = m_scene->getMapManager()->gatherResource(position_lookahead, dir);
+            if (resource != nullptr) {
+                // Drop the resource and add it to the map
+                resource->setPosition(position_lookahead);
+                m_scene->getPlayer()->pickup(resource);
+            }
         }
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_C) && m_key_c_released) {
