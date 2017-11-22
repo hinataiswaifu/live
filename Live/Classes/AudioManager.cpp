@@ -41,13 +41,13 @@ void AudioManager::enqueueSFX(AudioComponent clip) {
 
 void AudioManager::dequeueSFXIfAvailable() {
   if (m_audio_queue.size() == 0) {
-    std::thread t1(&dequeueSFX, *this);
+    std::thread t1(dequeueSFX);
   }
 }
 
 void AudioManager::dequeueSFX() {
   engine->playEffect(m_audio_queue.front().getFilePath(), false);
-  sleep_until(system_clock::now() + seconds(m_audio_queue.front().getLength()));
+  std::this_thread::sleep_until(chrono::system_clock::now() + chrono::seconds(m_audio_queue.front().getLength()));
   m_audio_queue.pop();
   if (!m_audio_queue.empty()) {
     dequeueSFX();
