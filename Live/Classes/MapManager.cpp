@@ -117,6 +117,10 @@ std::vector<Arrow*>& MapManager::getProjectiles() {
     return m_projectiles;
 }
 
+WeatherManager::Weather MapManager::getWeather() {
+    return m_weather_manager->getWeather();
+}
+
 void MapManager::update(float delta) {
     // delta to be used later on for adding dynamic effects WOW!
     m_resources->update();

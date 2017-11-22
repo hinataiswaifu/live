@@ -11,6 +11,7 @@ public:
     WeatherManager(float height, float width);
     cocos2d::Layer* getWeatherLayer();
     void setWeather(Weather weather);
+    Weather getWeather();
     void update();
     void addPlayer(Player* p);
 private:

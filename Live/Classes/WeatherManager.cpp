@@ -60,6 +60,10 @@ void WeatherManager::addPlayer(Player* p) {
     m_player = p;
 }
 
+WeatherManager::Weather WeatherManager::getWeather() {
+    return m_curr_weather;
+}
+
 void WeatherManager::update() {
     int day = GameTimer::getInstance()->getDaysElapsed();
     if(day % 2 == 0 && m_day < day) {
