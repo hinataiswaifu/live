@@ -21,8 +21,14 @@ Tree::Tree(const std::string& sprite_file, float pos_x, float pos_y)
             m_width, m_height/4);		// Set hitbox to lower quarter of sprite
 
     m_last_day = GameTimer::getDaysElapsed();
+    m_fruit_type = Tree::FruitType::CHERRY;
 
     setZOrder(-(pos_y-(m_height/2)));
+}
+
+Tree::Tree (const std::string& sprite_file, float pos_x, float pos_y, Tree::FruitType ftype) : Tree(sprite_file, pos_x, pos_y)
+{
+    m_fruit_type = ftype;
 }
 
 void Tree::update() {
@@ -33,7 +39,12 @@ void Tree::update() {
         int x = rand() % (m_width - FRUIT_PADDING_X);
         int y = rand() % (m_height - FRUIT_PADDING_Y);
 
-        m_fruits.push(new Cherry(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
+        if(m_fruit_type == Tree::CHERRY) {
+             m_fruits.push(new Cherry(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
+        } else {
+             m_fruits.push(new Apple(x + FRUIT_PADDING_X, y + FRUIT_PADDING_Y));
+        }
+       
         m_sprite->addChild(m_fruits.back()->getSprite());
     }
     m_last_day = GameTimer::getDaysElapsed();
@@ -60,7 +71,7 @@ Item* Tree::gather(cocos2d::Point pt, Direction dir) {
     }
 
     if(m_hitbox.containsPoint(ray)) {
-        Cherry* pickup = m_fruits.front();
+        Food* pickup = m_fruits.front();
         m_fruits.pop();
         //Change sprite
         return pickup;

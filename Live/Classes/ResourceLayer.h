@@ -12,7 +12,7 @@ class ResourceLayer : public cocos2d::Layer
 {
 public:
     ResourceLayer();
-    ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees);
+    ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees, std::vector<Animal*> &animals);
     bool checkCollision(cocos2d::Point position);
     Item* gather(cocos2d::Point position, Direction);	// Attempt to gather a resource from a resource obstacle you are facing
     void update();

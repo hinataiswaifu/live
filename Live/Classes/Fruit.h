@@ -9,7 +9,7 @@
 
 #define PEAR_SCALE 0.05
 #define ORANGE_SCALE 0.05
-#define APPLE_SCALE 0.07
+#define APPLE_SCALE 0.14
 #define CHERRY_SCALE 0.4
 
 // all the same for now
@@ -21,11 +21,15 @@ class Pear : public Food {
 public:
     Pear() : Food("Spritesheet/trees/pear.png", PEAR_WEIGHT) {
         Food::health_increase = FRUIT_HEALTH_INCREASE;
+        m_sprite = newSprite();
     }
     Sprite* newSprite() {
         Sprite* temp = GameObject::newSprite();
         setScale(PEAR_SCALE);
         return temp;
+    }
+    Pear(float x, float y) : Pear() {
+        setPosition(x,y);
     }
 };
 
@@ -45,11 +49,15 @@ class Apple : public Food {
 public:
     Apple() : Food("Spritesheet/trees/apple.png", APPLE_WEIGHT) {
         Food::health_increase = FRUIT_HEALTH_INCREASE;
+        newSprite();
     }
     Sprite* newSprite() {
         Sprite* temp = GameObject::newSprite();
         setScale(APPLE_SCALE);
         return temp;
+    }
+    Apple(float x, float y) : Apple() {
+        setPosition(x,y);
     }
 };
 

@@ -1,5 +1,6 @@
 #include "FastNoise/FastNoise.h"
 #include "MapGenerator.h"
+#include "Animal.h"
 
 #include <iostream>
 #include <fstream>
@@ -8,6 +9,8 @@
 
 #include <stdlib.h>     /* srand, rand */
 #include <time.h> 
+
+#define CLEARING_RADIUS 130
 
 MapGenerator::MapGenerator( int seed ){
 	std::srand(seed);
@@ -32,12 +35,16 @@ GeneratedResources MapGenerator::createMap(int width, int length) {
 	std::vector<ResourceObstacle*>* obstacles = generateObstacles(width, length, map, spawn);
 	std::vector<Tree*>* trees = generateTrees(width, length, map, spawn);
 
+	std::vector<Animal*>* animals = new std::vector<Animal*>();
+	animals->push_back(new Animal("SheepAnimation/0.plist", 2000, 2000, 0, 0.1));
+	animals->push_back(new Animal("SheepAnimation/0.plist", 2070, 2070, 0, 0.1));
+
 	for(int x = 0; x < width; x ++) {
 		delete [] map[x];
 	}
 	delete [] map;
 
-	return GeneratedResources(*obstacles, *trees, spawn);
+	return GeneratedResources(*obstacles, *trees, *animals, spawn);
 }
 
 void MapGenerator::applyNoise(int width ,int length, TileParam** map, int seed) {
@@ -160,7 +167,7 @@ std::vector<ResourceObstacle*>* MapGenerator::generateObstacles(int width, int l
         float displayY = (length*32)-y;
 
         // Obstacle spawn on top of the player
-        if(std::abs(displayX-spawn.x)<50 && std::abs(displayY-spawn.y) < 50) {
+        if((std::abs(displayX-spawn.x)<50 && std::abs(displayY-spawn.y) < 50) || (std::abs(displayX-2050)<CLEARING_RADIUS && std::abs(displayY-2050)<CLEARING_RADIUS) ) {
         	continue;
         }
 
@@ -192,19 +199,28 @@ std::vector<Tree*>* MapGenerator::generateTrees(int width, int length, TileParam
         float y = r/10;
         int tileX = (int)floor(x/32);
         int tileY = (int)floor(y/32);
+        float displayX = x;
+        float displayY = (length*32)-y;
 
-        if(std::abs(x-spawn.x)<50 && std::abs((length*32)-y-spawn.y) < 50) {
+
+        if((std::abs(displayX-spawn.x)<50 && std::abs(displayY-spawn.y) < 50) || (std::abs(displayX-2050)<CLEARING_RADIUS && std::abs(displayY-2050)<CLEARING_RADIUS ) ){
         	continue;
         }
 
         if(map[tileY][tileX].biome == TileParam::Biome::Forest) {
-        	int r = rand() & 3;
+        	int r = rand() & 6;
         	if(r == 0) {
         		output->push_back(new Tree("Foliage/PNG/foliagePack_008.png", x, (length*32)-y));
         	} else if (r==1) {
         		output->push_back(new Tree("Foliage/PNG/foliagePack_011.png", x, (length*32)-y));
-        	} else {
+        	} else if (r==2) {
         		output->push_back(new Tree("Foliage/PNG/foliagePack_010.png", x, (length*32)-y));
+        	} else if(r == 3) {
+        		output->push_back(new Tree("Foliage/PNG/foliagePack_008.png", x, (length*32)-y, Tree::FruitType::APPLE));
+        	} else if (r==4) {
+        		output->push_back(new Tree("Foliage/PNG/foliagePack_011.png", x, (length*32)-y, Tree::FruitType::APPLE));
+        	} else if (r==5) {
+        		output->push_back(new Tree("Foliage/PNG/foliagePack_010.png", x, (length*32)-y, Tree::FruitType::APPLE));
         	}
         }
 	}
