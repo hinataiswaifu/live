@@ -2,7 +2,7 @@
 
 #include "Item.h"
 
-#define MAX_WEIGHT 40
+#define MAX_WEIGHT 200
 #define MAX_ITEMS 6
 
 class Inventory {

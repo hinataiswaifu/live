@@ -25,7 +25,7 @@ public:
     void addPlayer(Player* player);
     void update(float delta);
     Item* gatherResource(cocos2d::Point position, Direction dir);
-    std::vector<Arrow*>& getProjectiles();
+    void addArrow(Arrow*);
     WeatherManager::Weather getWeather();
 
 private:
@@ -38,6 +38,5 @@ private:
     Layer* m_base_layer;
     WeatherManager* m_weather_manager;
     // Hack should have generic list here but who cares, ya feel?
-    std::vector<Arrow*> m_projectiles;
 
 };
