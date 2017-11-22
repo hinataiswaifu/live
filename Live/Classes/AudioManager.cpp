@@ -13,7 +13,7 @@ void AudioManager::changeBackgroundMusic(AudioComponent bgm) {
   engine->stopBackgroundMusic();
   engine->preloadBackgroundMusic(bgm.getFilePath());
   engine->playBackgroundMusic(bgm.getFilePath(), true);
-  engine->setBackgroundMusicVolume(0.1);
+  engine->setBackgroundMusicVolume(0.5);
 }
 
 void AudioManager::changeWeatherSFX(AudioComponent bgm) {
