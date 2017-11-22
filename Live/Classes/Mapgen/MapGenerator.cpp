@@ -8,7 +8,7 @@
 #include "cocos2d.h"
 
 #include <stdlib.h>     /* srand, rand */
-#include <time.h> 
+#include <time.h>
 
 #define CLEARING_RADIUS 130
 
@@ -36,8 +36,10 @@ GeneratedResources MapGenerator::createMap(int width, int length) {
 	std::vector<Tree*>* trees = generateTrees(width, length, map, spawn);
 
 	std::vector<Animal*>* animals = new std::vector<Animal*>();
-	animals->push_back(new Animal("SheepAnimation/0.plist", 2000, 2000, 0, 0.1));
-	animals->push_back(new Animal("SheepAnimation/0.plist", 2070, 2070, 0, 0.1));
+	animals->push_back(new Animal("SheepAnimation/0.plist", 2000, 2000, 0, 10));
+	animals->push_back(new Animal("SheepAnimation/0.plist", 2070, 2070, 0, 10));
+	animals->push_back(new Animal("SheepAnimation/0.plist", 2100, 2100, 0, 10));
+	animals->push_back(new Animal("SheepAnimation/0.plist", 2100, 2000, 0, 10));
 
 	for(int x = 0; x < width; x ++) {
 		delete [] map[x];
@@ -48,7 +50,7 @@ GeneratedResources MapGenerator::createMap(int width, int length) {
 }
 
 void MapGenerator::applyNoise(int width ,int length, TileParam** map, int seed) {
-	FastNoise perlin; 
+	FastNoise perlin;
 	perlin.SetSeed(seed);
 	perlin.SetFrequency(0.03);
 	perlin.SetNoiseType(FastNoise::NoiseType::PerlinFractal);
@@ -143,7 +145,7 @@ void MapGenerator::outputToFile(int width, int length, TileParam** map) {
 			if(!(x == width-1 && y== length-1)) {
 				out<<",";
 			}
-			
+
 		}
 		out<<"\n";
 	}
@@ -230,7 +232,7 @@ std::vector<Tree*>* MapGenerator::generateTrees(int width, int length, TileParam
 
 cocos2d::Point MapGenerator::generateSpawnPoint(int width, int length, TileParam** map) {
 	cocos2d::Point spawn(width*32/2, length*32/2);
-	
+
 	for(int y = length/2; y<length; y++) {
 		if(map[y][width/2].biome == TileParam::Biome::Beach) {		// Since the map is transposed, y must be used as the TileParam map's x coordinate
 			spawn.setPoint(width*32/2, (length-y)*32);
