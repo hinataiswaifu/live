@@ -1,7 +1,7 @@
 #pragma once
 
 #include <queue>
-#include "AudioComponent"
+#include "AudioComponent.h"
 
 class AudioQueue {
 public:
