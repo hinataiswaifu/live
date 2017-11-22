@@ -20,7 +20,7 @@ public:
 private:
   AudioComponent m_game_bg_music;
   AudioComponent m_weather_bg_music;
-  std::queue<AudioComponent> m_audio_queue;
+  static std::queue<AudioComponent> m_audio_queue;
 
   static AudioManager *instance;
   CocosDenshion::SimpleAudioEngine *engine;
