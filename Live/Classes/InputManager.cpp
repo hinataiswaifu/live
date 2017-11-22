@@ -68,14 +68,17 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
 
 void enqueueFootstep(int id) {
   if (AudioManager::getInstance()->getAudioQueueSize(id) < 1) {
-    std::cout << "enqueueeee" << std::endl;
-    AudioManager::getInstance()->enqueueIntoAudioQueue(
-      id,
-      AudioComponent( "Audio/Footsteps/footstep"
-                        + std::to_string(rand()%6+1)
-                        + ".mp3",
-                      1)
-    );
+    engine->playEffect("Audio/Footsteps/footstep"
+                      + std::to_string(rand()%6+1)
+                      + ".mp3", false);
+
+    // AudioManager::getInstance()->enqueueIntoAudioQueue(
+    //   id,
+    //   AudioComponent( "Audio/Footsteps/footstep"
+    //                     + std::to_string(rand()%6+1)
+    //                     + ".mp3",
+    //                   1)
+    // );
   }
 }
 
