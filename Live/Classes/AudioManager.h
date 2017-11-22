@@ -28,11 +28,11 @@ public:
   int createNewAudioQueue();
 
   // given an audio queue id, enqueue and play if possible
-  int enqueueIntoAudioQueue(int id, AudioComponent clip);
+  void enqueueIntoAudioQueue(int id, AudioComponent clip);
 
   // given an array of AudioComponents, choose one at random and enqueue it to
   // the given audio queue
-  int randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size);
+  void randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size);
 
   // remove all items from a given audio queue
   void clearAudioQueue(int id);
@@ -49,7 +49,7 @@ private:
 
   // a dictionary of created audio queues
   std::map<int, AudioQueue> dict;
-  
+
   // id generator
   int keygen = 0;
 

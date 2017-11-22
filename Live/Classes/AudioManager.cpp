@@ -34,11 +34,11 @@ int AudioManager::createNewAudioQueue() {
   return keygen-1;
 }
 
-int AudioManager::enqueueIntoAudioQueue(int id, AudioComponent clip) {
+void AudioManager::enqueueIntoAudioQueue(int id, AudioComponent clip) {
   dict[id].enqueueSFX(clip);
 }
 
-int AudioManager::randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size) {
+void AudioManager::randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size) {
   dict[id].enqueueRandomSFX(clips, size);
 }
 
