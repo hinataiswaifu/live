@@ -2,6 +2,7 @@
 
 #include <queue>
 #include "AudioComponent.h"
+#include "audio/include/SimpleAudioEngine.h"
 
 class AudioQueue {
 public:

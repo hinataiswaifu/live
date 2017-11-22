@@ -1,6 +1,4 @@
 #include "AudioManager.h"
-#include <thread>
-#include <chrono>
 
 AudioManager::AudioManager() {
   engine = CocosDenshion::SimpleAudioEngine::getInstance();

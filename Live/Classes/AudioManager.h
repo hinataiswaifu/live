@@ -1,9 +1,9 @@
 #pragma once
 
+#include <map>
 #include "audio/include/SimpleAudioEngine.h"
 #include "AudioComponent.h"
 #include "AudioQueue.h"
-#include <map>
 
 class AudioManager {
 public:

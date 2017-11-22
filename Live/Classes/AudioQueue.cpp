@@ -1,3 +1,5 @@
+#include <thread>
+#include <chrono>
 #include "AudioQueue.h"
 
 AudioQueue::AudioQueue() {
