@@ -64,13 +64,22 @@ ResourceLayer::ResourceLayer() : Layer() {
     }
 }
 
-ResourceLayer::ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees) : Layer(), m_resources(obstacles), m_trees(trees) {
+ResourceLayer::ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees, std::vector<Animal*> &animals) : 
+    Layer(),
+    m_resources(obstacles),
+    m_trees(trees),
+    m_animals(animals)
+{
     for(unsigned int i = 0; i < m_resources.size(); i++) {
         this->addChild(m_resources[i]->getSprite());
     }
 
-        for(unsigned int i = 0; i < m_trees.size(); i++) {
+    for(unsigned int i = 0; i < m_trees.size(); i++) {
         this->addChild(m_trees[i]->getSprite());
+    }
+
+    for(unsigned int i = 0; i < m_animals.size(); i++) {
+        this->addChild(m_animals[i]->getSprite());
     }
 }
 

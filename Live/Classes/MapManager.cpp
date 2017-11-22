@@ -26,7 +26,7 @@ MapManager::MapManager(GeneratedResources& resources) {
     m_collision_layer = m_tile_map->getLayer("Meta");
     m_map_width = m_tile_map->getMapSize().width * m_tile_map->getTileSize().width;
     m_map_height = m_tile_map->getMapSize().height * m_tile_map->getTileSize().height;
-    m_resources = new ResourceLayer(resources.m_obstacles, resources.m_resources);
+    m_resources = new ResourceLayer(resources.m_obstacles, resources.m_resources, resources.m_animals);
     m_tile_map->addChild(m_resources, RESOURCE_LAYER_Z_ORDER);
 
     m_base_layer = Layer::create();
