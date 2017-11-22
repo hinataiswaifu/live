@@ -54,6 +54,13 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
             std::chrono::high_resolution_clock::now() - keys[code])
         .count();
 }
+
+void enqueueFootstep() {
+  AudioManager::getInstance()->enqueueSFX(
+    AudioComponent("Audio/Footsteps/footstep" + std::to_string(rand()%6) + ".mp3",1)
+  );
+}
+
 void InputManager::update(float delta) {
     // check if the game is over
     if (!m_game_over) {
@@ -75,7 +82,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_LEFT;
-        AudioManager::getInstance()->enqueueSFX(AudioComponent("footstep" + std::to_string(rand()%6) + ".mp3",1));
+        enqueueFootstep();
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
@@ -84,7 +91,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_RIGHT;
-        AudioManager::getInstance()->enqueueSFX(AudioComponent("footstep" + std::to_string(rand()%6) + ".mp3",1));
+        enqueueFootstep();
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
@@ -93,7 +100,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, MOVE_STEP * delta);
         }
         dir = Direction::DIR_UP;
-        AudioManager::getInstance()->enqueueSFX(AudioComponent("footstep" + std::to_string(rand()%6) + ".mp3",1));
+        enqueueFootstep();
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
@@ -102,7 +109,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, -(MOVE_STEP * delta));
         }
         dir = Direction::DIR_DOWN;
-        AudioManager::getInstance()->enqueueSFX(AudioComponent("footstep" + std::to_string(rand()%6) + ".mp3",1));
+        enqueueFootstep();
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_scene->getMapItems()) {
