@@ -1,6 +1,7 @@
 #include "InputManager.h"
 #include "MainScene.h"
 #include "Direction.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 // Because cocos2d-x requres createScene to be static, we need to make other
