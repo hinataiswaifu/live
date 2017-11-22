@@ -50,3 +50,15 @@ Item* Inventory::drop(int i) {
     i = reindex(i);
     return remove(i);
 }
+
+bool Inventory::isFull() {
+    int index = 0;
+    for (; index < MAX_ITEMS; index++) {
+        if (m_items[index] == NULL) break;
+    }
+    if (index >= MAX_ITEMS) {
+        return true;
+    } else {
+        return false;
+    }
+}
