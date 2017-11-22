@@ -48,7 +48,7 @@ private:
   AudioComponent m_weather_bg_music;
 
   // a dictionary of created audio queues
-  std::map<int, AudioQueue> dict;
+  std::map<int, AudioQueue> m_dict;
 
   // id generator
   int keygen = 0;
