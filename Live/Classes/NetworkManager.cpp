@@ -1,6 +1,7 @@
+#include "NetworkManager.h"
+
 #if MULTIPLAYER
 #include "MainScene.h"
-#include "NetworkManager.h"
 
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
