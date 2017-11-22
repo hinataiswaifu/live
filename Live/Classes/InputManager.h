@@ -29,14 +29,7 @@ private:
     static bool m_game_over;
 
     // used to queue up footsteps
-    void enqueueFootstep(int id);
+    static void enqueueFootstep(int id);
     static int footsteps_audio_queue_id;
-    AudioComponent footsteps[6] = {
-      AudioComponent( "Audio/Footsteps/footstep1.mp3", 1),
-      AudioComponent( "Audio/Footsteps/footstep2.mp3", 1),
-      AudioComponent( "Audio/Footsteps/footstep3.mp3", 1),
-      AudioComponent( "Audio/Footsteps/footstep4.mp3", 1),
-      AudioComponent( "Audio/Footsteps/footstep5.mp3", 1),
-      AudioComponent( "Audio/Footsteps/footstep6.mp3", 1),
-    };
+    static AudioComponent footsteps[6];
 };
