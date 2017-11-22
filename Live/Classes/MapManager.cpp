@@ -45,6 +45,7 @@ Layer* MapManager::getMap() { return m_base_layer; }
 
 void MapManager::addPlayer(Player* player) {
     m_resources->addChild(player->getSprite());
+    m_weather_manager->addPlayer(player);
 }
 
 // Checks if a pixel coordinate lies on a collision tile

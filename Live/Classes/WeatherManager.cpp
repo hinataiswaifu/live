@@ -9,20 +9,29 @@ WeatherManager::WeatherManager(float width, float height) {
     m_weather_layer->setContentSize(Size(width, height));
     m_curr_weather = SUNNY;
     m_day = 0;
+    m_player = nullptr;
+    m_particle_generator = nullptr;
+    m_overlay = nullptr;
 }
 
 void WeatherManager::setWeather(WeatherManager::Weather weather) {
 
     if(m_curr_weather != weather) {
         m_curr_weather = weather;
-        m_weather_layer->removeChild(m_particle_generator);
-        m_weather_layer->removeChild(m_overlay);
+        if(m_particle_generator != nullptr) {
+            m_weather_layer->removeChild(m_particle_generator);
+            m_particle_generator = nullptr;
+        }
+
+        if(m_overlay != nullptr) {
+            m_weather_layer->removeChild(m_overlay);
+            m_overlay = nullptr;
+        }   
 
         if(weather == RAINING) {
             m_particle_generator = ParticleRain::createWithTotalParticles(100000);
             m_particle_generator->setSpeed(400.);
             m_particle_generator->setDuration(-1);
-            m_particle_generator->setEndSize(20);
             m_particle_generator->setEndSize(25);
             m_particle_generator->setSourcePosition(Vec2(0, m_weather_layer->getContentSize().height));
             m_weather_layer->addChild(m_particle_generator);
@@ -48,6 +57,10 @@ Layer* WeatherManager::getWeatherLayer() {
     return m_weather_layer;
 }
 
+void WeatherManager::addPlayer(Player* p) {
+    m_player = p;
+}
+
 void WeatherManager::update() {
     int day = GameTimer::getInstance()->getDaysElapsed();
     if(day % 2 == 0 && m_day < day) {
@@ -68,5 +81,11 @@ void WeatherManager::update() {
         default:
           AudioManager::getInstance()->stopWeatherSFX();
         }
+    }
+    cocos2d::Point p = m_player->getSprite()->getPosition();
+    p.x = p.x-512;
+
+    if(m_particle_generator != nullptr) {
+        m_particle_generator->setSourcePosition(p);
     }
 }
