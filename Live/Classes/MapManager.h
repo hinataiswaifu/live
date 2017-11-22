@@ -26,6 +26,7 @@ public:
     void update(float delta);
     Item* gatherResource(cocos2d::Point position, Direction dir);
     std::vector<Arrow*>& getProjectiles();
+    WeatherManager::Weather getWeather();
 
 private:
     cocos2d::TMXTiledMap *m_tile_map;

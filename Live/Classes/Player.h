@@ -33,7 +33,7 @@
 
 #define HUNGER_DEGEN -0.1f
 #define STAMINA_DEGEN -10
-#define STAMINA_REGEN 2
+#define STAMINA_REGEN 4
 
 #define PICKUP_RADIUS 20
 

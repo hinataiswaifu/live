@@ -189,10 +189,18 @@ void InputManager::update(float delta) {
             && move_distance.getLengthSq() > 0.0001f) {
         if (m_scene->getPlayer()->getStamina() > 0) {
             position_lookahead += move_distance;
-            m_scene->getPlayer()->updateStamina(STAMINA_DEGEN * delta);
+            if(m_scene->getMapManager()->getWeather() == WeatherManager::SUNNY) {
+                m_scene->getPlayer()->updateStamina(STAMINA_DEGEN * delta);
+            } else {
+                m_scene->getPlayer()->updateStamina(STAMINA_DEGEN * delta * 1.5);
+            }
         }
     } else {
-        m_scene->getPlayer()->updateStamina(STAMINA_REGEN * delta);
+        if(m_scene->getMapManager()->getWeather() == WeatherManager::SUNNY) {
+            m_scene->getPlayer()->updateStamina(STAMINA_REGEN * delta);
+        } else {
+            m_scene->getPlayer()->updateStamina(STAMINA_REGEN * delta * 0.5);
+        }
     }
 
     // update the player's position
