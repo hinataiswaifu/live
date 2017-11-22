@@ -14,6 +14,8 @@ Player::Player(const std::string& sprite_frame_file, unsigned int index, Mapping
     m_max_stamina(DEFAULT_MAX_STAMINA),
     m_mapping(mapping)
 {
+    m_equip = nullptr;
+    m_action_lock = false;
     m_inventory = new Inventory();
     std::stringstream ss;
     ss << "sprite_" << std::setfill('0') << std::setw(2) <<
@@ -60,6 +62,27 @@ void Player::moveY(float y) { move(0, y); }
 void Player::move(float x, float y) {
     Vec2 loc = m_sprite->getPosition();
     m_sprite->setPosition(loc.x + x, loc.y + y);
+    if(m_equip) {
+        m_equip->move(x, y);
+    }
+}
+
+// We suck this should be GameObject* or something
+Arrow* Player::action() {
+    if(m_equip) {
+        m_action_lock = true;
+        return m_equip->action(*this);
+    }
+}
+
+void Player::releaseAction() {
+    m_action_lock = false;
+}
+
+void Player::equip(Equipment* equip) {
+    // TODO potential memory leak here
+    m_equip = equip;
+    getSprite()->getParent()->addChild(m_equip->getSprite());
 }
 
 void Player::setPosition(cocos2d::Point new_pos, Direction dir) {
@@ -77,10 +100,10 @@ void Player::setPosition(cocos2d::Point new_pos, Direction dir) {
         animateMove();
     }
     m_sprite->setPosition(new_pos);
-}
 
-Direction Player::getOrientation() {
-    return m_orientation;
+    if(m_equip) {
+        m_equip->updateOnMove(*this, new_pos);
+    }
 }
 
 void Player::animateMove() {
@@ -97,4 +120,8 @@ void Player::stopMove() {
 
 Rect Player::getHitbox() {
     return Rect(getPosition().x-PLAYER_HITBOX_WIDTH/2,getPosition().y-PLAYER_HITBOX_HEIGHT/2, PLAYER_HITBOX_WIDTH, PLAYER_HITBOX_HEIGHT);
+}
+
+Direction Player::getOrientation() {
+    return m_orientation;
 }

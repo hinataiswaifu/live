@@ -7,6 +7,7 @@
 #include "Direction.h"
 #include "InputManager.h"
 #include "Animate.h"
+#include "Equipment/Equipment.h"
 
 #define MAX_PICKUP_DISTANCE 40
 
@@ -63,6 +64,9 @@ public:
     bool use(int i);
     Inventory* get_inventory();
     virtual cocos2d::Rect getHitbox();
+    Arrow* action();
+    void releaseAction();
+    void equip(Equipment* equip);
 
 protected:
     virtual void animateMove();
@@ -76,4 +80,6 @@ private:
     float m_max_stamina;
     // TODO Not being used yet, last resort use for local multiplayer
     Mapping m_mapping;
+    Equipment* m_equip;
+    bool m_action_lock;
 };

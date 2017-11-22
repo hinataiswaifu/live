@@ -7,6 +7,9 @@
 #include "Tree.h"
 #include "ResourceObstacle.h"
 #include "Animal.h"
+#include "DroppedItem.h"
+
+#define MAX_RESOURCES 75
 
 class ResourceLayer : public cocos2d::Layer
 {
@@ -21,6 +24,7 @@ private:
     std::vector<ResourceObstacle*> m_resources;
     std::vector<Tree*> m_trees;
     std::vector<Animal*> m_animals;
+    std::vector<DroppedItem*> m_dropped_items;
 };
 
 
