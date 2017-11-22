@@ -16,45 +16,12 @@
 #define FRUIT_HEALTH_INCREASE 11
 USING_NS_CC;
 
-// TODO Change these into a fruit factory
-class Pear : public Food {
-public:
-    Pear() : Food("Spritesheet/trees/pear.png", PEAR_WEIGHT, "Pear") {
-        Food::health_increase = FRUIT_HEALTH_INCREASE;
-        m_sprite = newSprite();
-    }
-    Sprite* newSprite() {
-        Sprite* temp = GameObject::newSprite();
-        setScale(PEAR_SCALE);
-        return temp;
-    }
-    Pear(float x, float y) : Pear() {
-        setPosition(x,y);
-    }
-};
-
-class Orange : public Food {
-public:
-    Orange() : Food("Spritesheet/trees/orange.png", ORANGE_WEIGHT, "Orange") {
-        Food::health_increase = FRUIT_HEALTH_INCREASE;
-    }
-    Sprite* newSprite() {
-        Sprite* temp = GameObject::newSprite();
-        setScale(ORANGE_SCALE);
-        return temp;
-    }
-};
-
 class Apple : public Food {
 public:
     Apple() : Food("Spritesheet/trees/apple.png", APPLE_WEIGHT, "Apple") {
         Food::health_increase = FRUIT_HEALTH_INCREASE;
-        newSprite();
-    }
-    Sprite* newSprite() {
-        Sprite* temp = GameObject::newSprite();
-        setScale(APPLE_SCALE);
-        return temp;
+        m_scale = APPLE_SCALE;
+        m_sprite = newSprite();
     }
     Apple(float x, float y) : Apple() {
         setPosition(x,y);
@@ -65,15 +32,11 @@ class Cherry : public Food {
 public:
     Cherry() : Food("Spritesheet/trees/cherry.png", CHERRY_WEIGHT, "Cherry") {
         Food::health_increase = FRUIT_HEALTH_INCREASE;
+        m_scale = CHERRY_SCALE;
         m_sprite = newSprite();
     }
     Cherry(float x, float y) : Cherry() {
         setPosition(x,y);
-    }
-    Sprite* newSprite() {
-        Sprite* temp = GameObject::newSprite();
-        setScale(CHERRY_SCALE);
-        return temp;
     }
 
 };

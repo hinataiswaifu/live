@@ -29,6 +29,9 @@ public:
     void update(float delta);
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
+    Food* getDroppedFood();
+    void setDroppedFood(Item* food);
+    void addMapItem(Item* item, Point pos);
 
 private:
     bool m_started = false;
@@ -42,6 +45,7 @@ private:
     MapManager* m_map_manager;
     cocos2d::Follow* m_camera;
     cocos2d::Layer* m_game_layer;
+    Food* m_dropped_food;
 };
 
 #endif  // __MAIN_SCENE_H__

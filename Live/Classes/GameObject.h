@@ -20,10 +20,11 @@ public:
     virtual cocos2d::Sprite* newSprite();
     virtual cocos2d::Sprite* newSprite(int width, int length);
     virtual cocos2d::Sprite* getSprite();
+    virtual std::string getSpriteFile() const;
 
 protected:
     cocos2d::Sprite* m_sprite;
-    const std::string m_sprite_file;
+    std::string m_sprite_file;
     int m_grid_pos_x;
     int m_grid_pos_y;
 };

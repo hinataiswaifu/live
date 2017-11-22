@@ -91,6 +91,7 @@ void InputManager::update(float delta) {
     // Lookahead variable stores result of movement to be used in collision checks
     Point position_lookahead = m_scene->getPlayer()->getPosition();
     Direction dir = Direction::DIR_DOWN;
+    m_scene->setDroppedFood(nullptr);
 
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
@@ -135,6 +136,9 @@ void InputManager::update(float delta) {
                 m_scene->getHUD()->enqueueMessage("You picked up a " + it->getName());
                 m_scene->getMapItems().erase(
                         std::remove(m_scene->getMapItems().begin(), m_scene->getMapItems().end(), it));
+                Food* dummy = new Food();
+                dummy->setName("x");
+                m_scene->setDroppedFood(dummy);
                 break;  // Only allow one pick up at a time
             }
         }
@@ -175,9 +179,8 @@ void InputManager::update(float delta) {
                 Item* item = m_scene->getPlayer()->drop(i);
                 if (item != NULL) {
                     m_scene->getHUD()->enqueueMessage("You dropped a " + item->getName());
-                    m_scene->getMapItems().push_back(item);
-                    m_scene->getMapManager()->getTileMap()->addChild(item->newSprite());
-                    item->setPosition(m_scene->getPlayer()->getPosition());
+                    m_scene->addMapItem(item, m_scene->getPlayer()->getPosition());
+                    m_scene->setDroppedFood(item);
                 }
             } else {
                 m_scene->getPlayer()->use(i);
