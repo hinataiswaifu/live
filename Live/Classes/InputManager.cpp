@@ -35,9 +35,9 @@ EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
 
     for(int i = 1; i < 7; i++) {
       CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(
-        "Audio/Footsteps/footstep"
+        ("Audio/Footsteps/footstep"
         + std::to_string(i)
-        + ".mp3")
+        + ".mp3").c_str());
     }
 
     return kb_listener;
