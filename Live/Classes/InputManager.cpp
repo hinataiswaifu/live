@@ -3,7 +3,6 @@
 #include "Direction.h"
 #include "AudioManager.h"
 #include "audio/include/SimpleAudioEngine.h"
-#include <iostream>
 
 USING_NS_CC;
 // Because cocos2d-x requres createScene to be static, we need to make other
@@ -133,6 +132,7 @@ void InputManager::update(float delta) {
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_scene->getMapItems()) {
             if (m_scene->getPlayer()->distanceFrom(*it) < 20 && m_scene->getPlayer()->pickup(it)) {
+                m_scene->getHUD()->enqueueMessage("You picked up a " + it->getName());
                 m_scene->getMapItems().erase(
                         std::remove(m_scene->getMapItems().begin(), m_scene->getMapItems().end(), it));
                 break;  // Only allow one pick up at a time
@@ -144,6 +144,7 @@ void InputManager::update(float delta) {
                 // Drop the resource and add it to the map
                 resource->setPosition(position_lookahead);
                 m_scene->getPlayer()->pickup(resource);
+                m_scene->getHUD()->enqueueMessage("You picked up a " + resource->getName());
             }
         }
     }
@@ -173,6 +174,7 @@ void InputManager::update(float delta) {
             if (isKeyPressed(EventKeyboard::KeyCode::KEY_X)) {
                 Item* item = m_scene->getPlayer()->drop(i);
                 if (item != NULL) {
+                    m_scene->getHUD()->enqueueMessage("You dropped a " + item->getName());
                     m_scene->getMapItems().push_back(item);
                     m_scene->getMapManager()->getTileMap()->addChild(item->newSprite());
                     item->setPosition(m_scene->getPlayer()->getPosition());

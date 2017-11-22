@@ -19,7 +19,7 @@ USING_NS_CC;
 // TODO Change these into a fruit factory
 class Pear : public Food {
 public:
-    Pear() : Food("Spritesheet/trees/pear.png", PEAR_WEIGHT) {
+    Pear() : Food("Spritesheet/trees/pear.png", PEAR_WEIGHT, "Pear") {
         Food::health_increase = FRUIT_HEALTH_INCREASE;
         m_sprite = newSprite();
     }
@@ -35,7 +35,7 @@ public:
 
 class Orange : public Food {
 public:
-    Orange() : Food("Spritesheet/trees/orange.png", ORANGE_WEIGHT) {
+    Orange() : Food("Spritesheet/trees/orange.png", ORANGE_WEIGHT, "Orange") {
         Food::health_increase = FRUIT_HEALTH_INCREASE;
     }
     Sprite* newSprite() {
@@ -47,7 +47,7 @@ public:
 
 class Apple : public Food {
 public:
-    Apple() : Food("Spritesheet/trees/apple.png", APPLE_WEIGHT) {
+    Apple() : Food("Spritesheet/trees/apple.png", APPLE_WEIGHT, "Apple") {
         Food::health_increase = FRUIT_HEALTH_INCREASE;
         newSprite();
     }
@@ -63,7 +63,7 @@ public:
 
 class Cherry : public Food {
 public:
-    Cherry() : Food("Spritesheet/trees/cherry.png", CHERRY_WEIGHT) {
+    Cherry() : Food("Spritesheet/trees/cherry.png", CHERRY_WEIGHT, "Cherry") {
         Food::health_increase = FRUIT_HEALTH_INCREASE;
         m_sprite = newSprite();
     }
