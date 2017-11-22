@@ -11,7 +11,7 @@ void AudioManager::preloadEffect(AudioComponent clip) {
 void AudioManager::changeBackgroundMusic(AudioComponent bgm) {
   m_game_bg_music = bgm;
   engine->stopBackgroundMusic();
-  engine->preloadEffect(bgm.getFilePath());
+  engine->preloadBackgroundMusic(bgm.getFilePath());
   engine->playBackgroundMusic(bgm.getFilePath(), true);
   engine->setBackgroundMusicVolume(0.1);
 }

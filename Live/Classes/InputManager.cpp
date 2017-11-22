@@ -2,6 +2,7 @@
 #include "MainScene.h"
 #include "Direction.h"
 #include "AudioManager.h"
+#include "audio/include/SimpleAudioEngine.h"
 
 USING_NS_CC;
 // Because cocos2d-x requres createScene to be static, we need to make other
@@ -32,6 +33,12 @@ EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
 
     InputManager::m_scene = scene;
 
+    for(int i = 1; i < 7; i++) {
+      CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(
+        "Audio/Footsteps/footstep"
+        + std::to_string(i)
+        + ".mp3")
+    }
 
     return kb_listener;
 }
