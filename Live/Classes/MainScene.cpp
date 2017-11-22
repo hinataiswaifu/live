@@ -59,10 +59,6 @@ bool MainScene::init() {
     AudioComponent bg_audio = AudioComponent("Audio/global_bg_day.mp3", 168);
     AudioManager::getInstance()->changeBackgroundMusic(bg_audio);
 
-    for (int i = 0; i < 6; i++) {
-      AudioManager::getInstance()->enqueueRandomSFX(footsteps, 6);
-    }
-
     return true;
 }
 
