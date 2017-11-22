@@ -29,8 +29,8 @@ void AudioManager::stopWeatherSFX() {
 
 int AudioManager::createNewAudioQueue() {
   dict[keygen] = AudioQueue();
-  return keygen;
   keygen++;
+  return keygen-1;
 }
 
 int AudioManager::enqueueIntoAudioQueue(int id, AudioComponent clip) {
