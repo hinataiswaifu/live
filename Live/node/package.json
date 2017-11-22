@@ -1,0 +1,12 @@
+{
+  "name": "app",
+  "version": "0.0.0",
+  "main": "app.js",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "^4.16.2",
+    "jquery": "^3.2.1",
+    "socket.io": "^2.0.4",
+    "ws": "^3.3.1"
+  }
+}

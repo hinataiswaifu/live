@@ -9,8 +9,8 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h> 
 
-MapGenerator::MapGenerator(){
-	std::srand(time(NULL));
+MapGenerator::MapGenerator( int seed ){
+	std::srand(seed);
 }
 
 GeneratedResources MapGenerator::createMap(int width, int length) {

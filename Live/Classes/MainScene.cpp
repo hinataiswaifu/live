@@ -28,15 +28,24 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
+    m_network_manager = new NetworkManager(this);
+    return true;
+}
+
+void MainScene::startGame( int seed ) {
+    m_started = true;
     m_game_layer = Layer::create();
 
     m_player = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
+    m_player2 = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
 
-    MapGenerator* mapgen = new MapGenerator();
+    MapGenerator* mapgen = new MapGenerator( seed );
     GeneratedResources mapResources = mapgen->createMap(MAP_WIDTH, MAP_HEIGHT);
     delete mapgen;
     
     m_player->setPosition(mapResources.m_spawn_point);
+    m_player2->setPosition(mapResources.m_spawn_point);
+
     m_map_manager = new MapManager(mapResources);
     m_game_layer->addChild(m_map_manager->getMap());
 
@@ -47,6 +56,7 @@ bool MainScene::init() {
     this->addChild(m_game_layer, 0);
 
     m_map_manager->addPlayer(m_player);
+    m_map_manager->addPlayer(m_player2);
 
     for (auto it : m_map_items) {
         m_map_manager->getTileMap()->addChild(it->newSprite());
@@ -64,8 +74,6 @@ bool MainScene::init() {
     // set up the input/event manager
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(
             InputManager::initializeInputManager(this), this);
-
-    return true;
 }
 
 void MainScene::update(float delta) {
@@ -77,9 +85,11 @@ void MainScene::update(float delta) {
     m_map_manager->update(delta);
     m_player->updateHunger(delta*HUNGER_DEGEN);
     m_hud->update();
+    m_network_manager->update();
 }
 
 Player* MainScene::getPlayer(int id) {
+    if(id == 1) return m_player2;
     return m_player;
 }
 
@@ -93,4 +103,8 @@ std::vector<Item*>& MainScene::getMapItems() {
 
 HUD* MainScene::getHUD() {
     return m_hud;
+}
+
+bool MainScene::isStarted() {
+    return m_started;
 }
