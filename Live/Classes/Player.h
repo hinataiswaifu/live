@@ -54,6 +54,7 @@ public:
     void moveX(float x);
     void moveY(float y);
     void setPosition(cocos2d::Point point, Direction dir = Direction::DIR_DOWN);
+    Direction getOrientation();
     void move(float x, float y);
     void stopMove();
     float getHunger() const;

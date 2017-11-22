@@ -97,6 +97,10 @@ void Player::setPosition(cocos2d::Point new_pos, Direction dir) {
     m_sprite->setPosition(new_pos);
 }
 
+Direction Player::getOrientation() {
+    return m_orientation;
+}
+
 void Player::stopMove() {
     m_state = STANDING;
     m_sprite->stopAllActions();
