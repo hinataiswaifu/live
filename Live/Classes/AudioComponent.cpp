@@ -24,17 +24,17 @@ void AudioComponent::setId(int id) {
 }
 
 bool AudioComponent::isEmpty() {
-  return isspace(m_filePath);
+  return m_filePath.empty();
 }
 
 bool AudioComponent::operator==(const AudioComponent &other) const {
   return m_filePath == other.getFilePath();
 }
 
-AudioComponent& AudioComponent::operator=(const AudioComponent& a) {
-  m_filePath = a.getFilePath();
-  m_length = a.getLength();
-  m_id = a.getId();
-
-  return *this
-}
+// AudioComponent& AudioComponent::operator=(const AudioComponent& a) {
+//   m_filePath = a.getFilePath();
+//   m_length = a.getLength();
+//   m_id = a.getId();
+//
+//   return *this;
+// }
