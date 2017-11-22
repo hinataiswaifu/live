@@ -18,7 +18,7 @@ public:
     ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees, std::vector<Animal*> &animals);
     bool checkCollision(cocos2d::Point position);
     Item* gather(cocos2d::Point position, Direction);	// Attempt to gather a resource from a resource obstacle you are facing
-    void update();
+    void update(float delta);
 
 private:
     std::vector<ResourceObstacle*> m_resources;

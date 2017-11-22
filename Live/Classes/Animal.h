@@ -13,7 +13,7 @@ public:
     Animal(const std::string& sprite_frame_file,
             float pos_x, float pos_y, unsigned int index, float speed);
 
-    void update();
+    void update(float delta);
 
 private:
     float m_health;

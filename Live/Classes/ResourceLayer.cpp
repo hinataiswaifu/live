@@ -131,12 +131,12 @@ Item* ResourceLayer::gather(cocos2d::Point position, Direction dir) {
     return nullptr;
 }
 
-void ResourceLayer::update() {
+void ResourceLayer::update(float delta) {
     for (auto iter : m_trees) {
         iter->update();
     }
 
     for (auto iter : m_animals) {
-        iter->update();
+        iter->update(delta);
     }
 }

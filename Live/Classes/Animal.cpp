@@ -22,29 +22,44 @@ Animal::Animal(const std::string& sprite_frame_file,
     m_sprite->setPosition(pos_x, pos_y);
 }
 
-void Animal::update() {
-    bool change_state = rand() % 100 < 10;
+void Animal::update(float delta) {
+    bool change_state = (rand() % 10000) < 5;
     // should it be moving?
     if (change_state) {
-        if (m_state == STANDING) { m_state = MOVING; }
-        else { m_state = STANDING; }
+        if (m_state == STANDING) {
+            m_state = MOVING;
+            m_orientation = (Direction)(rand() % NUM_DIR);
+
+            // do animation here
+            animateMove();
+        } else {
+            m_state = STANDING;
+        }
     }
 
-    if (m_state == STANDING) {
+    if (m_state == MOVING) {
         Direction dir = m_orientation;
         // should it change direction?
-        if (rand() % 100 < 1) {
+        if (rand() % 1000 < 2) {
             dir = (Direction)(rand() % NUM_DIR);
         }
 
         // update direction and state
-        if (m_state == STANDING || dir != m_orientation) {
-            m_state = MOVING;
+        if (dir != m_orientation) {
             m_orientation = dir;
             m_sprite->stopAllActions();
-
-            // do animation here
             animateMove();
+        }
+
+        Point cur_pos = getPosition();
+        if (m_orientation == DIR_DOWN) {
+            m_sprite->setPosition(cur_pos.x, cur_pos.y - (delta*m_speed));
+        } else if (m_orientation == DIR_UP) {
+            m_sprite->setPosition(cur_pos.x, cur_pos.y + (delta*m_speed));
+        } else if (m_orientation == DIR_LEFT) {
+            m_sprite->setPosition(cur_pos.x - (delta*m_speed), cur_pos.y);
+        } else if (m_orientation == DIR_RIGHT) {
+            m_sprite->setPosition(cur_pos.x + (delta*m_speed), cur_pos.y);
         }
     } else {
         stopMove();

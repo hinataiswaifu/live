@@ -123,7 +123,7 @@ WeatherManager::Weather MapManager::getWeather() {
 
 void MapManager::update(float delta) {
     // delta to be used later on for adding dynamic effects WOW!
-    m_resources->update();
+    m_resources->update(delta);
 
     m_weather_manager->update();
 
