@@ -20,6 +20,7 @@ public:
   int enqueueIntoAudioQueue(int id, AudioComponent clip);
   int randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size);
   void clearAudioQueue(int id);
+  int getAudioQueueSize(int id);
   void deleteAudioQueue(int id);
 
 private:

@@ -11,6 +11,7 @@ public:
   void enqueueRandomSFX(AudioComponent clips[], int size);
   void enqueueSFX(AudioComponent clip);
   void clear();
+  int size();
 private:
   std::queue<AudioComponent> m_audio_queue;
   void dequeueSFXIfAvailable();

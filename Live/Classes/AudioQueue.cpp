@@ -22,6 +22,10 @@ void AudioQueue::clear() {
   }
 }
 
+int AudioQueue::size() {
+  return m_audio_queue.size();
+}
+
 void AudioQueue::dequeueSFXIfAvailable() {
   if (m_audio_queue.size() == 1) {
     std::thread t1(&AudioQueue::dequeueSFX, this);
