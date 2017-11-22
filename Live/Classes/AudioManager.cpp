@@ -51,6 +51,7 @@ int AudioManager::getAudioQueueSize(int id) {
 }
 
 void AudioManager::deleteAudioQueue(int id) {
+  clearAudioQueue(id);
   dict.erase(id);
 }
 
