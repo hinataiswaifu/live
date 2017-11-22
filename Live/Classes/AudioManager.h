@@ -14,7 +14,7 @@ public:
   void changeBackgroundMusic(AudioComponent bgm);
   void changeWeatherSFX(AudioComponent bgm);
   void stopWeatherSFX();
-  void enqueueRandomSFX(AudioComponent[] clips);
+  void enqueueRandomSFX(AudioComponent clips[], int size);
   void enqueueSFX(AudioComponent clip);
 
 private:

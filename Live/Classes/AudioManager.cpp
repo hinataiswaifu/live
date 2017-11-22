@@ -22,7 +22,7 @@ void AudioManager::changeWeatherSFX(AudioComponent bgm) {
   m_weather_bg_music.setId(engine->playEffect(bgm.getFilePath(), true));
 }
 
-void AudioManager::enqueueRandomSFX(AudioComponent[] clips, int size) {
+void AudioManager::enqueueRandomSFX(AudioComponent clips[], int size) {
   m_audio_queue.push(clips[rand()%size]);
   dequeueSFXIfAvailable();
 }
