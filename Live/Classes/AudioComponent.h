@@ -4,7 +4,8 @@
 
 struct AudioComponent {
 public:
-  AudioComponent(const string filePath, const int length);
+  AudioComponent();
+  AudioComponent(const std::string filePath, const int length);
   const char* getFilePath() const;
   const int getLength();
   const int getId();
@@ -13,7 +14,7 @@ public:
   bool operator==(const AudioComponent &other) const;
   AudioComponent& operator=(const AudioComponent&);
 private:
-  const string m_filePath;
+  const std::string m_filePath;
   const int m_length;
   int m_id;
 };

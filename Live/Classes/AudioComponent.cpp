@@ -1,7 +1,8 @@
 #include "AudioComponent.h"
 #include "AudioManager.h"
 
-AudioComponent::AudioComponent(const string filePath, const int length): m_filePath(filePath), m_length(length) {
+AudioComponent::AudioComponent(const std::string filePath, const int length):
+  m_filePath(filePath), m_length(length) {
   AudioManager::getInstance()->preloadEffect(this);
 }
 
