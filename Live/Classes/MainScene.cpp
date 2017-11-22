@@ -67,10 +67,6 @@ void MainScene::startGame( int seed ) {
     this->addChild(m_hud, 2);
     this->addChild(m_game_layer, 0);
 
-    for (auto it : m_map_items) {
-        m_map_manager->getTileMap()->addChild(it->newSprite());
-    }
-
     // Let cocos know we have an update function to be called.
     this->scheduleUpdate();
 
@@ -124,4 +120,18 @@ HUD* MainScene::getHUD() {
 
 bool MainScene::isStarted() {
     return m_started;
+}
+
+Food* MainScene::getDroppedFood() {
+    return m_dropped_food;
+}
+
+void MainScene::setDroppedFood(Item* food) {
+    m_dropped_food = dynamic_cast<Food*>(food);
+}
+
+void MainScene::addMapItem(Item* item, Point pos) {
+    m_map_items.push_back(item);
+    m_map_manager->getTileMap()->addChild(item->newSprite());
+    item->setPosition(pos);
 }

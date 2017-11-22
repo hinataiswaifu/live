@@ -1,6 +1,7 @@
 #pragma once
 
 #define MULTIPLAYER 1
+
 #if MULTIPLAYER
 #include "cocos/network/WebSocket.h"
 
