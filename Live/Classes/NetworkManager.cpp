@@ -1,4 +1,6 @@
+#if MULTIPLAYER
 #include "MainScene.h"
+#include "NetworkManager.h"
 
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
@@ -30,7 +32,7 @@ void WebSocketClientDelegate::onClose(network::WebSocket* ws) { CC_SAFE_DELETE(w
 
 NetworkManager::NetworkManager(MainScene* m_scene): m_scene(m_scene) {
     m_socket = new network::WebSocket();
-    m_socket->init(*new WebSocketClientDelegate(m_scene), host);
+    m_socket->init(*new WebSocketClientDelegate(m_scene), HOST);
 }
 
 void NetworkManager::update() {
@@ -43,3 +45,4 @@ void NetworkManager::update() {
        << m_scene->getPlayer(selfPlayer)->getOrientation();
     m_socket->send((unsigned char*) buf, bufSize);
 }
+#endif

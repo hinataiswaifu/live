@@ -9,6 +9,7 @@
 #include "Mapgen/MapGenerator.h"
 #include "Mapgen/GeneratedResources.h"
 #include <iostream>
+#include <ctime>
 
 USING_NS_CC;
 
@@ -30,7 +31,11 @@ Scene* MainScene::createScene() {
 
 // on "init" you need to initialize your instance
 bool MainScene::init() {
+#if MULTIPLAYER
     m_network_manager = new NetworkManager(this);
+#else
+    startGame(time(NULL));
+#endif
     return true;
 }
 
@@ -38,8 +43,6 @@ void MainScene::startGame( int seed ) {
     m_started = true;
     m_game_layer = Layer::create();
 
-    m_player = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
-    m_player2 = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
 
     MapGenerator* mapgen = new MapGenerator( seed );
     GeneratedResources mapResources = mapgen->createMap(MAP_WIDTH, MAP_HEIGHT);
@@ -51,14 +54,21 @@ void MainScene::startGame( int seed ) {
     m_map_manager = new MapManager(mapResources);
     m_game_layer->addChild(m_map_manager->getMap());
 
+
+    m_player = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
+    m_player->setPosition(mapResources.m_spawn_point);
+    m_map_manager->addPlayer(m_player);
+
+#if MULTIPLAYER
+    m_player2 = new Player("Animation/boy_walk_down.plist", SPRITE_INDEX);
+    m_player2->setPosition(mapResources.m_spawn_point);
+    m_map_manager->addPlayer(m_player2);
+#endif
     // Instantiate HUD and add to scene
     m_hud = new HUD(m_player);
     // add HUD to the root layer
     this->addChild(m_hud, 2);
     this->addChild(m_game_layer, 0);
-
-    m_map_manager->addPlayer(m_player);
-    m_map_manager->addPlayer(m_player2);
 
     for (auto it : m_map_items) {
         m_map_manager->getTileMap()->addChild(it->newSprite());
@@ -91,11 +101,15 @@ void MainScene::update(float delta) {
     m_map_manager->update(delta);
     m_player->updateHunger(delta*HUNGER_DEGEN);
     m_hud->update();
+#if MULTIPLAYER
     m_network_manager->update();
+#endif
 }
 
 Player* MainScene::getPlayer(int id) {
+#if MULTIPLAYER
     if(id == 1) return m_player2;
+#endif
     return m_player;
 }
 

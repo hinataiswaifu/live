@@ -7,36 +7,20 @@
 USING_NS_CC;
 
 Player::Player(const std::string& sprite_frame_file, unsigned int index, Mapping mapping) :
+    Live::Animate(sprite_frame_file, index, FRAME_COUNT, NUM_CHAR),
     m_hunger(DEFAULT_MAX_HUNGER),
     m_stamina(DEFAULT_MAX_STAMINA),
-    m_orientation(DIR_DOWN),        // look in the down direction by default
-    m_state(STANDING),
     m_max_hunger(DEFAULT_MAX_HUNGER),
     m_max_stamina(DEFAULT_MAX_STAMINA),
     m_mapping(mapping)
 {
     m_inventory = new Inventory();
-    m_frame_cache = SpriteFrameCache::getInstance();
     std::stringstream ss;
     ss << "sprite_" << std::setfill('0') << std::setw(2) <<
         index + STATIONARY_INDEX << ".png";
-    m_frame_cache->addSpriteFramesWithFile(sprite_frame_file);
     m_sprite = new Sprite;
     m_sprite->initWithSpriteFrameName(ss.str());
-    m_move_anim = new Animation;
     m_sprite->setPosition(START_X, START_Y);
-
-    // initialize the animation frames:
-    for (int dir = DIR_DOWN; dir < NUM_DIR; dir++) {
-        Direction direnum = static_cast<Direction>(dir);
-        for (int i = 0; i < FRAME_COUNT; i++) {
-            std::stringstream ss;
-            ss << "sprite_" << std::setfill('0') << std::setw(2) <<
-                (dir * FRAME_COUNT * NUM_CHAR) + index + i  << ".png";
-            m_anim_map[direnum].pushBack(
-                    m_frame_cache->getSpriteFrameByName(ss.str()));
-        }
-    }
 }
 
 void Player::updateHunger(float diff) {
@@ -90,15 +74,19 @@ void Player::setPosition(cocos2d::Point new_pos, Direction dir) {
         m_sprite->stopAllActions();
 
         // do animation here
-        Animation* move_anim = new Animation;
-        move_anim->initWithSpriteFrames(m_anim_map[m_orientation], ANIM_SEC);
-        m_sprite->runAction(RepeatForever::create(Animate::create(move_anim)));
+        animateMove();
     }
     m_sprite->setPosition(new_pos);
 }
 
 Direction Player::getOrientation() {
     return m_orientation;
+}
+
+void Player::animateMove() {
+    Animation* move_anim = new Animation;
+    move_anim->initWithSpriteFrames(m_anim_map[m_orientation], ANIM_SEC);
+    m_sprite->runAction(RepeatForever::create(cocos2d::Animate::create(move_anim)));
 }
 
 void Player::stopMove() {

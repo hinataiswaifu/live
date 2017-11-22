@@ -6,12 +6,12 @@
 #include "Inventory.h"
 #include "Direction.h"
 #include "InputManager.h"
+#include "Animate.h"
 
 #define MAX_PICKUP_DISTANCE 40
 
 #define START_X     100
 #define START_Y     100
-#define ANIM_SEC    0.2f
 #define STATIONARY_INDEX 1  // Refers to where in the sprite frames the stationary
                             // sprite is
 #define FRAME_COUNT 3
@@ -41,7 +41,7 @@ typedef struct mapping {
 } Mapping;
 
 
-class Player : public GameObject {
+class Player : public GameObject, public Live::Animate {
 public:
     // Takes in the plist file and the initial sprite frame file index
     Player(const std::string& sprite_frame_file, unsigned int index,
@@ -56,7 +56,6 @@ public:
     void setPosition(cocos2d::Point point, Direction dir = Direction::DIR_DOWN);
     Direction getOrientation();
     void move(float x, float y);
-    void stopMove();
     float getHunger() const;
     float getStamina() const;
     bool pickup(Item* item);
@@ -65,28 +64,16 @@ public:
     Inventory* get_inventory();
     virtual cocos2d::Rect getHitbox();
 
+protected:
+    virtual void animateMove();
+    virtual void stopMove();
+
 private:
     float m_hunger;
     float m_max_hunger;
     Inventory* m_inventory;
     float m_stamina;
     float m_max_stamina;
-    typedef enum {
-        MOVING,
-        STANDING,
-
-        NUM_STATES
-    } State;
-    Direction m_orientation;    // store which way the player is facing
-    State m_state;              // Holds whether the player is currently moving
-
-    cocos2d::SpriteFrameCache* m_frame_cache;
-    cocos2d::Animation* m_move_anim;
-
-    cocos2d::Vector<cocos2d::SpriteFrame*> getAnimation(const char *format,
-           int start, int count);
-
-    std::map<Direction, cocos2d::Vector<cocos2d::SpriteFrame*> > m_anim_map;
     // TODO Not being used yet, last resort use for local multiplayer
     Mapping m_mapping;
 };
