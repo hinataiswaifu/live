@@ -2,8 +2,6 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "InputManager.h"
-#include "AudioManager.h"
-#include "AudioComponent.h"
 #include "Direction.h"
 #include "ResourceLayer.h"
 #include "Mapgen/MapGenerator.h"
@@ -83,10 +81,6 @@ void MainScene::startGame( int seed ) {
     // set up the input/event manager
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(
             InputManager::initializeInputManager(this), this);
-
-    // setup the audio manager
-    AudioComponent bg_audio = AudioComponent("Audio/global_bg_day.mp3", 168000);
-    AudioManager::getInstance()->changeBackgroundMusic(bg_audio);
 }
 
 void MainScene::update(float delta) {
