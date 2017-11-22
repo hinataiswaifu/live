@@ -12,7 +12,7 @@ bool InputManager::m_key_c_released = true;
 // used to track gameover state, currently used to reject keyboard input
 bool InputManager::m_game_over = false;
 MainScene* InputManager::m_scene = nullptr;
-footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
+InputManager::footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
 
 EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
     auto kb_listener = EventListenerKeyboard::create();
