@@ -14,8 +14,8 @@ bool InputManager::m_key_c_released = true;
 // used to track gameover state, currently used to reject keyboard input
 bool InputManager::m_game_over = false;
 MainScene* InputManager::m_scene = nullptr;
-int InputManager::footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
-AudioComponent InputManager::footsteps[6] = {
+int InputManager::m_footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
+AudioComponent InputManager::m_footsteps[6] = {
  AudioComponent( "Audio/Footsteps/footstep1.mp3", 1),
  AudioComponent( "Audio/Footsteps/footstep2.mp3", 1),
  AudioComponent( "Audio/Footsteps/footstep3.mp3", 1),
@@ -78,7 +78,7 @@ void InputManager::enqueueFootstep(int id) {
   if (AudioManager::getInstance()->getAudioQueueSize(id) < 1) {
     AudioManager::getInstance()->enqueueIntoAudioQueue(
       id,
-      InputManager::footsteps[rand()%6]
+      InputManager::m_footsteps[rand()%6]
     );
   }
 }
@@ -104,7 +104,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_LEFT;
-        InputManager::enqueueFootstep(footsteps_audio_queue_id);
+        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
@@ -113,7 +113,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_RIGHT;
-        InputManager::enqueueFootstep(footsteps_audio_queue_id);
+        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
@@ -122,7 +122,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, MOVE_STEP * delta);
         }
         dir = Direction::DIR_UP;
-        InputManager::enqueueFootstep(footsteps_audio_queue_id);
+        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
@@ -131,7 +131,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, -(MOVE_STEP * delta));
         }
         dir = Direction::DIR_DOWN;
-        InputManager::enqueueFootstep(footsteps_audio_queue_id);
+        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_scene->getMapItems()) {

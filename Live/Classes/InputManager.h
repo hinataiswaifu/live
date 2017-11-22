@@ -30,6 +30,7 @@ private:
 
     // used to queue up footsteps
     static void enqueueFootstep(int id);
-    static int footsteps_audio_queue_id;
-    static AudioComponent footsteps[6];
+    static int m_footsteps_audio_queue_id;
+    static AudioComponent m_footsteps[6];
+    static AudioManager m_audio_mgr;
 };
