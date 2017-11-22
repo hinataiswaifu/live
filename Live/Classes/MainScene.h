@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "cocos2d.h"
 #include "MapManager.h"
+#include "NetworkManager.h"
 #include "Tree.h"
 
 #define WINDOW_WIDTH 1024
@@ -17,20 +18,24 @@ class MainScene : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
+    virtual void startGame( int seed );
     Player* getPlayer(int id = 0);
     MapManager* getMapManager();
     std::vector<Item*>& getMapItems();
     HUD* getHUD();
-
+    bool isStarted();
     void update(float delta);
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
 
 private:
+    bool m_started = false;
     Player* m_player;
+    Player* m_player2;
     HUD* m_hud;
     std::vector<Item*> m_map_items;
     MapManager* m_map_manager;
+    NetworkManager* m_network_manager;
     cocos2d::Follow* m_camera;
     cocos2d::Layer* m_game_layer;
 };

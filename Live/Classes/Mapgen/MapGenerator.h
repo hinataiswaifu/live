@@ -14,7 +14,7 @@
 class MapGenerator
 {
 public:
-    MapGenerator();
+    MapGenerator( int seed );
     GeneratedResources createMap(int width, int length);
 private:
     void applyGradient(int width, int length, TileParam** map);

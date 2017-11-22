@@ -108,6 +108,8 @@ elseif(ANDROID)
     )
 endif()
 
+find_package(Boost 1.55 REQUIRED system serialization)
+
 include_directories(
   /usr/local/include/GLFW
   /usr/include/GLFW
@@ -116,6 +118,7 @@ include_directories(
   ${COCOS2D_ROOT}/external
   ${COCOS2D_ROOT}/cocos/platform
   ${COCOS2D_ROOT}/cocos/audio/include/
+  ${Boost_INCLUDE_DIRS}
   Classes
 )
 if ( WIN32 )
@@ -169,7 +172,7 @@ else()
     add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
+target_link_libraries(${APP_NAME} ${Boost_LIBRARIES} cocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
@@ -193,3 +196,4 @@ else()
     )
 
 endif()
+
