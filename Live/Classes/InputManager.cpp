@@ -31,7 +31,7 @@ EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
 
     InputManager::m_scene = scene;
 
-    InputManager::footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
+    footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
 
     return kb_listener;
 }
@@ -88,7 +88,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_LEFT;
-        enqueueFootstep(InputManager::footsteps_audio_queue_id);
+        enqueueFootstep(footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
@@ -97,7 +97,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_RIGHT;
-        enqueueFootstep(InputManager::footsteps_audio_queue_id);
+        enqueueFootstep(footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
@@ -106,7 +106,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, MOVE_STEP * delta);
         }
         dir = Direction::DIR_UP;
-        enqueueFootstep(InputManager::footsteps_audio_queue_id);
+        enqueueFootstep(footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
@@ -115,7 +115,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, -(MOVE_STEP * delta));
         }
         dir = Direction::DIR_DOWN;
-        enqueueFootstep(InputManager::footsteps_audio_queue_id);
+        enqueueFootstep(footsteps_audio_queue_id);
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_scene->getMapItems()) {
