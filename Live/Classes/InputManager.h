@@ -4,6 +4,7 @@
 #include <chrono>
 #include "cocos2d.h"
 #include "AudioComponent.h"
+#include "AudioManager.h"
 
 #define MOVE_STEP 50
 
