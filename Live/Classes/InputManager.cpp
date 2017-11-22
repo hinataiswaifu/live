@@ -68,7 +68,7 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
 
 void enqueueFootstep(int id) {
   if (AudioManager::getInstance()->getAudioQueueSize(id) < 1) {
-    // std::cout << "enqueueeee" << std::endl;
+    std::cout << "enqueueeee" << std::endl;
     // AudioManager::getInstance()->enqueueIntoAudioQueue(
     //   id,
     //   AudioComponent( "Audio/Footsteps/footstep"
