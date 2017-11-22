@@ -80,8 +80,6 @@ void MainScene::startGame( int seed ) {
     // setup the audio manager
     AudioComponent bg_audio = AudioComponent("Audio/global_bg_day.mp3", 168000);
     AudioManager::getInstance()->changeBackgroundMusic(bg_audio);
-
-    return true;
 }
 
 void MainScene::update(float delta) {
