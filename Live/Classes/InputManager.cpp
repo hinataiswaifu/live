@@ -16,14 +16,6 @@ bool InputManager::m_game_over = false;
 MainScene* InputManager::m_scene = nullptr;
 int InputManager::m_footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
 AudioManager* InputManager::m_audio_mgr = AudioManager::getInstance();
-AudioComponent InputManager::m_footsteps[6] = {
- AudioComponent( "Audio/Footsteps/footstep1.mp3", 1),
- AudioComponent( "Audio/Footsteps/footstep2.mp3", 1),
- AudioComponent( "Audio/Footsteps/footstep3.mp3", 1),
- AudioComponent( "Audio/Footsteps/footstep4.mp3", 1),
- AudioComponent( "Audio/Footsteps/footstep5.mp3", 1),
- AudioComponent( "Audio/Footsteps/footstep6.mp3", 1),
-};
 
 EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
     auto kb_listener = EventListenerKeyboard::create();
@@ -79,7 +71,10 @@ void InputManager::enqueueFootstep(int id) {
   if (InputManager::m_audio_mgr->getAudioQueueSize(id) < 1) {
     InputManager::m_audio_mgr->enqueueIntoAudioQueue(
       id,
-      InputManager::m_footsteps[rand()%6]
+      AudioComponent( "Audio/Footsteps/footstep"
+                      + std::to_string(rand()%6+1)
+                      + ".mp3",
+                    1)
     );
   }
 }
