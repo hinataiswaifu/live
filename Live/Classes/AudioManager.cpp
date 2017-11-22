@@ -30,25 +30,25 @@ void AudioManager::stopWeatherSFX() {
 }
 
 int AudioManager::createNewAudioQueue() {
-  map[keygen] = AudioQueue();
+  dict[keygen] = AudioQueue();
   return keygen;
   keygen++;
 }
 
 int AudioManager::enqueueIntoAudioQueue(int id, AudioComponent clip) {
-  map[id].enqueueSFX(clip);
+  dict[id].enqueueSFX(clip);
 }
 
 int randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size) {
-  map[id].enqueueRandomSFX(clips, size);
+  dict[id].enqueueRandomSFX(clips, size);
 }
 
 void AudioManager::clearAudioQueue(int id) {
-  map[id].clear();
+  dict[id].clear();
 }
 
 void AudioManager::deleteAudioQueue(int id) {
-  map.erase(id);
+  dict.erase(id);
 }
 
 AudioManager* AudioManager::getInstance() {
