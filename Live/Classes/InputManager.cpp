@@ -57,7 +57,7 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
 
 void enqueueFootstep() {
   AudioManager::getInstance()->enqueueSFX(
-    AudioComponent("Audio/Footsteps/footstep" + std::to_string(rand()%6) + ".mp3",1)
+    AudioComponent("Audio/Footsteps/footstep" + std::to_string(rand()%6+1) + ".mp3",1)
   );
 }
 
