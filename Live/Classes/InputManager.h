@@ -26,4 +26,8 @@ private:
     static bool m_key_c_released;
     // used to track gameover state, currently used to reject keyboard input
     static bool m_game_over;
+    // used to queue up footsteps
+    static int footsteps_audio_queue_id;
+    // used to track whether movement keys are currently pressed
+    static int m_movement_pressed;
 };

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <queue>
 #include "audio/include/SimpleAudioEngine.h"
 #include "AudioComponent.h"
+#include <map>
 
 class AudioManager {
 public:
@@ -14,18 +14,19 @@ public:
   void changeBackgroundMusic(AudioComponent bgm);
   void changeWeatherSFX(AudioComponent bgm);
   void stopWeatherSFX();
-  void enqueueRandomSFX(AudioComponent clips[], int size);
-  void enqueueSFX(AudioComponent clip);
-  void clearQueue();
+
+  int createNewAudioQueue();
+  int enqueueIntoAudioQueue(int id, AudioComponent clip);
+  int randomEnqueueIntoAudioQueue(int id, AudioComponent clips[], int size);
+  void clearAudioQueue(int id);
+  void deleteAudioQueue(int id);
 
 private:
   AudioComponent m_game_bg_music;
   AudioComponent m_weather_bg_music;
-  std::queue<AudioComponent> m_audio_queue;
+  std::map<int, AudioQueue> dict;
+  int keygen = 0;
 
   static AudioManager *instance;
   CocosDenshion::SimpleAudioEngine *engine;
-
-  void dequeueSFXIfAvailable();
-  void dequeueSFX();
 };
