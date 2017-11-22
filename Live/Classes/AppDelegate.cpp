@@ -2,9 +2,10 @@
 // Lots of PPDirectives in this file, don't go well with clang.
 #include "AppDelegate.h"
 #include "MainScene.h"
+#include "AudioManager.h"
 
 // #define USE_AUDIO_ENGINE 1
-// #define USE_SIMPLE_AUDIO_ENGINE 1
+#define USE_SIMPLE_AUDIO_ENGINE 1
 
 #if USE_AUDIO_ENGINE && USE_SIMPLE_AUDIO_ENGINE
 #error \
@@ -16,7 +17,6 @@
 using namespace cocos2d::experimental;
 #elif USE_SIMPLE_AUDIO_ENGINE
 #include "audio/include/SimpleAudioEngine.h"
-using namespace CocosDenshion;
 #endif
 
 USING_NS_CC;
@@ -33,7 +33,7 @@ AppDelegate::~AppDelegate() {
 #if USE_AUDIO_ENGINE
     AudioEngine::end();
 #elif USE_SIMPLE_AUDIO_ENGINE
-    SimpleAudioEngine::end();
+    CocosDenshion::SimpleAudioEngine::end();
 #endif
 }
 
@@ -117,8 +117,8 @@ void AppDelegate::applicationDidEnterBackground() {
 #if USE_AUDIO_ENGINE
     AudioEngine::pauseAll();
 #elif USE_SIMPLE_AUDIO_ENGINE
-    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();
+    CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    CocosDenshion::SimpleAudioEngine::getInstance()->pauseAllEffects();
 #endif
 }
 
@@ -129,7 +129,7 @@ void AppDelegate::applicationWillEnterForeground() {
 #if USE_AUDIO_ENGINE
     AudioEngine::resumeAll();
 #elif USE_SIMPLE_AUDIO_ENGINE
-    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-    SimpleAudioEngine::getInstance()->resumeAllEffects();
+    CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
 #endif
 }

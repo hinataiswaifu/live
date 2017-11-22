@@ -1,6 +1,9 @@
 #include "InputManager.h"
 #include "MainScene.h"
 #include "Direction.h"
+#include "AudioManager.h"
+#include "audio/include/SimpleAudioEngine.h"
+#include <iostream>
 
 USING_NS_CC;
 // Because cocos2d-x requres createScene to be static, we need to make other
@@ -11,6 +14,8 @@ bool InputManager::m_key_c_released = true;
 // used to track gameover state, currently used to reject keyboard input
 bool InputManager::m_game_over = false;
 MainScene* InputManager::m_scene = nullptr;
+int InputManager::m_footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
+AudioManager* InputManager::m_audio_mgr = AudioManager::getInstance();
 
 EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
     auto kb_listener = EventListenerKeyboard::create();
@@ -29,6 +34,14 @@ EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
     };
 
     InputManager::m_scene = scene;
+
+    // preload footsteps
+    for(int i = 1; i < 7; i++) {
+      CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(
+        ("Audio/Footsteps/footstep"
+        + std::to_string(i)
+        + ".mp3").c_str());
+    }
 
     return kb_listener;
 }
@@ -53,6 +66,19 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
             std::chrono::high_resolution_clock::now() - keys[code])
         .count();
 }
+
+void InputManager::enqueueFootstep(int id) {
+  if (InputManager::m_audio_mgr->getAudioQueueSize(id) < 1) {
+    InputManager::m_audio_mgr->enqueueIntoAudioQueue(
+      id,
+      AudioComponent( "Audio/Footsteps/footstep"
+                      + std::to_string(rand()%6+1)
+                      + ".mp3",
+                    1000)
+    );
+  }
+}
+
 void InputManager::update(float delta) {
     // check if the game is over
     if (!m_game_over) {
@@ -74,6 +100,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_LEFT;
+        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
@@ -82,6 +109,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_RIGHT;
+        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
@@ -90,6 +118,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, MOVE_STEP * delta);
         }
         dir = Direction::DIR_UP;
+        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
         InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
@@ -98,6 +127,7 @@ void InputManager::update(float delta) {
             position_lookahead -= Point(0, -(MOVE_STEP * delta));
         }
         dir = Direction::DIR_DOWN;
+        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_scene->getMapItems()) {

@@ -3,6 +3,8 @@
 #include <map>
 #include <chrono>
 #include "cocos2d.h"
+#include "AudioComponent.h"
+#include "AudioManager.h"
 
 #define MOVE_STEP 50
 
@@ -26,4 +28,9 @@ private:
     static bool m_key_c_released;
     // used to track gameover state, currently used to reject keyboard input
     static bool m_game_over;
+
+    // used to queue up footsteps
+    static void enqueueFootstep(int id);
+    static int m_footsteps_audio_queue_id;
+    static AudioManager* m_audio_mgr;
 };
