@@ -42,7 +42,7 @@ void AudioManager::enqueueSFX(AudioComponent clip) {
 
 void AudioManager::clearQueue() {
   while (!m_audio_queue.empty()) {
-    m_audio_queue.clear();
+    m_audio_queue.pop();
   }
 }
 
