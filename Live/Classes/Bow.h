@@ -12,7 +12,6 @@ public:
     	newSprite();
         // setScale(BOW_SCALE);
         setHitbox(450, 450, 200, 200);
-        setPosition(450, 450);
     }
     bool use(Player& p);
 };

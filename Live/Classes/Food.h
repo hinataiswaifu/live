@@ -39,3 +39,18 @@ public:
 
     void setHealthInc(int health) { health_increase = health; }
 };
+
+class Meat : public Food {
+public:
+    Meat() : Food("steak.png", 50, "Meat") {
+        Food::health_increase = 20;
+        m_scale = 0.4;
+        m_sprite = newSprite();
+    }
+
+    Meat(float x, float y) : Meat() {
+        setPosition(x,y);
+    }
+
+    Meat(Point pos) : Meat(pos.x, pos.y) {}
+};

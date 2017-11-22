@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "Player.h"
+#include "Bow.h"
 
 USING_NS_CC;
 
@@ -23,6 +24,7 @@ Player::Player(const std::string& sprite_frame_file, unsigned int index, Mapping
     m_sprite = new Sprite;
     m_sprite->initWithSpriteFrameName(ss.str());
     m_sprite->setPosition(START_X, START_Y);
+    m_inventory->pickup(new Bow());
 }
 
 void Player::updateHunger(float diff) {
@@ -73,6 +75,7 @@ Arrow* Player::action() {
         m_action_lock = true;
         return m_equip->action(*this);
     }
+    return nullptr;
 }
 
 void Player::releaseAction() {

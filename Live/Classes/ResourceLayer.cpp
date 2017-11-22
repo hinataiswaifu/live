@@ -1,5 +1,4 @@
 #include "ResourceLayer.h"
-#include "Bow.h"
 #include <ctime>
 #include <cstdlib>
 
@@ -47,14 +46,6 @@ ResourceLayer::ResourceLayer() : Layer() {
         this->addChild(m_resources[i]->getSprite());
 
     }
-    // FIXME Hardcoded fruit trees
-    // Initialize foliage, hardcoded values because sprite sheet is weird, we may
-    // want to add a Create() that takes in an enum for the type of tree
-    m_trees.push_back(new Tree("Foliage/PNG/foliagePack_008.png", 400, 300));
-    m_trees.push_back(new Tree("Foliage/PNG/foliagePack_011.png", 600, 500));
-    m_trees.push_back(new Tree("Foliage/PNG/foliagePack_010.png", 800, 250));
-
-    m_animals.push_back(new Animal("SheepAnimation/0.plist", 450, 300, 0, 0.1));
 
     for (auto iter : m_trees) {
         this->addChild(iter->getSprite());
@@ -63,9 +54,7 @@ ResourceLayer::ResourceLayer() : Layer() {
     for (auto iter : m_animals) {
         this->addChild(iter->getSprite());
     }
-    m_dropped_items.push_back(new Bow());
 
-    this->addChild(m_dropped_items.back()->getSprite());
 }
 
 ResourceLayer::ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vector<Tree*> &trees, std::vector<Animal*> &animals) :
@@ -85,9 +74,6 @@ ResourceLayer::ResourceLayer(std::vector<ResourceObstacle*> &obstacles, std::vec
     for(unsigned int i = 0; i < m_animals.size(); i++) {
         this->addChild(m_animals[i]->getSprite());
     }
-    m_dropped_items.push_back(new Bow());
-
-    this->addChild(m_dropped_items.back()->getSprite());
 }
 
 bool ResourceLayer::checkCollision(cocos2d::Point position) {
@@ -107,18 +93,14 @@ bool ResourceLayer::checkCollision(cocos2d::Point position) {
 }
 
 Item* ResourceLayer::gather(cocos2d::Point position, Direction dir) {
-    /*
-    for(int i = 0; i < MAX_RESOURCES; i++) {
-        if(m_resources[i]->gather(position, dir)) {
-            return true;
-        }
-    }*/ //FIXME
 
-    for(int i = 0; i < m_dropped_items.size(); i++) {
-        if( m_dropped_items[i]->checkCollision(position)) {
-            Item* temp = m_dropped_items[i];
-            m_dropped_items.erase(m_dropped_items.begin()+i);
+    for(auto it : m_dropped_items) {
+        if (it->getPosition().distance(position) < 20) {
+            Item* temp = it;
+            m_dropped_items.erase( std::remove(m_dropped_items.begin(),
+                        m_dropped_items.end(), it));
             return temp;
+
         }
     }
 
@@ -139,4 +121,31 @@ void ResourceLayer::update(float delta) {
     for (auto iter : m_animals) {
         iter->update(delta);
     }
+
+    for(int i = 0; i < m_projectiles.size(); i++) {
+        m_projectiles[i]->update();
+        if(m_projectiles[i]->isExpired()) {
+            Arrow* temp = m_projectiles[i];
+            m_projectiles.erase(m_projectiles.begin() + i);
+            delete temp;
+        } else {
+            for (auto iter = m_animals.begin(); iter != m_animals.end(); iter++) {
+                if (m_projectiles[i]->distanceFrom(**iter) < 20) {
+                    Animal* an = *iter;
+                    m_dropped_items.push_back(new Meat(an->getPosition()));
+                    m_animals.erase(iter);
+                    this->addChild(m_dropped_items.back()->getSprite(), 5);
+                    Arrow* temp = m_projectiles[i];
+                    m_projectiles.erase(m_projectiles.begin() + i);
+                    delete temp;
+                    delete an;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void ResourceLayer::addArrow(Arrow* arrow) {
+    m_projectiles.push_back(arrow);
 }

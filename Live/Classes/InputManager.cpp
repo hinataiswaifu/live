@@ -147,8 +147,12 @@ void InputManager::update(float delta) {
             if (resource != nullptr) {
                 // Drop the resource and add it to the map
                 resource->setPosition(position_lookahead);
-                m_scene->getPlayer()->pickup(resource);
-                m_scene->getHUD()->enqueueMessage("You picked up a " + resource->getName());
+                if (m_scene->getPlayer()->pickup(resource)) {
+                    m_scene->getHUD()->enqueueMessage("You picked up a " + resource->getName());
+                } else {
+                    resource->getSprite()->removeFromParent();
+                    m_scene->addMapItem(resource, m_scene->getPlayer()->getPosition());
+                }
             }
         }
     }
@@ -164,7 +168,7 @@ void InputManager::update(float delta) {
         if(m_key_v_released) {
             Arrow* arrow = m_scene->getPlayer()->action();
             if(arrow != NULL) {
-                m_scene->getMapManager()->getProjectiles().push_back(arrow);
+                m_scene->getMapManager()->addArrow(arrow);
             }
         }
         m_key_v_released = false;

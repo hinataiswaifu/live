@@ -46,7 +46,9 @@ const float GameObject::distanceFrom(const GameObject& other) {
     return getPosition().distance(other.getPosition());
 }
 
-GameObject::~GameObject() {}  // m_sprite deleted by game instance
+GameObject::~GameObject() {
+    m_sprite->removeFromParent();
+}  // m_sprite deleted by game instance
 
 std::string GameObject::getSpriteFile() const {
     return m_sprite_file;
