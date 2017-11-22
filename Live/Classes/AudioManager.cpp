@@ -1,4 +1,6 @@
 #include "AudioManager.h"
+#include <thread>
+#include <chrono>
 
 AudioManager::AudioManager() {
   engine = CocosDenshion::SimpleAudioEngine::getInstance();
@@ -39,8 +41,16 @@ void AudioManager::enqueueSFX(AudioComponent clip) {
 
 void AudioManager::dequeueSFXIfAvailable() {
   if (m_audio_queue.size() == 0) {
-    engine->playEffect(m_audio_queue.front().getFilePath(), false);
-    m_audio_queue.pop();
+    std::thread t1(&dequeueSFX, *this);
+  }
+}
+
+void AudioManager::dequeueSFX() {
+  engine->playEffect(m_audio_queue.front().getFilePath(), false);
+  sleep_until(system_clock::now() + seconds(m_audio_queue.front().getLength()));
+  m_audio_queue.pop();
+  if (!m_audio_queue.empty()) {
+    dequeueSFX();
   }
 }
 

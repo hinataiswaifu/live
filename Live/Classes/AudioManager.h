@@ -26,4 +26,5 @@ private:
   CocosDenshion::SimpleAudioEngine *engine;
 
   void dequeueSFXIfAvailable();
+  void dequeueSFX();
 };
