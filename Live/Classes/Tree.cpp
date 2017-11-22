@@ -50,38 +50,6 @@ void Tree::update() {
     m_last_day = GameTimer::getDaysElapsed();
 }
 
-<<<<<<< HEAD
-// Gather resource, given that you are facing the obstacle
-Item* Tree::gather(cocos2d::Point pt, Direction dir) {
-
-    // Create a point in front of the player
-    Point ray = pt;
-
-    if(m_fruits.size() <= 0) {
-        return nullptr;
-    }
-
-    if(dir == DIR_LEFT) {
-        ray += Point(-6, 0);
-    } else if(dir == DIR_RIGHT) {
-        ray += Point(6, 0);
-    } else if(dir == DIR_DOWN) {
-        ray += Point(0, -6);
-    } else if(dir == DIR_UP) {
-        ray += Point(0, 6);
-    }
-
-    if(m_hitbox.containsPoint(ray)) {
-        Food* pickup = m_fruits.front();
-        m_fruits.pop();
-        //Change sprite
-        return pickup;
-    }
-    return nullptr;
-}
-
-=======
->>>>>>> 1b96fb2... Squashed commits manually for bow and arrow
 Tree::~Tree() {
     while (!m_items.empty()) {
         m_items.pop();

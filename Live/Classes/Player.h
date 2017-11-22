@@ -64,13 +64,13 @@ public:
     bool use(int i);
     Inventory* get_inventory();
     virtual cocos2d::Rect getHitbox();
+    Arrow* action();
+    void releaseAction();
+    void equip(Equipment* equip);
 
 protected:
     virtual void animateMove();
     virtual void stopMove();
-    Arrow* action();
-    void releaseAction();
-    void equip(Equipment* equip);
 
 private:
     float m_hunger;

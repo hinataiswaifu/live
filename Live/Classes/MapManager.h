@@ -5,10 +5,7 @@
 #include <map>
 #include "Player.h"
 #include "WeatherManager.h"
-<<<<<<< HEAD
 #include "Mapgen/GeneratedResources.h"
-=======
->>>>>>> 24becdae7fa8bcdf6da2e0d64c47f0590ac86d20
 #include "Equipment/Arrow.h"
 
 #define MAP_FILE_NAME "sample_map.tmx"
