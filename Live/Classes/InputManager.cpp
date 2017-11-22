@@ -66,16 +66,11 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
         .count();
 }
 
-void enqueueFootstep(int id) {
+void InputManager::enqueueFootstep(int id) {
   if (AudioManager::getInstance()->getAudioQueueSize(id) < 1) {
-    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(("Audio/Footsteps/footstep"
-                      + std::to_string(rand()%6+1)
-                      + ".mp3").c_str(), false);
-
     AudioManager::getInstance()->enqueueIntoAudioQueue(
       id,
-      AudioComponent( "Audio/Footsteps/footstep1.mp3",
-                      1)
+      footsteps[rand()%6]
     );
   }
 }
