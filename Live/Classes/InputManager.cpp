@@ -72,13 +72,11 @@ void enqueueFootstep(int id) {
                       + std::to_string(rand()%6+1)
                       + ".mp3").c_str(), false);
 
-    // AudioManager::getInstance()->enqueueIntoAudioQueue(
-    //   id,
-    //   AudioComponent( "Audio/Footsteps/footstep"
-    //                     + std::to_string(rand()%6+1)
-    //                     + ".mp3",
-    //                   1)
-    // );
+    AudioManager::getInstance()->enqueueIntoAudioQueue(
+      id,
+      AudioComponent( "Audio/Footsteps/footstep1.mp3",
+                      1)
+    );
   }
 }
 
