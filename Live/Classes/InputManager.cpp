@@ -78,7 +78,7 @@ void InputManager::enqueueFootstep(int id) {
   if (AudioManager::getInstance()->getAudioQueueSize(id) < 1) {
     AudioManager::getInstance()->enqueueIntoAudioQueue(
       id,
-      InputManager::footsteps[0]
+      InputManager::footsteps[rand()%6]
     );
   }
 }
