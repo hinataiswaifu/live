@@ -7,7 +7,6 @@
 class AudioQueue {
 public:
   AudioQueue();
-  ~AudioQueue();
 
   void enqueueRandomSFX(AudioComponent clips[], int size);
   void enqueueSFX(AudioComponent clip);
