@@ -1,4 +1,4 @@
-#include "InputManager.h"
+#include "EventManager.h"
 #include "MainScene.h"
 #include "Direction.h"
 #include "AudioManager.h"
@@ -8,16 +8,16 @@ USING_NS_CC;
 // Because cocos2d-x requres createScene to be static, we need to make other
 // non-pointer members static
 std::map<cocos2d::EventKeyboard::KeyCode, std::chrono::high_resolution_clock::time_point>
-    InputManager::keys;
-bool InputManager::m_key_c_released = true;
-bool InputManager::m_key_v_released = true;
+    EventManager::keys;
+bool EventManager::m_key_c_released = true;
+bool EventManager::m_key_v_released = true;
 // used to track gameover state, currently used to reject keyboard input
-bool InputManager::m_game_over = false;
-MainScene* InputManager::m_scene = nullptr;
-int InputManager::m_footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
-AudioManager* InputManager::m_audio_mgr = AudioManager::getInstance();
+bool EventManager::m_game_over = false;
+MainScene* EventManager::m_scene = nullptr;
+int EventManager::m_footsteps_audio_queue_id = AudioManager::getInstance()->createNewAudioQueue();
+AudioManager* EventManager::m_audio_mgr = AudioManager::getInstance();
 
-EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
+EventListenerKeyboard* EventManager::initializeEventManager(MainScene* scene) {
     auto kb_listener = EventListenerKeyboard::create();
     Director::getInstance()->getOpenGLView()->setIMEKeyboardState(true);
     kb_listener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
@@ -33,7 +33,7 @@ EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
         keys.erase(keyCode);
     };
 
-    InputManager::m_scene = scene;
+    EventManager::m_scene = scene;
 
     // preload footsteps
     for(int i = 1; i < 7; i++) {
@@ -46,7 +46,7 @@ EventListenerKeyboard* InputManager::initializeInputManager(MainScene* scene) {
     return kb_listener;
 }
 
-bool InputManager::isKeyPressed(EventKeyboard::KeyCode code) {
+bool EventManager::isKeyPressed(EventKeyboard::KeyCode code) {
     // Check if the key is currently pressed by seeing it it's in the std::map keys
     // In retrospect, keys is a terrible name for a key/value paried datatype isnt it?
     if (keys.find(code) != keys.end()) {
@@ -55,7 +55,7 @@ bool InputManager::isKeyPressed(EventKeyboard::KeyCode code) {
     return false;
 }
 
-double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
+double EventManager::keyPressedDuration(EventKeyboard::KeyCode code) {
     if (!isKeyPressed(EventKeyboard::KeyCode::KEY_CTRL))
         return 0;  // Not pressed, so no duration obviously
 
@@ -67,9 +67,9 @@ double InputManager::keyPressedDuration(EventKeyboard::KeyCode code) {
         .count();
 }
 
-void InputManager::enqueueFootstep(int id) {
-  if (InputManager::m_audio_mgr->getAudioQueueSize(id) < 1) {
-    InputManager::m_audio_mgr->enqueueIntoAudioQueue(
+void EventManager::enqueueFootstep(int id) {
+  if (EventManager::m_audio_mgr->getAudioQueueSize(id) < 1) {
+    EventManager::m_audio_mgr->enqueueIntoAudioQueue(
       id,
       AudioComponent( "Audio/Footsteps/footstep"
                       + std::to_string(rand()%6+1)
@@ -79,7 +79,7 @@ void InputManager::enqueueFootstep(int id) {
   }
 }
 
-void InputManager::update(float delta) {
+void EventManager::update(float delta) {
     // check if the game is over
     if (!m_game_over) {
         if (m_scene->getPlayer()->getHunger() <= 0) {
@@ -93,42 +93,42 @@ void InputManager::update(float delta) {
     Direction dir = Direction::DIR_DOWN;
     m_scene->setDroppedFood(nullptr);
 
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
-        InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
+    if (EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_ARROW) ||
+        EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_A)) {
         position_lookahead += Point(-(MOVE_STEP * delta), 0);
         // Check if the movement results in collision. If so, undo the movement
         if (m_scene->getMapManager()->checkCollision(position_lookahead)) {
             position_lookahead -= Point(-(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_LEFT;
-        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
+        EventManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
-        InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
+    if (EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_RIGHT_ARROW) ||
+        EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_D)) {
         position_lookahead += Point(MOVE_STEP * delta, 0);
         if (m_scene->getMapManager()->checkCollision(position_lookahead)) {
             position_lookahead -= Point(+(MOVE_STEP * delta), 0);
         }
         dir = Direction::DIR_RIGHT;
-        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
+        EventManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
-        InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
+    if (EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_UP_ARROW) ||
+        EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_W)) {
         position_lookahead += Point(0, MOVE_STEP * delta);
         if (m_scene->getMapManager()->checkCollision(position_lookahead)) {
             position_lookahead -= Point(0, MOVE_STEP * delta);
         }
         dir = Direction::DIR_UP;
-        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
+        EventManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
-        InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
+    if (EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_DOWN_ARROW) ||
+        EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_S)) {
         position_lookahead += Point(0, -(MOVE_STEP * delta));
         if (m_scene->getMapManager()->checkCollision(position_lookahead)) {
             position_lookahead -= Point(0, -(MOVE_STEP * delta));
         }
         dir = Direction::DIR_DOWN;
-        InputManager::enqueueFootstep(m_footsteps_audio_queue_id);
+        EventManager::enqueueFootstep(m_footsteps_audio_queue_id);
     }
     if (isKeyPressed(EventKeyboard::KeyCode::KEY_Z)) {
         for (auto it : m_scene->getMapItems()) {
@@ -156,7 +156,7 @@ void InputManager::update(float delta) {
             }
         }
     }
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_C)) {
+    if (EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_C)) {
         if(m_key_c_released) {
             m_scene->getHUD()->dismissMessage();
         }
@@ -164,7 +164,7 @@ void InputManager::update(float delta) {
     } else {
         m_key_c_released = true;
     }
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_V)) {
+    if (EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_V)) {
         if(m_key_v_released) {
             Arrow* arrow = m_scene->getPlayer()->action();
             if(arrow != NULL) {
@@ -194,7 +194,7 @@ void InputManager::update(float delta) {
 
     Point move_distance = position_lookahead - m_scene->getPlayer()->getPosition();
     // update the stamina
-    if (InputManager::isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)
+    if (EventManager::isKeyPressed(EventKeyboard::KeyCode::KEY_LEFT_SHIFT)
             && move_distance.getLengthSq() > 0.0001f) {
         if (m_scene->getPlayer()->getStamina() > 0) {
             position_lookahead += move_distance;

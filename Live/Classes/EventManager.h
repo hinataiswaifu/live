@@ -10,16 +10,16 @@
 #define MOVE_STEP 50
 
 class MainScene;
-class InputManager {
+class EventManager {
 public:
-    static cocos2d::EventListenerKeyboard* initializeInputManager(MainScene* scene);
+    static cocos2d::EventListenerKeyboard* initializeEventManager(MainScene* scene);
     static void update(float delta);
 private:
     static bool isKeyPressed(cocos2d::EventKeyboard::KeyCode code);
     static double keyPressedDuration(cocos2d::EventKeyboard::KeyCode code);
 
     // Disallow contructor:
-    InputManager();
+    EventManager();
     static std::map<cocos2d::EventKeyboard::KeyCode,
                     std::chrono::high_resolution_clock::time_point> keys;
 

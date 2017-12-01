@@ -5,7 +5,7 @@
 #include "Item.h"
 #include "Inventory.h"
 #include "Direction.h"
-#include "InputManager.h"
+#include "EventManager.h"
 #include "Animate.h"
 #include "Equipment/Equipment.h"
 

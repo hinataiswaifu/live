@@ -7,7 +7,7 @@
 
 #define selfPlayer 0
 #define opponentPlayer 1
-#define HOST "localhost:4200"
+#define HOST "ws://io.sadmansk.com"
 class MainScene;
 
 class WebSocketClientDelegate : public cocos2d::network::WebSocket::Delegate {

@@ -1,7 +1,7 @@
 #include "Fruit.h"
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
-#include "InputManager.h"
+#include "EventManager.h"
 #include "AudioManager.h"
 #include "AudioComponent.h"
 #include "Direction.h"
@@ -78,7 +78,7 @@ void MainScene::startGame( int seed ) {
 
     // set up the input/event manager
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(
-            InputManager::initializeInputManager(this), this);
+            EventManager::initializeEventManager(this), this);
 
     // setup the audio manager
     AudioComponent bg_audio = AudioComponent("Audio/global_bg_day.mp3", 168000);
@@ -90,7 +90,7 @@ void MainScene::update(float delta) {
     // and if it is displays how long, otherwise tell the user to press it
     Node::update(delta);
 
-    InputManager::update(delta);
+    EventManager::update(delta);
     m_map_manager->update(delta);
     m_player->updateHunger(delta*HUNGER_DEGEN);
     m_hud->update();
